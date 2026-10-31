@@ -128,7 +128,7 @@ export const TopBar: React.FC = () => {
 
         {/* User Profile Info */}
         <div className="flex items-center gap-3 pl-3 border-l border-slate-200">
-          <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-white font-semibold text-xs shadow-xs">
+          <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-white font-semibold text-xs shadow-sm">
             {currentUser?.name.charAt(0) || 'U'}
           </div>
           <div className="hidden sm:flex flex-col text-left">

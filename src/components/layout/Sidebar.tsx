@@ -179,7 +179,7 @@ export const Sidebar: React.FC = () => {
                 onClick={() => switchRole(r.id)}
                 className={`text-left px-2 py-1.5 rounded text-xs transition-colors flex flex-col ${
                   isSelected
-                    ? 'bg-amber-100 border border-amber-400 text-amber-900 font-semibold shadow-xs'
+                    ? 'bg-amber-100 border border-amber-400 text-amber-900 font-semibold shadow-sm'
                     : 'bg-white hover:bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200'
                 }`}
                 title={r.name}

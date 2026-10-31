@@ -30,7 +30,7 @@ export const NotFound: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col justify-center items-center p-6 selection:bg-amber-500 selection:text-white font-sans">
       <div className="w-full max-w-lg text-center space-y-6">
-        <div className="w-12 h-12 mx-auto rounded-lg bg-amber-500 flex items-center justify-center text-white shadow-xs">
+        <div className="w-12 h-12 mx-auto rounded-lg bg-amber-500 flex items-center justify-center text-white shadow-sm">
           <Sun className="w-7 h-7" />
         </div>
 
@@ -50,7 +50,7 @@ export const NotFound: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 pt-2">
           <button
             onClick={() => navigate('/dashboard')}
-            className="w-full sm:w-auto btn-accent px-5 py-2 rounded text-xs font-semibold flex items-center justify-center gap-2 shadow-xs"
+            className="w-full sm:w-auto btn-accent px-5 py-2 rounded text-xs font-semibold flex items-center justify-center gap-2 shadow-sm"
           >
             <LayoutDashboard className="w-4 h-4" />
             <span>Go to Dashboard</span>
@@ -72,7 +72,7 @@ export const NotFound: React.FC = () => {
         </div>
 
         {/* Quick Directory Tray */}
-        <div className="card p-4 bg-white border border-slate-200 text-left mt-6 shadow-xs">
+        <div className="card p-4 bg-white border border-slate-200 text-left mt-6 shadow-sm">
           <span className="text-[10px] uppercase font-semibold tracking-wider text-slate-400 block mb-2 px-1">
             Active System Modules
           </span>

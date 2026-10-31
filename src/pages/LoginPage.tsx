@@ -29,7 +29,7 @@ export const LoginPage: React.FC = () => {
         {/* Logo Header */}
         <div className="text-center space-y-2">
           <NavLink to="/" className="inline-flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-lg bg-amber-500 flex items-center justify-center text-white shadow-xs">
+            <div className="w-10 h-10 rounded-lg bg-amber-500 flex items-center justify-center text-white shadow-sm">
               <Sun className="w-6 h-6" />
             </div>
             <div className="text-left">
@@ -47,7 +47,7 @@ export const LoginPage: React.FC = () => {
         </div>
 
         {/* Demo Persona Switcher */}
-        <div className="p-4 rounded-lg bg-white border border-slate-200 shadow-xs space-y-2.5">
+        <div className="p-4 rounded-lg bg-white border border-slate-200 shadow-sm space-y-2.5">
           <span className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
             <UserCheck className="w-3.5 h-3.5 text-amber-600" />
             Instant Demo Sign-in:
@@ -67,7 +67,7 @@ export const LoginPage: React.FC = () => {
         </div>
 
         {/* Standard Form */}
-        <div className="card p-6 bg-white border border-slate-200 shadow-xs">
+        <div className="card p-6 bg-white border border-slate-200 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-4 text-xs">
             <div>
               <label className="label text-slate-700">Work Email Address</label>
@@ -99,7 +99,7 @@ export const LoginPage: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full btn-accent py-2.5 rounded font-semibold text-sm flex items-center justify-center gap-2 shadow-xs"
+              className="w-full btn-accent py-2.5 rounded font-semibold text-sm flex items-center justify-center gap-2 shadow-sm"
             >
               <span>Sign In to Platform</span>
               <ArrowRight className="w-4 h-4" />

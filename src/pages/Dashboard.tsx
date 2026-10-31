@@ -39,6 +39,13 @@ import { StatusBadge } from '../components/ui/StatusBadge';
 import { useStore } from '../store/useStore';
 import { demoNasaPowerChennai, demoNasaPowerJodhpur } from '../data/demoData';
 import { api } from '../lib/api';
+import {
+  toNumber,
+  formatCurrencyLakh,
+  formatCurrencyLakhs,
+  formatPercent,
+  safeDivide,
+} from '../lib/number';
 
 export const Dashboard: React.FC = () => {
   const { leads, orders, jobs, warranties, tickets, products, serialNumbers } = useStore();
@@ -56,24 +63,65 @@ export const Dashboard: React.FC = () => {
       });
   }, []);
 
-  // KPI Calculations
-  const totalLeads = leads.length;
-  const convertedLeads = leads.filter((l) => l.status === 'converted').length;
-  const conversionRate = Number(((convertedLeads / totalLeads) * 100).toFixed(1));
+  // Safe KPI Calculations
+  const totalLeads = leads?.length || 0;
+  const convertedLeads = leads?.filter(
+    (l) => (l.status || '').toLowerCase() === 'converted'
+  ).length || 0;
+  const conversionRate = totalLeads > 0
+    ? Number(((convertedLeads / totalLeads) * 100).toFixed(1))
+    : 0;
 
-  const activeJobs = jobs.filter((j) => j.status === 'scheduled' || j.status === 'in_progress').length;
-  const completedJobs = jobs.filter((j) => j.status === 'completed').length;
+  const activeJobs = jobs?.filter((j) => {
+    const s = (j.status || '').toLowerCase();
+    return s === 'scheduled' || s === 'in_progress' || s === 'in progress';
+  }).length || 0;
+  const completedJobs = jobs?.filter(
+    (j) => (j.status || '').toLowerCase() === 'completed'
+  ).length || 0;
 
-  const totalRevenue = orders.reduce((sum, o) => sum + o.totalAmount, 0);
-  const totalCost = 510000; // Estimated equipment and technician costs
-  const grossProfit = totalRevenue - totalCost;
-  const avgMargin = Number(((grossProfit / totalRevenue) * 100).toFixed(1));
+  const totalRevenue = toNumber(
+    orders?.reduce((sum, o: any) => sum + toNumber(o.totalAmount ?? o.total, 0), 0),
+    0
+  );
 
-  const totalInventoryValue = products.reduce((sum, p) => sum + p.costPrice * p.stockQuantity, 0);
-  const lowStockCount = products.filter((p) => p.stockQuantity <= p.reorderLevel).length;
+  const totalCost = toNumber(
+    orders?.reduce((sum, o: any) => {
+      const equipCost = toNumber(
+        o.equipmentCost ?? o.totalCost ?? (o.total || o.totalAmount ? (o.total || o.totalAmount) * 0.72 : 0),
+        0
+      );
+      const installCost = toNumber(o.installationCost, 0);
+      const labourCost = toNumber(o.labourCost, 0);
+      return sum + equipCost + installCost + labourCost;
+    }, 0) || (totalRevenue > 0 ? totalRevenue * 0.72 : 0),
+    0
+  );
 
-  const openTickets = tickets.filter((t) => t.status !== 'closed' && t.status !== 'resolved').length;
-  const underWarrantyTickets = tickets.filter((t) => t.isCoveredByWarranty).length;
+  const grossProfit = Math.max(0, totalRevenue - totalCost);
+  const avgMargin = totalRevenue > 0
+    ? Number(((grossProfit / totalRevenue) * 100).toFixed(1))
+    : 0;
+
+  const totalInventoryValue = toNumber(
+    products?.reduce((sum, p: any) => {
+      const unitCost = toNumber(p.costPrice ?? p.cost ?? p.price, 0);
+      const qty = toNumber(p.stockQuantity ?? p.stockQty, 0);
+      return sum + unitCost * qty;
+    }, 0),
+    0
+  );
+  const lowStockCount = products?.filter((p: any) => {
+    const qty = toNumber(p.stockQuantity ?? p.stockQty, 0);
+    const min = toNumber(p.reorderLevel ?? p.minStock, 0);
+    return qty <= min;
+  }).length || 0;
+
+  const openTickets = tickets?.filter((t) => {
+    const s = (t.status || '').toLowerCase();
+    return s !== 'closed' && s !== 'resolved';
+  }).length || 0;
+  const underWarrantyTickets = tickets?.filter((t: any) => t.isCoveredByWarranty || t.isUnderWarranty).length || 0;
 
   // Chart 1: Revenue vs Cost (6 months trend)
   const financialData = [
@@ -83,7 +131,12 @@ export const Dashboard: React.FC = () => {
     { month: 'Sep', revenue: 1240000, cost: 895000, margin: 27.8 },
     { month: 'Oct', revenue: 1480000, cost: 1060000, margin: 28.3 },
     { month: 'Nov (Proj)', revenue: 1650000, cost: 1180000, margin: 28.4 },
-  ];
+  ].map((d) => ({
+    ...d,
+    revenue: toNumber(d.revenue, 0),
+    cost: toNumber(d.cost, 0),
+    margin: toNumber(d.margin, 0),
+  }));
 
   // Chart 2: Lead Funnel
   const funnelData = [
@@ -92,7 +145,10 @@ export const Dashboard: React.FC = () => {
     { stage: 'Survey Done', count: 10 },
     { stage: 'Qualified', count: 8 },
     { stage: 'Quote Accepted', count: 5 },
-  ];
+  ].map((f) => ({
+    ...f,
+    count: toNumber(f.count, 0),
+  }));
 
   // Chart 3: System Type Distribution
   const systemTypeData = [
@@ -100,17 +156,20 @@ export const Dashboard: React.FC = () => {
     { name: '3 kW On-Grid', value: 30, color: '#0ea5e9' },
     { name: '5 kW On-Grid', value: 15, color: '#10b981' },
     { name: '1-2 kW Basic', value: 10, color: '#8b5cf6' },
-  ];
+  ].map((s) => ({
+    ...s,
+    value: toNumber(s.value, 0),
+  }));
 
   // Chart 4: NASA POWER Monthly Irradiance & Generation for Demo Sites
   const chennaiMonths = demoNasaPowerChennai.monthlyData || demoNasaPowerChennai.monthly || [];
   const jodhpurMonths = demoNasaPowerJodhpur.monthlyData || demoNasaPowerJodhpur.monthly || [];
   const solarChartData = chennaiMonths.map((chennaiMonth: any, idx: number) => {
     const jodhpurMonth: any = jodhpurMonths[idx] || {};
-    const cGhi = chennaiMonth.irradiance ?? chennaiMonth.ghi ?? 5.4;
-    const jGhi = jodhpurMonth.irradiance ?? jodhpurMonth.ghi ?? 5.7;
+    const cGhi = toNumber(chennaiMonth.irradiance ?? chennaiMonth.ghi, 5.4);
+    const jGhi = toNumber(jodhpurMonth.irradiance ?? jodhpurMonth.ghi, 5.7);
     return {
-      month: chennaiMonth.month,
+      month: chennaiMonth.month || `M${idx + 1}`,
       chennaiGhi: cGhi,
       jodhpurGhi: jGhi,
       chennaiOutputKwh: Math.round(5 * cGhi * 30 * 0.78),
@@ -131,13 +190,13 @@ export const Dashboard: React.FC = () => {
       'Metric,Value\n' +
       `Total Leads,${totalLeads}\n` +
       `Conversion Rate,${conversionRate}%\n` +
-      `Total Revenue,₹${totalRevenue.toLocaleString('en-IN')}\n` +
-      `Gross Profit,₹${grossProfit.toLocaleString('en-IN')}\n` +
+      `Total Revenue,₹${toNumber(totalRevenue).toLocaleString('en-IN')}\n` +
+      `Gross Profit,₹${toNumber(grossProfit).toLocaleString('en-IN')}\n` +
       `Average Margin,${avgMargin}%\n` +
       `Active Jobs,${activeJobs}\n` +
       `Completed Jobs,${completedJobs}\n` +
       `Open Tickets,${openTickets}\n` +
-      `Inventory Valuation,₹${totalInventoryValue.toLocaleString('en-IN')}\n`;
+      `Inventory Valuation,₹${toNumber(totalInventoryValue).toLocaleString('en-IN')}\n`;
 
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
@@ -189,7 +248,7 @@ export const Dashboard: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <KPICard
           title="Monthly Revenue"
-          value={`₹${(totalRevenue / 100000).toFixed(2)} Lakh`}
+          value={formatCurrencyLakh(totalRevenue)}
           subtitle="From confirmed & installed orders"
           change={{ value: '18.4%', isPositive: true }}
           icon={DollarSign}
@@ -198,8 +257,8 @@ export const Dashboard: React.FC = () => {
         />
         <KPICard
           title="Gross Margin"
-          value={`${avgMargin}%`}
-          subtitle={`₹${(grossProfit / 100000).toFixed(2)}L gross profit`}
+          value={formatPercent(avgMargin)}
+          subtitle={`₹${(toNumber(grossProfit, 0) / 100000).toFixed(2)}L gross profit`}
           change={{ value: '1.2%', isPositive: true }}
           icon={TrendingUp}
           iconBgColor="bg-amber-50"
@@ -208,7 +267,7 @@ export const Dashboard: React.FC = () => {
         <KPICard
           title="Lead Pipeline"
           value={totalLeads}
-          subtitle={`${conversionRate}% overall conversion rate`}
+          subtitle={`${formatPercent(conversionRate)} overall conversion rate`}
           change={{ value: '6 new this week', isPositive: true }}
           icon={Users}
           iconBgColor="bg-blue-50"
@@ -230,10 +289,10 @@ export const Dashboard: React.FC = () => {
           <div className="space-y-0.5">
             <span className="text-[11px] font-semibold text-slate-500 uppercase">Warehouse Valuation</span>
             <div className="text-lg font-bold text-slate-900 font-mono">
-              ₹{(totalInventoryValue / 100000).toFixed(2)} Lakhs
+              {formatCurrencyLakhs(totalInventoryValue)}
             </div>
             <span className="text-xs text-slate-500">
-              {serialNumbers.filter((s) => s.status === 'in_stock').length} barcoded serials in stock
+              {serialNumbers?.filter((s) => (s.status || '').toLowerCase() === 'in_stock' || s.status === 'In Stock').length || 0} barcoded serials in stock
             </span>
           </div>
           <div className="p-2.5 rounded bg-slate-100 text-slate-700">

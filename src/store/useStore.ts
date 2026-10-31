@@ -262,61 +262,70 @@ export const useStore = create<AppState>((set, get) => ({
 
     // Automatic Bill of Materials generation
     const items: QuoteItem[] = [];
+    // Panel
     const panelProduct = products.find((p) => p.category === 'panel')!;
     const panelCount = Math.ceil((capacityKw * 1000) / 400); // 400W panels
+    const panelPrice = Number(panelProduct?.sellingPrice ?? panelProduct?.price ?? 11000);
+    const panelCost = Number(panelProduct?.costPrice ?? panelProduct?.cost ?? 8500);
     items.push({
       id: `qi-p-${Date.now()}`,
-      productId: panelProduct.id,
-      productName: `${panelProduct.name} (${panelProduct.sku})`,
+      productId: panelProduct?.id || 'p1',
+      productName: `${panelProduct?.name || 'Solar Panel'} (${panelProduct?.sku || 'SP-400'})`,
       category: 'panel',
       quantity: panelCount,
-      unitPrice: panelProduct.sellingPrice,
-      totalPrice: panelCount * panelProduct.sellingPrice,
-      unitCost: panelProduct.costPrice,
-      totalCost: panelCount * panelProduct.costPrice,
+      unitPrice: panelPrice,
+      totalPrice: panelCount * panelPrice,
+      unitCost: panelCost,
+      totalCost: panelCount * panelCost,
     });
 
     // Inverter
     const inverterProduct = products.find((p) => p.category === 'inverter')!;
+    const invPrice = Number(inverterProduct?.sellingPrice ?? inverterProduct?.price ?? 48000);
+    const invCost = Number(inverterProduct?.costPrice ?? inverterProduct?.cost ?? 35000);
     items.push({
       id: `qi-i-${Date.now()}`,
-      productId: inverterProduct.id,
-      productName: `${inverterProduct.name} (${capacityKw}kW)`,
+      productId: inverterProduct?.id || 'p2',
+      productName: `${inverterProduct?.name || 'Inverter'} (${capacityKw}kW)`,
       category: 'inverter',
       quantity: 1,
-      unitPrice: inverterProduct.sellingPrice,
-      totalPrice: inverterProduct.sellingPrice,
-      unitCost: inverterProduct.costPrice,
-      totalCost: inverterProduct.costPrice,
+      unitPrice: invPrice,
+      totalPrice: invPrice,
+      unitCost: invCost,
+      totalCost: invCost,
     });
 
     // Battery if Off-Grid
     if (systemType === 'off_grid') {
       const batteryProduct = products.find((p) => p.category === 'battery')!;
       const batteryCount = capacityKw >= 4 ? 2 : 1;
+      const batPrice = Number(batteryProduct?.sellingPrice ?? batteryProduct?.price ?? 65000);
+      const batCost = Number(batteryProduct?.costPrice ?? batteryProduct?.cost ?? 45000);
       items.push({
         id: `qi-b-${Date.now()}`,
-        productId: batteryProduct.id,
-        productName: `${batteryProduct.name} 5kWh`,
+        productId: batteryProduct?.id || 'p4',
+        productName: `${batteryProduct?.name || 'Battery'} 5kWh`,
         category: 'battery',
         quantity: batteryCount,
-        unitPrice: batteryProduct.sellingPrice,
-        totalPrice: batteryCount * batteryProduct.sellingPrice,
-        unitCost: batteryProduct.costPrice,
-        totalCost: batteryCount * batteryProduct.costPrice,
+        unitPrice: batPrice,
+        totalPrice: batteryCount * batPrice,
+        unitCost: batCost,
+        totalCost: batteryCount * batCost,
       });
 
       const ccProduct = products.find((p) => p.category === 'charge_controller')!;
+      const ccPrice = Number(ccProduct?.sellingPrice ?? ccProduct?.price ?? 7000);
+      const ccCost = Number(ccProduct?.costPrice ?? ccProduct?.cost ?? 4500);
       items.push({
         id: `qi-c-${Date.now()}`,
-        productId: ccProduct.id,
-        productName: ccProduct.name,
+        productId: ccProduct?.id || 'p5',
+        productName: ccProduct?.name || 'Charge Controller',
         category: 'charge_controller',
         quantity: 1,
-        unitPrice: ccProduct.sellingPrice,
-        totalPrice: ccProduct.sellingPrice,
-        unitCost: ccProduct.costPrice,
-        totalCost: ccProduct.costPrice,
+        unitPrice: ccPrice,
+        totalPrice: ccPrice,
+        unitCost: ccCost,
+        totalCost: ccCost,
       });
     }
 
@@ -324,27 +333,30 @@ export const useStore = create<AppState>((set, get) => ({
     ['mounting', 'wiring_safety', 'service'].forEach((cat) => {
       const prod = products.find((p) => p.category === cat);
       if (prod) {
+        const prodPrice = Number(prod.sellingPrice ?? prod.price ?? 10000);
+        const prodCost = Number(prod.costPrice ?? prod.cost ?? 7000);
         items.push({
           id: `qi-${cat}-${Date.now()}`,
           productId: prod.id,
           productName: prod.name,
           category: prod.category,
           quantity: 1,
-          unitPrice: prod.sellingPrice,
-          totalPrice: prod.sellingPrice,
-          unitCost: prod.costPrice,
-          totalCost: prod.costPrice,
+          unitPrice: prodPrice,
+          totalPrice: prodPrice,
+          unitCost: prodCost,
+          totalCost: prodCost,
         });
       }
     });
 
-    const subtotal = items.reduce((sum, item) => sum + item.totalPrice, 0);
-    const totalCost = items.reduce((sum, item) => sum + item.totalCost, 0);
+    const subtotal = items.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0);
+    const totalCost = items.reduce((sum, item) => sum + Number(item.totalCost || 0), 0);
     const discountAmount = Math.round((subtotal * discountPercent) / 100);
-    const taxAmount = Math.round((subtotal - discountAmount) * 0.12); // 12% GST on solar
-    const totalAmount = subtotal - discountAmount + taxAmount;
+    const netSubtotal = Math.max(0, subtotal - discountAmount);
+    const taxAmount = Math.round(netSubtotal * 0.12); // 12% GST on solar
+    const totalAmount = netSubtotal + taxAmount;
     const grossMargin = totalAmount - totalCost - taxAmount;
-    const marginPercentage = Number(((grossMargin / (subtotal - discountAmount)) * 100).toFixed(2));
+    const marginPercentage = netSubtotal > 0 ? Number(((grossMargin / netSubtotal) * 100).toFixed(2)) : 0;
     const advanceAmount = Math.round((totalAmount * advancePercent) / 100);
 
     const newQuote: Quote = {

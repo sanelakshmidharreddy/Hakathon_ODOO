@@ -33,7 +33,7 @@ export const LandingPage: React.FC = () => {
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center text-white shadow-xs">
+            <div className="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center text-white shadow-sm">
               <Sun className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
@@ -70,7 +70,7 @@ export const LandingPage: React.FC = () => {
             </NavLink>
             <NavLink
               to="/dashboard"
-              className="btn-accent text-sm font-semibold px-4 py-2 rounded-md shadow-xs flex items-center gap-2"
+              className="btn-accent text-sm font-semibold px-4 py-2 rounded-md shadow-sm flex items-center gap-2"
             >
               <span>Open ERP</span>
               <ArrowRight className="w-4 h-4" />
@@ -98,7 +98,7 @@ export const LandingPage: React.FC = () => {
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
             <NavLink
               to="/dashboard"
-              className="w-full sm:w-auto btn-accent px-6 py-3 rounded-md text-sm font-semibold shadow-xs flex items-center justify-center gap-2"
+              className="w-full sm:w-auto btn-accent px-6 py-3 rounded-md text-sm font-semibold shadow-sm flex items-center justify-center gap-2"
             >
               <span>Explore Dashboard</span>
               <ArrowRight className="w-4 h-4" />
@@ -403,7 +403,7 @@ export const LandingPage: React.FC = () => {
               <div className="mt-8">
                 <NavLink
                   to="/solar-insights"
-                  className="btn-accent px-5 py-2.5 rounded-md text-xs font-semibold inline-flex items-center gap-2 shadow-xs"
+                  className="btn-accent px-5 py-2.5 rounded-md text-xs font-semibold inline-flex items-center gap-2 shadow-sm"
                 >
                   <span>Explore Solar Data Insights</span>
                   <ArrowRight className="w-4 h-4" />
@@ -461,7 +461,7 @@ export const LandingPage: React.FC = () => {
           <div className="mt-6 flex justify-center">
             <NavLink
               to="/dashboard"
-              className="btn-accent px-6 py-3 rounded-md text-sm font-semibold shadow-xs inline-flex items-center gap-2"
+              className="btn-accent px-6 py-3 rounded-md text-sm font-semibold shadow-sm inline-flex items-center gap-2"
             >
               <span>Launch Director Dashboard</span>
               <ArrowRight className="w-4 h-4" />

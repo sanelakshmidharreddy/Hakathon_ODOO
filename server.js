@@ -219,11 +219,17 @@ app.get('/api/analytics', (req, res) => {
     success: true,
     data: {
       monthlyRevenue: 1420000,
-      completedInstallations: 38,
-      pipelineLeads: 24,
-      avgGrossMargin: 28.4,
-      co2SavedTonnes: 142.8,
+      totalCost: 1016720,
+      grossProfit: 403280,
+      grossMargin: 28.4,
+      warehouseValue: 4625000,
+      activeJobs: 12,
+      completedJobs: 38,
       activeWarranties: 412,
+      openTickets: 5,
+      leadConversionRate: 44.4,
+      pipelineLeads: 24,
+      co2SavedTonnes: 142.8,
     },
   });
 });
