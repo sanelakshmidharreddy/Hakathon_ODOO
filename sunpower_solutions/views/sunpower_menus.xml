@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top-Level Root Menu -->
+    <menuitem id="menu_sunpower_root"
+              name="SunPower Solar"
+              web_icon="sunpower_solutions,static/description/icon.png"
+              sequence="10"/>
+
+    <!-- 1. Executive Dashboard -->
+    <menuitem id="menu_sunpower_dashboard"
+              name="Executive Dashboard"
+              parent="menu_sunpower_root"
+              action="action_sunpower_director_dashboard"
+              sequence="5"/>
+
+    <!-- 2. CRM & Sales -->
+    <menuitem id="menu_sunpower_crm_sales"
+              name="CRM &amp; Sales"
+              parent="menu_sunpower_root"
+              sequence="10"/>
+
+    <menuitem id="menu_sunpower_lead"
+              name="Solar Leads"
+              parent="menu_sunpower_crm_sales"
+              action="action_sunpower_lead"
+              sequence="10"/>
+
+    <menuitem id="menu_sunpower_survey"
+              name="Technical Site Surveys"
+              parent="menu_sunpower_crm_sales"
+              action="action_sunpower_survey"
+              sequence="20"/>
+
+    <menuitem id="menu_sunpower_quote"
+              name="Solar Quotations (BOM)"
+              parent="menu_sunpower_crm_sales"
+              action="action_sunpower_quote"
+              sequence="30"/>
+
+    <menuitem id="menu_sunpower_order"
+              name="Confirmed Sales Orders"
+              parent="menu_sunpower_crm_sales"
+              action="action_sunpower_order"
+              sequence="40"/>
+
+    <menuitem id="menu_sunpower_customer"
+              name="Solar Consumers"
+              parent="menu_sunpower_crm_sales"
+              action="action_sunpower_customer"
+              sequence="50"/>
+
+    <!-- 3. Warehouse & Inventory -->
+    <menuitem id="menu_sunpower_warehouse"
+              name="Warehouse &amp; Dispatch"
+              parent="menu_sunpower_root"
+              sequence="20"/>
+
+    <menuitem id="menu_sunpower_dispatch"
+              name="Dispatch Manifests"
+              parent="menu_sunpower_warehouse"
+              action="action_sunpower_dispatch"
+              sequence="10"/>
+
+    <menuitem id="menu_sunpower_serial"
+              name="Serial Number Tracking"
+              parent="menu_sunpower_warehouse"
+              action="action_sunpower_inventory_serial"
+              sequence="20"/>
+
+    <menuitem id="menu_sunpower_product"
+              name="Solar Catalog &amp; Hardware"
+              parent="menu_sunpower_warehouse"
+              action="action_sunpower_product"
+              sequence="30"/>
+
+    <!-- 4. Field Installation -->
+    <menuitem id="menu_sunpower_field_ops"
+              name="Field Installation"
+              parent="menu_sunpower_root"
+              sequence="30"/>
+
+    <menuitem id="menu_sunpower_job"
+              name="Installation Jobs"
+              parent="menu_sunpower_field_ops"
+              action="action_sunpower_job"
+              sequence="10"/>
+
+    <menuitem id="menu_sunpower_site_photo"
+              name="Site Geotagged Photos"
+              parent="menu_sunpower_field_ops"
+              action="action_sunpower_site_photo"
+              sequence="20"/>
+
+    <menuitem id="menu_sunpower_signature"
+              name="Customer Sign-Offs"
+              parent="menu_sunpower_field_ops"
+              action="action_sunpower_signature"
+              sequence="30"/>
+
+    <!-- 5. Warranties & Service -->
+    <menuitem id="menu_sunpower_after_sales"
+              name="Warranties &amp; Service"
+              parent="menu_sunpower_root"
+              sequence="40"/>
+
+    <menuitem id="menu_sunpower_warranty"
+              name="Asset 20-Year Warranties"
+              parent="menu_sunpower_after_sales"
+              action="action_sunpower_warranty"
+              sequence="10"/>
+
+    <menuitem id="menu_sunpower_ticket"
+              name="Service &amp; RMA Tickets"
+              parent="menu_sunpower_after_sales"
+              action="action_sunpower_service_ticket"
+              sequence="20"/>
+
+    <!-- 6. Billing & Subsidies -->
+    <menuitem id="menu_sunpower_finance"
+              name="Billing &amp; Subsidies"
+              parent="menu_sunpower_root"
+              sequence="50"/>
+
+    <menuitem id="menu_sunpower_invoice"
+              name="Customer Invoices"
+              parent="menu_sunpower_finance"
+              action="action_sunpower_invoice"
+              sequence="10"/>
+
+    <menuitem id="menu_sunpower_subsidy"
+              name="Government Subsidies (PM Surya Ghar)"
+              parent="menu_sunpower_finance"
+              action="action_sunpower_subsidy"
+              sequence="20"/>
+
+    <!-- 7. Solar Science & Climatology -->
+    <menuitem id="menu_sunpower_science"
+              name="Solar Climatology"
+              parent="menu_sunpower_root"
+              sequence="60"/>
+
+    <menuitem id="menu_sunpower_solar_site"
+              name="Solar Site Climatology"
+              parent="menu_sunpower_science"
+              action="action_sunpower_solar_site"
+              sequence="10"/>
+</odoo>

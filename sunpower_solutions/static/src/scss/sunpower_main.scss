@@ -1,0 +1,58 @@
+/* SunPower Solutions Solar Brand Styling for Odoo */
+:root {
+    --sunpower-navy: #005a9c;
+    --sunpower-navy-dark: #003e6b;
+    --sunpower-amber: #f59e0b;
+    --sunpower-amber-light: #fef3c7;
+    --sunpower-emerald: #10b981;
+    --sunpower-emerald-light: #ecfdf5;
+    --sunpower-slate: #0f172a;
+    --sunpower-card-bg: #ffffff;
+    --sunpower-border: #e2e8f0;
+}
+
+.o_web_client {
+    --brand-primary: var(--sunpower-navy);
+}
+
+.o_form_view {
+    .badge.bg-success {
+        background-color: var(--sunpower-emerald) !important;
+        color: #ffffff;
+    }
+    .badge.bg-warning {
+        background-color: var(--sunpower-amber) !important;
+        color: #1e293b;
+    }
+}
+
+.o_kanban_view {
+    .oe_kanban_card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 90, 156, 0.08) !important;
+        }
+    }
+}
+
+.sunpower_metric_badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    &.active {
+        background-color: #dcfce7;
+        color: #15803d;
+    }
+    &.warning {
+        background-color: #fef3c7;
+        color: #b45309;
+    }
+    &.danger {
+        background-color: #fee2e2;
+        color: #b91c1c;
+    }
+}

@@ -1,0 +1,90 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'SunPower Solutions - Solar Business ERP',
+    'version': '1.0.0',
+    'category': 'Sales/Renewable Energy',
+    'summary': 'End-to-End Rooftop Solar Installation & Lifecycle Management ERP',
+    'sequence': 1,
+    'author': 'SunPower Solutions India',
+    'website': 'https://sunpowersolutions.in',
+    'license': 'LGPL-3',
+    'depends': [
+        'base',
+        'mail',
+        'web',
+        'portal',
+    ],
+    'data': [
+        # Security
+        'security/sunpower_groups.xml',
+        'security/ir.model.access.csv',
+        'security/sunpower_record_rules.xml',
+
+        # Master & Sequence Data
+        'data/sequence_data.xml',
+        'data/product_data.xml',
+        'data/warranty_policy_data.xml',
+        'data/mail_template_data.xml',
+        'data/dashboard_action_data.xml',
+
+        # Wizards
+        'wizard/sunpower_quote_wizard_views.xml',
+        'wizard/sunpower_dispatch_wizard_views.xml',
+
+        # Backend Model Views
+        'views/sunpower_customer_views.xml',
+        'views/sunpower_lead_views.xml',
+        'views/sunpower_survey_views.xml',
+        'views/sunpower_product_views.xml',
+        'views/sunpower_quote_views.xml',
+        'views/sunpower_order_views.xml',
+        'views/sunpower_inventory_serial_views.xml',
+        'views/sunpower_dispatch_views.xml',
+        'views/sunpower_warranty_views.xml',
+        'views/sunpower_job_views.xml',
+        'views/sunpower_site_photo_views.xml',
+        'views/sunpower_signature_views.xml',
+        'views/sunpower_service_ticket_views.xml',
+        'views/sunpower_invoice_views.xml',
+        'views/sunpower_subsidy_views.xml',
+        'views/sunpower_solar_site_views.xml',
+        'views/sunpower_dashboard_views.xml',
+        'views/sunpower_menus.xml',
+
+        # QWeb PDF Reports
+        'reports/sunpower_report_templates.xml',
+        'reports/sunpower_quote_report.xml',
+        'reports/sunpower_invoice_report.xml',
+        'reports/sunpower_dispatch_report.xml',
+        'reports/sunpower_installation_certificate.xml',
+        'reports/sunpower_warranty_certificate.xml',
+    ],
+    'demo': [
+        'demo/demo_data.xml',
+    ],
+    'assets': {
+        'web.assets_backend': [
+            'sunpower_solutions/static/src/scss/sunpower_main.scss',
+            'sunpower_solutions/static/src/scss/dashboard.scss',
+            'sunpower_solutions/static/src/scss/field_app.scss',
+            'sunpower_solutions/static/src/js/serial_scanner.js',
+            'sunpower_solutions/static/src/js/warranty_badge.js',
+            'sunpower_solutions/static/src/js/solar_score_widget.js',
+            'sunpower_solutions/static/src/js/installation_map.js',
+            'sunpower_solutions/static/src/js/photo_gallery.js',
+            'sunpower_solutions/static/src/js/signature_pad.js',
+            'sunpower_solutions/static/src/js/dashboard_widgets.js',
+            'sunpower_solutions/static/src/xml/serial_scanner.xml',
+            'sunpower_solutions/static/src/xml/warranty_badge.xml',
+            'sunpower_solutions/static/src/xml/solar_score_widget.xml',
+            'sunpower_solutions/static/src/xml/installation_map.xml',
+            'sunpower_solutions/static/src/xml/photo_gallery.xml',
+            'sunpower_solutions/static/src/xml/signature_pad.xml',
+            'sunpower_solutions/static/src/xml/dashboard_widgets.xml',
+        ],
+    },
+    'images': ['static/description/icon.png'],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

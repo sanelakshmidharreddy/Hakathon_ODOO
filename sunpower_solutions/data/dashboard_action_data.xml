@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Default KPI record for Director Dashboard -->
+    <record id="default_sunpower_dashboard_kpi" model="sunpower.dashboard.kpi">
+        <field name="name">Director Executive Dashboard KPI</field>
+    </record>
+</odoo>

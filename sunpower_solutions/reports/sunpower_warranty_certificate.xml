@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_sunpower_warranty_cert" model="ir.actions.report">
+        <field name="name">Digital Warranty Certificate</field>
+        <field name="model">sunpower.warranty</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sunpower_solutions.report_sunpower_warranty_cert_document</field>
+        <field name="report_file">sunpower_solutions.report_sunpower_warranty_cert_document</field>
+        <field name="print_report_name">'Warranty Certificate - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_sunpower_warranty"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_sunpower_warranty_cert_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; padding: 25px; border: 4px double #005a9c; margin: 10px;">
+                    <div style="text-align: center; margin-bottom: 25px;">
+                        <h1 style="color: #005a9c; margin: 0; font-size: 26px; text-transform: uppercase; letter-spacing: 1px;">SUNPOWER SOLUTIONS</h1>
+                        <h3 style="color: #f59e0b; margin: 4px 0 0; font-size: 16px; font-weight: 600;">CERTIFICATE OF PERFORMANCE &amp; ASSET WARRANTY</h3>
+                        <p style="color: #6b7280; font-size: 11px; margin: 2px 0 0;">Certificate Ref: <strong><t t-esc="doc.name"/></strong></p>
+                    </div>
+
+                    <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 15px; margin-bottom: 25px; text-align: center;">
+                        <span style="font-size: 14px; color: #166534; font-weight: bold;">
+                            THIS CERTIFICATE CONFIRMS REGISTERED WARRANTY PROTECTION FOR THE FOLLOWING SOLAR ASSET:
+                        </span>
+                        <div style="margin-top: 10px; font-size: 22px; font-family: monospace; font-weight: bold; color: #005a9c;">
+                            SERIAL NUMBER: <t t-esc="doc.serial_id.serial_number"/>
+                        </div>
+                    </div>
+
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px;">
+                        <tr style="border-bottom: 1px solid #e5e7eb;">
+                            <td style="padding: 8px; width: 35%; color: #4b5563; font-weight: bold;">Registered Owner / Consumer</td>
+                            <td style="padding: 8px; width: 65%; font-weight: bold; font-size: 13px;"><t t-esc="doc.customer_id.name"/></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e5e7eb;">
+                            <td style="padding: 8px; color: #4b5563; font-weight: bold;">Installation Site</td>
+                            <td style="padding: 8px;"><t t-esc="doc.customer_id.street or ''"/>, <t t-esc="doc.customer_id.city or ''"/></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e5e7eb;">
+                            <td style="padding: 8px; color: #4b5563; font-weight: bold;">Hardware Model &amp; Make</td>
+                            <td style="padding: 8px; font-weight: bold;"><t t-esc="doc.product_id.name"/> (<t t-esc="doc.product_id.product_type.replace('_', ' ').title()"/>)</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e5e7eb;">
+                            <td style="padding: 8px; color: #4b5563; font-weight: bold;">Warranty Effective Date</td>
+                            <td style="padding: 8px;"><t t-esc="doc.start_date"/> (Commissioning / Dispatch Date)</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e5e7eb;">
+                            <td style="padding: 8px; color: #4b5563; font-weight: bold;">Warranty Expiration Date</td>
+                            <td style="padding: 8px; font-weight: bold; color: #005a9c;"><t t-esc="doc.end_date"/> (<t t-esc="doc.warranty_years"/>-Year Manufacturer Assurance)</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e5e7eb;">
+                            <td style="padding: 8px; color: #4b5563; font-weight: bold;">Active Coverage Status</td>
+                            <td style="padding: 8px;">
+                                <span style="background: #16a34a; color: white; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold;" t-if="doc.state == 'active'">
+                                    ACTIVE &amp; VERIFIED
+                                </span>
+                                <span style="background: #dc2626; color: white; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold;" t-else="">
+                                    <t t-esc="doc.state.upper()"/>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; font-size: 10px; color: #475569; margin-bottom: 30px;">
+                        <h5 style="margin: 0 0 4px; color: #005a9c; font-size: 11px;">Standard Warranty Policy &amp; Terms:</h5>
+                        <ul style="margin: 0; padding-left: 16px;">
+                            <li><strong>Photovoltaic Panels:</strong> Guaranteed linear power degradation of not more than 0.55% per year after year 1, ensuring minimum 84.8% output efficiency at Year 20. Free replacement or repair of manufacturing cell defects.</li>
+                            <li><strong>Power Conditioning Units (Inverters):</strong> 2 to 5 years manufacturer defect protection covering internal bridge rectifiers, MPPT logic boards, and display units.</li>
+                            <li><strong>Claim Verification:</strong> All service claims are validated instantly via the Odoo digital ORM serial ledger. Genuine warranty service tickets incur ₹0.00 parts or technician charges.</li>
+                        </ul>
+                    </div>
+
+                    <table style="width: 100%; margin-top: 20px;">
+                        <tr>
+                            <td style="width: 40%; text-align: center; vertical-align: bottom;">
+                                <div style="border-top: 1px solid #9ca3af; width: 160px; margin: 0 auto; padding-top: 4px; font-size: 10px; color: #6b7280;">
+                                    Head of Quality Assurance
+                                </div>
+                            </td>
+                            <td style="width: 20%; text-align: center; vertical-align: middle;">
+                                <div style="border: 2px solid #f59e0b; border-radius: 50%; width: 70px; height: 70px; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: #005a9c; font-weight: bold; font-size: 9px; text-transform: uppercase;">
+                                    SunPower<br/>SEAL
+                                </div>
+                            </td>
+                            <td style="width: 40%; text-align: center; vertical-align: bottom;">
+                                <div style="border-top: 1px solid #9ca3af; width: 160px; margin: 0 auto; padding-top: 4px; font-size: 10px; color: #6b7280;">
+                                    Managing Director, SunPower Solutions
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

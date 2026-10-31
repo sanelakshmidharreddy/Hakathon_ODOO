@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Kanban View -->
+    <record id="view_sunpower_lead_kanban" model="ir.ui.view">
+        <field name="name">sunpower.lead.kanban</field>
+        <field name="model">sunpower.lead</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="status" class="o_kanban_small_column" sample="1" quick_create="false">
+                <field name="name"/>
+                <field name="customer_name"/>
+                <field name="phone"/>
+                <field name="city"/>
+                <field name="system_type"/>
+                <field name="requested_capacity"/>
+                <field name="solar_score"/>
+                <field name="source"/>
+                <field name="status"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record p-3 border rounded shadow-sm bg-white">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong class="text-primary"><field name="customer_name"/></strong>
+                                <span t-attf-class="badge #{record.solar_score.raw_value >= 85 ? 'text-bg-success' : 'text-bg-warning'}">
+                                    <i class="fa fa-sun-o mr-1"/>Score: <field name="solar_score"/>
+                                </span>
+                            </div>
+                            <div class="text-muted small">
+                                <i class="fa fa-phone mr-1"/> <field name="phone"/><br/>
+                                <i class="fa fa-map-marker mr-1"/> <field name="city"/>
+                            </div>
+                            <div class="mt-2 pt-2 border-top d-flex justify-content-between align-items-center small">
+                                <span class="badge text-bg-light border">
+                                    <field name="requested_capacity"/> kW • <field name="system_type"/>
+                                </span>
+                                <span class="text-muted"><field name="source"/></span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_sunpower_lead_tree" model="ir.ui.view">
+        <field name="name">sunpower.lead.tree</field>
+        <field name="model">sunpower.lead</field>
+        <field name="arch" type="xml">
+            <tree string="CRM Leads &amp; Pipeline" sample="1">
+                <field name="name"/>
+                <field name="customer_name"/>
+                <field name="phone"/>
+                <field name="city"/>
+                <field name="source"/>
+                <field name="system_type"/>
+                <field name="requested_capacity" string="kW"/>
+                <field name="solar_score" widget="badge" decoration-success="solar_score >= 85" decoration-warning="solar_score &lt; 85"/>
+                <field name="expected_annual_generation" string="kWh/Yr"/>
+                <field name="assigned_salesperson_id"/>
+                <field name="status" widget="badge"
+                       decoration-info="status in ('new', 'contacted')"
+                       decoration-warning="status == 'survey_scheduled'"
+                       decoration-success="status in ('qualified', 'converted')"
+                       decoration-danger="status == 'lost'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sunpower_lead_form" model="ir.ui.view">
+        <field name="name">sunpower.lead.form</field>
+        <field name="model">sunpower.lead</field>
+        <field name="arch" type="xml">
+            <form string="Solar CRM Lead &amp; Sizing">
+                <header>
+                    <button name="action_schedule_survey" string="Schedule Site Survey" type="object" class="btn-primary"
+                            attrs="{'invisible': [('status', 'in', ('survey_completed', 'qualified', 'converted', 'lost'))]}"/>
+                    <button name="action_create_quote" string="Generate Solar Quote" type="object" class="btn-success"
+                            attrs="{'invisible': [('status', 'in', ('converted', 'lost'))]}"/>
+                    <field name="status" widget="statusbar" statusbar_visible="new,contacted,survey_scheduled,survey_completed,qualified,converted"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_surveys" type="object" class="oe_stat_button" icon="fa-compass">
+                            <field name="survey_count" widget="statinfo" string="Surveys"/>
+                        </button>
+                        <button name="action_view_quotes" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="quote_count" widget="statinfo" string="Quotations"/>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <label for="name" string="Lead Code"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+
+                    <group>
+                        <group string="Enquiry &amp; Customer Information">
+                            <field name="customer_name"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="customer_id"/>
+                            <field name="source"/>
+                            <field name="assigned_salesperson_id"/>
+                        </group>
+                        <group string="Site Sizing &amp; Solar Score">
+                            <field name="system_type"/>
+                            <field name="requested_capacity"/>
+                            <field name="monthly_bill"/>
+                            <field name="roof_area"/>
+                            <label for="solar_score" string="NASA Irradiance Score"/>
+                            <div class="d-flex align-items-center">
+                                <field name="solar_score" widget="badge" decoration-success="solar_score >= 85" decoration-warning="solar_score &lt; 85"/>
+                                <span class="ml-2 text-muted small">(Estimated from NASA POWER Climatology)</span>
+                            </div>
+                            <field name="expected_annual_generation"/>
+                            <field name="has_approved_survey" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <group string="Rooftop Address (OpenStreetMap Geocoded)">
+                        <group>
+                            <field name="address" placeholder="Door No, Street, Landmark..."/>
+                            <field name="city"/>
+                            <field name="state_name"/>
+                        </group>
+                        <group>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Engineering Surveys" name="surveys">
+                            <field name="survey_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="technician_id"/>
+                                    <field name="roof_direction"/>
+                                    <field name="roof_tilt"/>
+                                    <field name="shadow_free_area"/>
+                                    <field name="recommended_capacity"/>
+                                    <field name="state" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Formal Quotations" name="quotes">
+                            <field name="quote_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="system_type"/>
+                                    <field name="capacity"/>
+                                    <field name="total_amount"/>
+                                    <field name="margin_percentage" widget="badge"/>
+                                    <field name="state" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_sunpower_lead_search" model="ir.ui.view">
+        <field name="name">sunpower.lead.search</field>
+        <field name="model">sunpower.lead</field>
+        <field name="arch" type="xml">
+            <search string="Search Leads">
+                <field name="name"/>
+                <field name="customer_name"/>
+                <field name="phone"/>
+                <field name="city"/>
+                <filter name="new_leads" string="New Enquiries" domain="[('status', '=', 'new')]"/>
+                <filter name="qualified" string="Qualified Leads" domain="[('status', '=', 'qualified')]"/>
+                <filter name="off_grid" string="Off-Grid" domain="[('system_type', '=', 'off_grid')]"/>
+                <filter name="on_grid" string="On-Grid" domain="[('system_type', '=', 'on_grid')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_status" string="Stage" context="{'group_by': 'status'}"/>
+                    <filter name="group_salesperson" string="Sales Rep" context="{'group_by': 'assigned_salesperson_id'}"/>
+                    <filter name="group_city" string="City" context="{'group_by': 'city'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_sunpower_lead" model="ir.actions.act_window">
+        <field name="name">Leads &amp; CRM Pipeline</field>
+        <field name="res_model">sunpower.lead</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="view_sunpower_lead_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Capture your first rooftop solar inquiry!
+            </p>
+        </field>
+    </record>
+</odoo>

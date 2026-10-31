@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- SunPower Category -->
+    <record id="module_category_sunpower" model="ir.module.category">
+        <field name="name">SunPower Solar Solutions</field>
+        <field name="description">Access management for rooftop solar installation ERP</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- 1. Customer Portal User -->
+    <record id="group_sunpower_customer" model="res.groups">
+        <field name="name">Customer Portal</field>
+        <field name="category_id" ref="module_category_sunpower"/>
+        <field name="comment">Read-only access to customer's own solar project, warranties, and generation certificate.</field>
+    </record>
+
+    <!-- 2. Technician (Field PWA) -->
+    <record id="group_sunpower_technician" model="res.groups">
+        <field name="name">Field Technician</field>
+        <field name="category_id" ref="module_category_sunpower"/>
+        <field name="comment">Mobile field access for checklists, site surveys, photo uploads, and customer sign-off.</field>
+    </record>
+
+    <!-- 3. Warehouse User -->
+    <record id="group_sunpower_warehouse" model="res.groups">
+        <field name="name">Warehouse Dispatcher</field>
+        <field name="category_id" ref="module_category_sunpower"/>
+        <field name="comment">Inventory serial barcode/QR scanning, staging, and dispatch manifest sign-offs.</field>
+    </record>
+
+    <!-- 4. Service Support Agent -->
+    <record id="group_sunpower_service" model="res.groups">
+        <field name="name">Service &amp; Warranty Agent</field>
+        <field name="category_id" ref="module_category_sunpower"/>
+        <field name="comment">Post-installation maintenance, ticket triage, and warranty claims verification.</field>
+    </record>
+
+    <!-- 5. Sales User -->
+    <record id="group_sunpower_sales_user" model="res.groups">
+        <field name="name">Sales Representative</field>
+        <field name="category_id" ref="module_category_sunpower"/>
+        <field name="comment">Lead capture, NASA solar scoring, and quotation drafting.</field>
+    </record>
+
+    <!-- 6. Sales Manager -->
+    <record id="group_sunpower_sales_manager" model="res.groups">
+        <field name="name">Sales Manager</field>
+        <field name="category_id" ref="module_category_sunpower"/>
+        <field name="implied_ids" eval="[(4, ref('group_sunpower_sales_user'))]"/>
+        <field name="comment">Lead pipeline assignment, BOM margin approvals, and sales order sign-offs.</field>
+    </record>
+
+    <!-- 7. Director (Full Administrator) -->
+    <record id="group_sunpower_director" model="res.groups">
+        <field name="name">Director / Executive Admin</field>
+        <field name="category_id" ref="module_category_sunpower"/>
+        <field name="implied_ids" eval="[
+            (4, ref('group_sunpower_sales_manager')),
+            (4, ref('group_sunpower_warehouse')),
+            (4, ref('group_sunpower_technician')),
+            (4, ref('group_sunpower_service'))
+        ]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        <field name="comment">Complete executive access across financials, margin controls, inventory, audit logs, and analytics.</field>
+    </record>
+</odoo>

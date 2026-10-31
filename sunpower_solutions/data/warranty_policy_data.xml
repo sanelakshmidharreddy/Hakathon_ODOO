@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Scheduled Action for Daily Warranty Expiry Checks -->
+    <record id="ir_cron_warranty_status_update" model="ir.cron">
+        <field name="name">SunPower: Check &amp; Update Warranty Expiry Statuses</field>
+        <field name="model_id" ref="model_sunpower_warranty"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_update_warranty_statuses()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="active" eval="True"/>
+    </record>
+
+    <!-- Master External Data Sources with Verified Provenance -->
+    <record id="data_source_nasa_power" model="sunpower.external.data.source">
+        <field name="name">NASA POWER Project (LaRC)</field>
+        <field name="portal_url">https://power.larc.nasa.gov/</field>
+        <field name="endpoint_url">https://power.larc.nasa.gov/api/temporal/climatology/point</field>
+        <field name="license">Public Domain (NASA Open Science Data Policy)</field>
+        <field name="coverage">Global 0.5° x 0.5° Latitude/Longitude Grid</field>
+        <field name="format">json</field>
+        <field name="api_key_required" eval="False"/>
+        <field name="notes">Parameters queried: ALLSKY_SFC_SW_DWN (Daily Global Horizontal Irradiance GHI in kWh/m²/day), T2M (2m Air Temperature in °C).</field>
+    </record>
+
+    <record id="data_source_global_solar_atlas" model="sunpower.external.data.source">
+        <field name="name">Global Solar Atlas (World Bank / Solargis)</field>
+        <field name="portal_url">https://globalsolaratlas.info/</field>
+        <field name="endpoint_url">https://globalsolaratlas.info/download</field>
+        <field name="license">Creative Commons Attribution 4.0 International (CC BY 4.0)</field>
+        <field name="coverage">India &amp; Worldwide High-Resolution Solar Radiation Layers</field>
+        <field name="format">geojson</field>
+        <field name="api_key_required" eval="False"/>
+        <field name="notes">Used for long-term multi-year GHI, DNI, optimum tilt angle calibration, and PVOUT specific yield benchmarks.</field>
+    </record>
+
+    <record id="data_source_openstreetmap" model="sunpower.external.data.source">
+        <field name="name">OpenStreetMap &amp; Nominatim Geocoding</field>
+        <field name="portal_url">https://www.openstreetmap.org/</field>
+        <field name="endpoint_url">https://nominatim.openstreetmap.org/search</field>
+        <field name="license">Open Data Commons Open Database License (ODbL)</field>
+        <field name="coverage">Global Street-Level Geocoding &amp; Spatial Addresses</field>
+        <field name="format">json</field>
+        <field name="api_key_required" eval="False"/>
+        <field name="notes">Used for rooftop customer address validation, latitude/longitude resolution, and geospatial technician map plots.</field>
+    </record>
+</odoo>

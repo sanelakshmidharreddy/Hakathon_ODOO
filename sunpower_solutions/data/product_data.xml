@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- 1. SunMax 400W Monocrystalline Panel -->
+    <record id="product_panel_400w" model="sunpower.product">
+        <field name="name">SunMax 400W Monocrystalline Solar Panel</field>
+        <field name="default_code">SP-PAN-400</field>
+        <field name="category">panel</field>
+        <field name="brand">SunMax</field>
+        <field name="model_name">SM-400M-PERC</field>
+        <field name="cost_price">8500.0</field>
+        <field name="sale_price">11000.0</field>
+        <field name="warranty_years">20</field>
+        <field name="track_serial" eval="True"/>
+        <field name="min_stock_level">25.0</field>
+        <field name="description">High efficiency 400W Mono-PERC panel (21.3% efficiency, 25-yr linear degradation guarantee).</field>
+    </record>
+
+    <!-- 2. Growatt 5kW On-Grid Inverter -->
+    <record id="product_inverter_5kw" model="sunpower.product">
+        <field name="name">Growatt 5kW Dual-MPPT String Inverter</field>
+        <field name="default_code">SP-INV-5K</field>
+        <field name="category">inverter</field>
+        <field name="brand">Growatt</field>
+        <field name="model_name">MIN-5000TL-X</field>
+        <field name="cost_price">35000.0</field>
+        <field name="sale_price">48000.0</field>
+        <field name="warranty_years">2</field>
+        <field name="track_serial" eval="True"/>
+        <field name="min_stock_level">4.0</field>
+        <field name="description">Single phase 5kW grid-tied inverter with built-in DC disconnect and WiFi cloud generation monitoring.</field>
+    </record>
+
+    <!-- 3. Growatt 3kW On-Grid Inverter -->
+    <record id="product_inverter_3kw" model="sunpower.product">
+        <field name="name">Growatt 3kW Single Phase Inverter</field>
+        <field name="default_code">SP-INV-3K</field>
+        <field name="category">inverter</field>
+        <field name="brand">Growatt</field>
+        <field name="model_name">MIN-3000TL-X</field>
+        <field name="cost_price">22000.0</field>
+        <field name="sale_price">32000.0</field>
+        <field name="warranty_years">2</field>
+        <field name="track_serial" eval="True"/>
+        <field name="min_stock_level">4.0</field>
+        <field name="description">Single phase 3kW grid-tied inverter for residential rooftop installations.</field>
+    </record>
+
+    <!-- 4. Luminous 200Ah Lithium Storage Battery -->
+    <record id="product_battery_200ah" model="sunpower.product">
+        <field name="name">Luminous 200Ah LiFePO4 Storage Battery</field>
+        <field name="default_code">SP-BAT-200</field>
+        <field name="category">battery</field>
+        <field name="brand">Luminous</field>
+        <field name="model_name">Li-200-48V</field>
+        <field name="cost_price">45000.0</field>
+        <field name="sale_price">65000.0</field>
+        <field name="warranty_years">5</field>
+        <field name="track_serial" eval="True"/>
+        <field name="min_stock_level">3.0</field>
+        <field name="description">48V 200Ah Lithium Iron Phosphate battery, 3500+ cycles at 80% DoD for reliable off-grid resilience.</field>
+    </record>
+
+    <!-- 5. MPPT Charge Controller -->
+    <record id="product_charge_controller_40a" model="sunpower.product">
+        <field name="name">40A MPPT Intelligent Charge Controller</field>
+        <field name="default_code">SP-CC-40A</field>
+        <field name="category">charge_controller</field>
+        <field name="brand">EPsolar</field>
+        <field name="model_name">Tracer-4215BN</field>
+        <field name="cost_price">4500.0</field>
+        <field name="sale_price">7000.0</field>
+        <field name="warranty_years">2</field>
+        <field name="track_serial" eval="True"/>
+        <field name="min_stock_level">5.0</field>
+        <field name="description">Auto-sensing 12/24/36/48V MPPT solar controller with 98% tracking efficiency.</field>
+    </record>
+
+    <!-- 6. Aluminium Mounting Structure -->
+    <record id="product_mounting_5kw" model="sunpower.product">
+        <field name="name">Aluminium Anodized Mounting Structure Kit (5kW)</field>
+        <field name="default_code">SP-MNT-5K</field>
+        <field name="category">mounting</field>
+        <field name="brand">SunPower Struct</field>
+        <field name="model_name">AL6005-T5</field>
+        <field name="cost_price">12000.0</field>
+        <field name="sale_price">18000.0</field>
+        <field name="warranty_years">10</field>
+        <field name="track_serial" eval="False"/>
+        <field name="min_stock_level">5.0</field>
+        <field name="description">Corrosion-resistant anodized aluminium rails, stainless steel mid/end clamps, wind tested to 150 km/h.</field>
+    </record>
+
+    <!-- 7. DC/AC Cabling Kit -->
+    <record id="product_wiring_5kw" model="sunpower.product">
+        <field name="name">Solar DC &amp; AC Cabling Kit with Conduits</field>
+        <field name="default_code">SP-WIRE-5K</field>
+        <field name="category">wiring</field>
+        <field name="brand">Polycab Solar</field>
+        <field name="cost_price">5500.0</field>
+        <field name="sale_price">9000.0</field>
+        <field name="warranty_years">1</field>
+        <field name="track_serial" eval="False"/>
+        <field name="min_stock_level">10.0</field>
+        <field name="description">UV-resistant 4mm²/6mm² cross-linked polyolefin insulated DC solar cables and MC4 connectors.</field>
+    </record>
+
+    <!-- 8. Safety & Earthing Kit -->
+    <record id="product_safety_kit" model="sunpower.product">
+        <field name="name">Dual AC/DC Distribution Box &amp; Chemical Earthing</field>
+        <field name="default_code">SP-SAFE-KIT</field>
+        <field name="category">safety</field>
+        <field name="brand">SunPower Safety</field>
+        <field name="cost_price">3500.0</field>
+        <field name="sale_price">6000.0</field>
+        <field name="warranty_years">1</field>
+        <field name="track_serial" eval="False"/>
+        <field name="min_stock_level">8.0</field>
+        <field name="description">Includes Type II Surge Protection Devices (SPD), DC MCBs, Class-B lightning arrestor, copper-bonded chemical earthing electrode.</field>
+    </record>
+
+    <!-- 9. Installation & Commissioning Service -->
+    <record id="product_service_install" model="sunpower.product">
+        <field name="name">Turnkey Rooftop Solar Installation &amp; Meter Testing</field>
+        <field name="default_code">SP-INSTALL-5K</field>
+        <field name="category">service</field>
+        <field name="cost_price">8000.0</field>
+        <field name="sale_price">15000.0</field>
+        <field name="warranty_years">1</field>
+        <field name="track_serial" eval="False"/>
+        <field name="description">Mechanical mounting, DC/AC wiring, insulation resistance test, net-metering synchronization assistance.</field>
+    </record>
+</odoo>

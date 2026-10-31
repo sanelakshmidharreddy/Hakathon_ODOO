@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- SunPower Common Header & Layout Template -->
+    <template id="sunpower_external_layout">
+        <div class="header" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border-bottom: 2px solid #005a9c; padding-bottom: 10px; margin-bottom: 20px;">
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 60%; vertical-align: middle;">
+                        <h2 style="color: #005a9c; margin: 0; font-size: 24px; font-weight: bold; letter-spacing: -0.5px;">SUNPOWER SOLUTIONS</h2>
+                        <p style="margin: 3px 0 0; color: #f59e0b; font-weight: 600; font-size: 12px; text-transform: uppercase;">Engineered Solar Rooftop Systems &bull; 20-Year Asset Reliability</p>
+                    </td>
+                    <td style="width: 40%; text-align: right; vertical-align: middle; font-size: 11px; color: #4b5563;">
+                        <div>SunPower Solutions Pvt Ltd</div>
+                        <div>Whitefield Tech Corridor, Bengaluru - 560066</div>
+                        <div>GSTIN: 29AAACS1234F1Z5 | contact@sunpower.internal</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="article" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 12px; color: #1f2937;">
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border-top: 1px solid #e5e7eb; padding-top: 8px; font-size: 10px; color: #9ca3af; text-align: center;">
+            <table style="width: 100%;">
+                <tr>
+                    <td style="text-align: left; width: 40%;">Certified MNRE Rooftop Channel Partner</td>
+                    <td style="text-align: center; width: 20%;">Page <span class="page"/> / <span class="topage"/></td>
+                    <td style="text-align: right; width: 40%;">ISO 9001:2015 &bull; IEC 61215 Tier 1 Hardware</td>
+                </tr>
+            </table>
+        </div>
+    </template>
+</odoo>

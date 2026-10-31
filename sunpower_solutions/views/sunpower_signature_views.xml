@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sunpower_signature_tree" model="ir.ui.view">
+        <field name="name">sunpower.signature.tree</field>
+        <field name="model">sunpower.signature</field>
+        <field name="arch" type="xml">
+            <tree string="Customer Signatures" create="false" edit="false">
+                <field name="job_id"/>
+                <field name="signer_name"/>
+                <field name="signed_at"/>
+                <field name="ip_address"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sunpower_signature_form" model="ir.ui.view">
+        <field name="name">sunpower.signature.form</field>
+        <field name="model">sunpower.signature</field>
+        <field name="arch" type="xml">
+            <form string="Customer Digital Sign-Off" create="false" edit="false">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="signer_name" class="oe_edit_only"/>
+                        <h1><field name="signer_name" readonly="1"/></h1>
+                        <h3>Job: <field name="job_id" readonly="1"/></h3>
+                    </div>
+                    <group>
+                        <group string="Signature Audit">
+                            <field name="signed_at" readonly="1"/>
+                            <field name="ip_address" readonly="1"/>
+                        </group>
+                        <group string="Confirmation">
+                            <field name="confirmation_text" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Digital Signature Vector / Canvas" name="signature">
+                            <field name="signature_image" widget="image" class="oe_avatar" options="{'size': [400, 200]}" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sunpower_signature" model="ir.actions.act_window">
+        <field name="name">Customer Signatures</field>
+        <field name="res_model">sunpower.signature</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No signatures collected yet.
+            </p>
+        </field>
+    </record>
+</odoo>

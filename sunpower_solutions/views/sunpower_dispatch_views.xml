@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sunpower_dispatch_tree" model="ir.ui.view">
+        <field name="name">sunpower.dispatch.tree</field>
+        <field name="model">sunpower.dispatch</field>
+        <field name="arch" type="xml">
+            <tree string="Dispatch Manifests" sample="1">
+                <field name="name"/>
+                <field name="order_id"/>
+                <field name="customer_id"/>
+                <field name="dispatch_date"/>
+                <field name="vehicle_number"/>
+                <field name="warehouse_user_id"/>
+                <field name="all_serials_scanned" widget="boolean_toggle"/>
+                <field name="state" widget="badge"
+                       decoration-warning="state in ('draft', 'scanning')"
+                       decoration-info="state == 'ready'"
+                       decoration-success="state in ('dispatched', 'delivered')"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sunpower_dispatch_form" model="ir.ui.view">
+        <field name="name">sunpower.dispatch.form</field>
+        <field name="model">sunpower.dispatch</field>
+        <field name="arch" type="xml">
+            <form string="Warehouse Dispatch Manifest &amp; Barcode Verification">
+                <header>
+                    <button name="%(action_sunpower_dispatch_wizard)d" string="Scan Barcode / QR Serial" type="action" class="btn-primary"
+                            context="{'default_dispatch_id': active_id}"
+                            attrs="{'invisible': [('state', 'in', ('dispatched', 'delivered'))]}"/>
+                    <button name="action_confirm_dispatch" string="Confirm Dispatch &amp; Trigger Warranties" type="object" class="btn-success"
+                            attrs="{'invisible': [('state', 'in', ('dispatched', 'delivered'))]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="scanning,ready,dispatched,delivered"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Manifest Number"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+
+                    <group>
+                        <group string="Logistics Information">
+                            <field name="order_id"/>
+                            <field name="customer_id"/>
+                            <field name="warehouse_user_id"/>
+                            <field name="dispatch_date"/>
+                        </group>
+                        <group string="Transportation Vehicle">
+                            <field name="vehicle_number"/>
+                            <field name="driver_phone"/>
+                            <field name="all_serials_scanned" widget="boolean"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Manifest Items &amp; Scanned Serials" name="lines">
+                            <field name="dispatch_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="category"/>
+                                    <field name="track_serial"/>
+                                    <field name="quantity_required" string="Required Units"/>
+                                    <field name="quantity_scanned" string="Scanned Units"/>
+                                    <field name="scanned_serial_ids" widget="many2many_tags" string="Verified Serials"/>
+                                    <field name="is_complete" widget="boolean" string="OK"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Triggered Digital Warranties" name="warranties" attrs="{'invisible': [('state', 'not in', ('dispatched', 'delivered'))]}">
+                            <field name="warranty_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="product_id"/>
+                                    <field name="serial_number_str"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="state" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_sunpower_dispatch" model="ir.actions.act_window">
+        <field name="name">Dispatch Manifests</field>
+        <field name="res_model">sunpower.dispatch</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

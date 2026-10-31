@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_sunpower_dispatch" model="ir.actions.report">
+        <field name="name">Warehouse Dispatch Manifest</field>
+        <field name="model">sunpower.dispatch</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sunpower_solutions.report_sunpower_dispatch_document</field>
+        <field name="report_file">sunpower_solutions.report_sunpower_dispatch_document</field>
+        <field name="print_report_name">'Dispatch Manifest - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_sunpower_dispatch"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_sunpower_dispatch_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="sunpower_solutions.sunpower_external_layout">
+                    <div class="page">
+                        <table style="width: 100%; margin-bottom: 20px;">
+                            <tr>
+                                <td style="width: 50%; vertical-align: top;">
+                                    <h4 style="color: #005a9c; margin: 0 0 6px;">DELIVERY DESTINATION:</h4>
+                                    <div style="font-size: 13px; font-weight: bold;"><t t-esc="doc.order_id.customer_id.name"/></div>
+                                    <div><t t-esc="doc.order_id.customer_id.street or ''"/></div>
+                                    <div><t t-esc="doc.order_id.customer_id.city or ''"/>, <t t-esc="doc.order_id.customer_id.state or ''"/></div>
+                                    <div>Contact: <t t-esc="doc.order_id.customer_id.phone or ''"/></div>
+                                </td>
+                                <td style="width: 50%; vertical-align: top; text-align: right;">
+                                    <h3 style="color: #111827; margin: 0;">DISPATCH MANIFEST</h3>
+                                    <div style="font-size: 13px; color: #4b5563; margin-top: 4px;">Manifest #: <strong><t t-esc="doc.name"/></strong></div>
+                                    <div>Order Reference: <strong><t t-esc="doc.order_id.name"/></strong></div>
+                                    <div>Dispatch Date: <t t-esc="doc.dispatch_date"/></div>
+                                    <div>Vehicle Number: <strong style="color: #005a9c;"><t t-esc="doc.vehicle_number or 'LOGISTICS-DIRECT'"/></strong></div>
+                                    <div>Warehouse Controller: <t t-esc="doc.warehouse_user_id.name"/></div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h4 style="background: #f3f4f6; padding: 6px 10px; border-left: 4px solid #005a9c; margin-bottom: 10px;">
+                            SCANNED &amp; VERIFIED SERIAL ASSETS (AUDIT MANIFEST)
+                        </h4>
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                            <thead>
+                                <tr style="background: #005a9c; color: white; text-align: left; font-size: 11px;">
+                                    <th style="padding: 7px;">#</th>
+                                    <th style="padding: 7px;">Hardware Model</th>
+                                    <th style="padding: 7px;">Verified Unique Serial Number</th>
+                                    <th style="padding: 7px; text-align: center;">Scan Timestamp</th>
+                                    <th style="padding: 7px; text-align: center;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="cnt" t-value="1"/>
+                                <t t-foreach="doc.dispatch_line_ids" t-as="line">
+                                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                                        <td style="padding: 6px 7px;"><t t-esc="cnt"/></td>
+                                        <td style="padding: 6px 7px;"><strong><t t-esc="line.product_id.name"/></strong></td>
+                                        <td style="padding: 6px 7px; font-family: monospace; font-size: 12px; font-weight: bold; color: #005a9c;">
+                                            <t t-esc="line.serial_id.serial_number"/>
+                                        </td>
+                                        <td style="padding: 6px 7px; text-align: center; font-size: 11px; color: #6b7280;">
+                                            <t t-esc="line.scanned_at.strftime('%d-%b-%Y %H:%M') if line.scanned_at else 'Verified'"/>
+                                        </td>
+                                        <td style="padding: 6px 7px; text-align: center;">
+                                            <span style="color: #16a34a; font-weight: bold; font-size: 11px;">✓ Dispatched</span>
+                                        </td>
+                                    </tr>
+                                    <t t-set="cnt" t-value="cnt + 1"/>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div style="border: 1px solid #d1d5db; padding: 10px; border-radius: 4px; font-size: 11px; color: #4b5563; margin-top: 15px;">
+                            <strong>Automatic Warranty Activation Notice:</strong> Upon scanning and physical gate dispatch, each serial-tracked hardware asset above is automatically registered with SunPower Warranty Cloud with effective date <t t-esc="doc.dispatch_date"/>.
+                        </div>
+
+                        <table style="width: 100%; margin-top: 40px;">
+                            <tr>
+                                <td style="width: 50%; text-align: center;">
+                                    <div style="border-top: 1px dashed #9ca3af; width: 200px; margin: 0 auto; padding-top: 5px;">
+                                        Warehouse Officer Signature
+                                    </div>
+                                </td>
+                                <td style="width: 50%; text-align: center;">
+                                    <div style="border-top: 1px dashed #9ca3af; width: 200px; margin: 0 auto; padding-top: 5px;">
+                                        Logistics Driver Signature &amp; Date
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sunpower_service_ticket_tree" model="ir.ui.view">
+        <field name="name">sunpower.service.ticket.tree</field>
+        <field name="model">sunpower.service.ticket</field>
+        <field name="arch" type="xml">
+            <tree string="Service Tickets" decoration-info="state == 'new'" decoration-warning="state in ('triaged', 'waiting_part')" decoration-success="state == 'resolved'" decoration-muted="state == 'closed'">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="job_id"/>
+                <field name="serial_id"/>
+                <field name="fault_code"/>
+                <field name="is_under_warranty" widget="boolean_toggle"/>
+                <field name="total_charge" widget="monetary"/>
+                <field name="state" widget="badge" decoration-info="state == 'new'" decoration-warning="state in ('triaged', 'waiting_part')" decoration-success="state == 'resolved'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_sunpower_service_ticket_kanban" model="ir.ui.view">
+        <field name="name">sunpower.service.ticket.kanban</field>
+        <field name="model">sunpower.service.ticket</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" quick_create="false">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="fault_code"/>
+                <field name="is_under_warranty"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click p-3 shadow-sm rounded border-start border-4 border-warning">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <strong class="text-primary"><field name="name"/></strong>
+                                <span t-if="record.is_under_warranty.raw_value" class="badge bg-success">Under Warranty (₹0)</span>
+                                <span t-else="" class="badge bg-danger">Out of Warranty</span>
+                            </div>
+                            <div class="mb-1">
+                                <strong><field name="customer_id"/></strong>
+                            </div>
+                            <div class="text-muted small mb-2">
+                                Fault: <span class="badge bg-secondary"><field name="fault_code"/></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-2 pt-2 border-top">
+                                <span class="text-muted small"><field name="serial_id"/></span>
+                                <field name="state" widget="badge"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sunpower_service_ticket_form" model="ir.ui.view">
+        <field name="name">sunpower.service.ticket.form</field>
+        <field name="model">sunpower.service.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Solar Service &amp; RMA Ticket">
+                <header>
+                    <button name="action_triage" string="Triage &amp; Check Warranty" type="object" states="new" class="oe_highlight"/>
+                    <button name="action_assign" string="Assign Technician" type="object" states="triaged" class="oe_highlight"/>
+                    <button name="action_start_work" string="Start Diagnosis / Repair" type="object" states="assigned" class="btn-primary"/>
+                    <button name="action_wait_part" string="Waiting for Part / RMA" type="object" states="in_progress"/>
+                    <button name="action_resolve" string="Mark Resolved" type="object" states="in_progress,waiting_part" class="oe_highlight"/>
+                    <button name="action_close" string="Close Ticket" type="object" states="resolved" class="btn-success"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,triaged,assigned,in_progress,resolved,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <span class="o_form_label">Ticket Reference</span>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Customer &amp; Asset Information">
+                            <field name="customer_id" options="{'no_create': True}"/>
+                            <field name="job_id" domain="[('customer_id', '=', customer_id)]"/>
+                            <field name="serial_id"/>
+                            <field name="warranty_id" readonly="1"/>
+                            <field name="is_under_warranty" widget="badge" decoration-success="is_under_warranty == True" decoration-danger="is_under_warranty == False"/>
+                        </group>
+                        <group string="Issue Classification">
+                            <field name="fault_code"/>
+                            <field name="technician_id"/>
+                            <field name="replacement_serial_id" attrs="{'invisible': [('fault_code', 'not in', ('inverter_tripping', 'panel_degradation', 'other'))]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Issue Description" name="description">
+                            <group>
+                                <field name="issue_description" placeholder="Describe symptoms, customer comments, alarm codes..."/>
+                            </group>
+                        </page>
+                        <page string="Billing &amp; Warranty Calculation" name="billing">
+                            <div class="alert alert-info" role="alert" attrs="{'invisible': [('is_under_warranty', '=', False)]}">
+                                <strong>Active Warranty Coverage:</strong> All genuine defect repairs and manufacturer replacement components are provided free of cost (₹0.00) under SunPower warranty terms.
+                            </div>
+                            <div class="alert alert-warning" role="alert" attrs="{'invisible': [('is_under_warranty', '=', True)]}">
+                                <strong>Warranty Expired / Billable Service:</strong> Component replacement and field labour will be charged to the customer.
+                            </div>
+                            <group>
+                                <group string="Cost Breakdown">
+                                    <field name="repair_cost"/>
+                                    <field name="labour_cost"/>
+                                </group>
+                                <group string="Customer Payable">
+                                    <field name="total_charge" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Resolution Notes" name="resolution">
+                            <group>
+                                <field name="resolution_notes" placeholder="Actions taken, voltage measurements, test logs, customer sign-off..."/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_sunpower_service_ticket_search" model="ir.ui.view">
+        <field name="name">sunpower.service.ticket.search</field>
+        <field name="model">sunpower.service.ticket</field>
+        <field name="arch" type="xml">
+            <search string="Search Service Tickets">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="serial_id"/>
+                <field name="fault_code"/>
+                <filter string="Under Warranty" name="under_warranty" domain="[('is_under_warranty', '=', True)]"/>
+                <filter string="Out of Warranty (Billable)" name="out_of_warranty" domain="[('is_under_warranty', '=', False)]"/>
+                <filter string="Open Tickets" name="open_tickets" domain="[('state', 'not in', ('resolved', 'closed'))]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Fault Code" name="group_fault" context="{'group_by': 'fault_code'}"/>
+                    <filter string="Customer" name="group_customer" context="{'group_by': 'customer_id'}"/>
+                    <filter string="Technician" name="group_tech" context="{'group_by': 'technician_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sunpower_service_ticket" model="ir.actions.act_window">
+        <field name="name">Service &amp; RMA Tickets</field>
+        <field name="res_model">sunpower.service.ticket</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="view_sunpower_service_ticket_search"/>
+        <field name="context">{'search_default_open_tickets': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new service or warranty support ticket.
+            </p>
+        </field>
+    </record>
+</odoo>

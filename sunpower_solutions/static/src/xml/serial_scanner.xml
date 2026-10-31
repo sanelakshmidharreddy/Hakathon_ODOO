@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sunpower_solutions.SerialScannerWidget" owl="1">
+        <div class="sunpower_serial_scanner_container p-3 bg-light rounded border">
+            <div class="d-flex align-items-center mb-2">
+                <i class="fa fa-barcode fa-2x text-primary me-2"/>
+                <div>
+                    <h6 class="mb-0 font-weight-bold text-dark">High-Speed Serial &amp; QR Barcode Scanner</h6>
+                    <small class="text-muted">Type or scan hardware serial using USB scanner / camera</small>
+                </div>
+            </div>
+
+            <div class="input-group mb-2">
+                <input type="text"
+                       class="form-control form-control-lg font-monospace font-weight-bold"
+                       placeholder="Scan or enter serial (e.g. PAN12345, INV54321)..."
+                       t-model="state.scannedInput"
+                       t-on-keydown="onBarcodeEnter"
+                       t-att-disabled="state.isScanning"/>
+                <button class="btn btn-primary px-4"
+                        type="button"
+                        t-on-click="() => this.processSerial(this.state.scannedInput)"
+                        t-att-disabled="state.isScanning || !state.scannedInput">
+                    <i t-if="state.isScanning" class="fa fa-spinner fa-spin me-1"/>
+                    <i t-else="" class="fa fa-check me-1"/>
+                    Verify &amp; Link
+                </button>
+            </div>
+
+            <div t-if="state.hasError" class="alert alert-danger py-2 px-3 mb-2 d-flex justify-content-between align-items-center">
+                <span><i class="fa fa-exclamation-triangle me-2"/> <t t-esc="state.errorMessage"/></span>
+                <button type="button" class="btn-close btn-sm" t-on-click="clearError"/>
+            </div>
+
+            <div class="d-flex justify-content-between text-muted small mt-2">
+                <span>Session Verified Scans: <strong class="text-success"><t t-esc="state.scannedCount"/></strong></span>
+                <span t-if="state.lastScanned">Last Scanned: <strong class="text-primary font-monospace"><t t-esc="state.lastScanned"/></strong></span>
+            </div>
+        </div>
+    </t>
+</templates>

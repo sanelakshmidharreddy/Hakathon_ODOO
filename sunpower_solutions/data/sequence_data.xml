@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Lead Sequence -->
+    <record id="seq_sunpower_lead" model="ir.sequence">
+        <field name="name">SunPower Lead</field>
+        <field name="code">sunpower.lead</field>
+        <field name="prefix">LEAD-%(year)s-</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- Survey Sequence -->
+    <record id="seq_sunpower_survey" model="ir.sequence">
+        <field name="name">SunPower Survey</field>
+        <field name="code">sunpower.survey</field>
+        <field name="prefix">SRV-%(year)s-</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- Quote Sequence -->
+    <record id="seq_sunpower_quote" model="ir.sequence">
+        <field name="name">SunPower Quote</field>
+        <field name="code">sunpower.quote</field>
+        <field name="prefix">QUO-%(year)s-</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- Sales Order Sequence -->
+    <record id="seq_sunpower_order" model="ir.sequence">
+        <field name="name">SunPower Order</field>
+        <field name="code">sunpower.order</field>
+        <field name="prefix">ORD-%(year)s-</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- Dispatch Manifest Sequence -->
+    <record id="seq_sunpower_dispatch" model="ir.sequence">
+        <field name="name">SunPower Dispatch</field>
+        <field name="code">sunpower.dispatch</field>
+        <field name="prefix">DSP-%(year)s-</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- Warranty Certificate Sequence -->
+    <record id="seq_sunpower_warranty" model="ir.sequence">
+        <field name="name">SunPower Warranty</field>
+        <field name="code">sunpower.warranty</field>
+        <field name="prefix">WAR-%(year)s-</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- Field Job Sequence -->
+    <record id="seq_sunpower_job" model="ir.sequence">
+        <field name="name">SunPower Job</field>
+        <field name="code">sunpower.job</field>
+        <field name="prefix">JOB-%(year)s-</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- Service Ticket Sequence -->
+    <record id="seq_sunpower_ticket" model="ir.sequence">
+        <field name="name">SunPower Service Ticket</field>
+        <field name="code">sunpower.service.ticket</field>
+        <field name="prefix">TKT-%(year)s-</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- Invoice Sequence -->
+    <record id="seq_sunpower_invoice" model="ir.sequence">
+        <field name="name">SunPower Tax Invoice</field>
+        <field name="code">sunpower.invoice</field>
+        <field name="prefix">INV-%(year)s-</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

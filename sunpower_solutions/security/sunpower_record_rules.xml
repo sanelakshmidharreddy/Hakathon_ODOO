@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Technician Job Record Rule -->
+    <record id="rule_sunpower_job_technician" model="ir.rule">
+        <field name="name">Technicians: Assigned Jobs Only</field>
+        <field name="model_id" ref="model_sunpower_job"/>
+        <field name="groups" eval="[(4, ref('group_sunpower_technician'))]"/>
+        <field name="domain_force">[
+            '|',
+            ('technician_ids', 'in', [user.id]),
+            ('lead_technician_id', '=', user.id)
+        ]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Technician Surveys Record Rule -->
+    <record id="rule_sunpower_survey_technician" model="ir.rule">
+        <field name="name">Technicians: Assigned Surveys Only</field>
+        <field name="model_id" ref="model_sunpower_survey"/>
+        <field name="groups" eval="[(4, ref('group_sunpower_technician'))]"/>
+        <field name="domain_force">[('technician_id', '=', user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Sales Rep Assigned Leads Rule -->
+    <record id="rule_sunpower_lead_sales_rep" model="ir.rule">
+        <field name="name">Sales Reps: Assigned Leads</field>
+        <field name="model_id" ref="model_sunpower_lead"/>
+        <field name="groups" eval="[(4, ref('group_sunpower_sales_user'))]"/>
+        <field name="domain_force">['|', ('assigned_salesperson_id', '=', user.id), ('assigned_salesperson_id', '=', False)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Director Global Override Rules -->
+    <record id="rule_sunpower_lead_director" model="ir.rule">
+        <field name="name">Director: All Leads</field>
+        <field name="model_id" ref="model_sunpower_lead"/>
+        <field name="groups" eval="[(4, ref('group_sunpower_director'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="rule_sunpower_job_director" model="ir.rule">
+        <field name="name">Director: All Jobs</field>
+        <field name="model_id" ref="model_sunpower_job"/>
+        <field name="groups" eval="[(4, ref('group_sunpower_director'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>

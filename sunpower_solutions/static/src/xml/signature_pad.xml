@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sunpower_solutions.SignaturePadWidget" owl="1">
+        <div class="sunpower_signature_pad_wrapper p-3 border rounded bg-white shadow-sm">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="font-weight-bold text-dark small">
+                    <i class="fa fa-pencil text-primary me-1"/> Customer Digital Sign-Off Canvas
+                </span>
+                <button type="button"
+                        class="btn btn-outline-secondary btn-sm"
+                        t-on-click="clearSignature"
+                        t-att-disabled="!state.hasSignature">
+                    <i class="fa fa-eraser me-1"/> Clear
+                </button>
+            </div>
+            <div class="border rounded bg-light overflow-hidden" style="touch-action: none;">
+                <canvas t-ref="signatureCanvas"
+                        width="480"
+                        height="180"
+                        style="width: 100%; height: 180px; display: block; cursor: crosshair; background: #ffffff;"
+                        t-on-mousedown="startDrawing"
+                        t-on-mousemove="draw"
+                        t-on-mouseup="stopDrawing"
+                        t-on-mouseleave="stopDrawing"
+                        t-on-touchstart="startDrawing"
+                        t-on-touchmove="draw"
+                        t-on-touchend="stopDrawing"/>
+            </div>
+            <div class="text-muted small mt-2 d-flex justify-content-between">
+                <span>Draw signature inside the box using finger or mouse</span>
+                <span t-if="state.hasSignature" class="text-success font-weight-bold">✓ Captured</span>
+            </div>
+        </div>
+    </t>
+</templates>

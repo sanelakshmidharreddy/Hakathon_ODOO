@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sunpower_survey_tree" model="ir.ui.view">
+        <field name="name">sunpower.survey.tree</field>
+        <field name="model">sunpower.survey</field>
+        <field name="arch" type="xml">
+            <tree string="Technical Site Surveys" sample="1">
+                <field name="name"/>
+                <field name="lead_id"/>
+                <field name="customer_id"/>
+                <field name="technician_id"/>
+                <field name="roof_direction"/>
+                <field name="roof_tilt" string="Tilt (°)"/>
+                <field name="shadow_free_area" string="Area (Sq Ft)"/>
+                <field name="recommended_capacity" string="Rec. kW"/>
+                <field name="grid_connection"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'completed'"
+                       decoration-success="state == 'approved'"
+                       decoration-danger="state == 'rejected'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sunpower_survey_form" model="ir.ui.view">
+        <field name="name">sunpower.survey.form</field>
+        <field name="model">sunpower.survey</field>
+        <field name="arch" type="xml">
+            <form string="Rooftop Site Survey">
+                <header>
+                    <button name="action_complete_survey" string="Complete Survey" type="object" class="btn-primary"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_approve" string="Approve Survey &amp; Enable Quote" type="object" class="btn-success"
+                            attrs="{'invisible': [('state', '!=', 'completed')]}"/>
+                    <button name="action_reject" string="Reject" type="object" class="btn-danger"
+                            attrs="{'invisible': [('state', '!=', 'completed')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,completed,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Survey Reference"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+
+                    <group>
+                        <group string="Project &amp; Technician">
+                            <field name="lead_id"/>
+                            <field name="customer_id"/>
+                            <field name="technician_id"/>
+                        </group>
+                        <group string="Roof Geometry &amp; Grid Phase">
+                            <field name="roof_direction"/>
+                            <field name="roof_tilt"/>
+                            <field name="shadow_free_area"/>
+                            <field name="roof_type"/>
+                            <field name="grid_connection"/>
+                            <field name="cable_distance"/>
+                            <field name="recommended_capacity"/>
+                        </group>
+                    </group>
+
+                    <group string="Site Geotagging &amp; Notes">
+                        <group>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                        </group>
+                        <group>
+                            <field name="notes" placeholder="Observations regarding trees, chimney shadows, water tanks..."/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Survey Photos &amp; Roof Evidence" name="photos">
+                            <field name="photo_ids">
+                                <kanban>
+                                    <field name="id"/>
+                                    <field name="image"/>
+                                    <field name="photo_type"/>
+                                    <field name="caption"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_global_click p-2 border rounded bg-white text-center">
+                                                <field name="image" widget="image" class="oe_avatar" options="{'size': [140, 140]}"/>
+                                                <div class="small font-weight-bold mt-1"><field name="photo_type"/></div>
+                                                <div class="text-muted small"><field name="caption"/></div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                                <form>
+                                    <group>
+                                        <field name="photo_type"/>
+                                        <field name="caption"/>
+                                        <field name="image" widget="image"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_sunpower_survey" model="ir.actions.act_window">
+        <field name="name">Site Surveys</field>
+        <field name="res_model">sunpower.survey</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

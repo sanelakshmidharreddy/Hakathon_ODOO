@@ -1,0 +1,35 @@
+/* SunPower Solutions Public & Portal Landing Styles */
+.sunpower_landing_hero {
+    background: linear-gradient(135deg, #003e6b 0%, #005a9c 100%);
+    color: #ffffff;
+    padding: 4rem 2rem;
+    text-align: center;
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-size: 1.125rem;
+        color: #e2e8f0;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+    }
+
+    .cta_button {
+        background: #f59e0b;
+        color: #0f172a;
+        font-weight: 700;
+        padding: 0.875rem 2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-block;
+        transition: transform 0.2s, background 0.2s;
+        &:hover {
+            background: #d97706;
+            transform: scale(1.02);
+        }
+    }
+}

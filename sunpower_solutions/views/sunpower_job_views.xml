@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Calendar View -->
+    <record id="view_sunpower_job_calendar" model="ir.ui.view">
+        <field name="name">sunpower.job.calendar</field>
+        <field name="model">sunpower.job</field>
+        <field name="arch" type="xml">
+            <calendar string="Installation Scheduling" date_start="scheduled_date" color="lead_technician_id" mode="month">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="installed_capacity"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_sunpower_job_tree" model="ir.ui.view">
+        <field name="name">sunpower.job.tree</field>
+        <field name="model">sunpower.job</field>
+        <field name="arch" type="xml">
+            <tree string="Field Installation Jobs" sample="1">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="order_id"/>
+                <field name="scheduled_date"/>
+                <field name="lead_technician_id"/>
+                <field name="installed_capacity" string="Capacity (kW)"/>
+                <field name="test_result"/>
+                <field name="generation_meter_reading" string="Meter (kWh)"/>
+                <field name="photo_count" string="Photos"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'assigned'"
+                       decoration-warning="state == 'in_progress'"
+                       decoration-success="state in ('completed', 'verified')"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_sunpower_job_kanban" model="ir.ui.view">
+        <field name="name">sunpower.job.kanban</field>
+        <field name="model">sunpower.job</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column" sample="1">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="scheduled_date"/>
+                <field name="lead_technician_id"/>
+                <field name="installed_capacity"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record p-3 border rounded shadow-sm bg-white">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong class="text-primary"><field name="name"/></strong>
+                                <span class="badge text-bg-info"><field name="installed_capacity"/> kW</span>
+                            </div>
+                            <div class="font-weight-bold"><field name="customer_id"/></div>
+                            <div class="text-muted small mt-1">
+                                <i class="fa fa-calendar mr-1"/> <field name="scheduled_date"/><br/>
+                                <i class="fa fa-user mr-1"/> <field name="lead_technician_id"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sunpower_job_form" model="ir.ui.view">
+        <field name="name">sunpower.job.form</field>
+        <field name="model">sunpower.job</field>
+        <field name="arch" type="xml">
+            <form string="Field Installation Job &amp; Handover">
+                <header>
+                    <button name="action_start_work" string="Start Field Installation" type="object" class="btn-primary"
+                            attrs="{'invisible': [('state', '!=', 'assigned')]}"/>
+                    <button name="action_complete_work" string="Complete Installation &amp; Sign-off" type="object" class="btn-success"
+                            attrs="{'invisible': [('state', '!=', 'in_progress')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="assigned,in_progress,completed,verified"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Job Reference"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+
+                    <group>
+                        <group string="Installation Crew &amp; Schedule">
+                            <field name="customer_id"/>
+                            <field name="order_id"/>
+                            <field name="lead_technician_id"/>
+                            <field name="technician_ids" widget="many2many_tags"/>
+                            <field name="scheduled_date"/>
+                        </group>
+                        <group string="Commissioning Telemetry &amp; Tests">
+                            <field name="installed_capacity"/>
+                            <field name="test_result"/>
+                            <field name="generation_meter_reading"/>
+                            <field name="start_time" readonly="1"/>
+                            <field name="end_time" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Geotagged Site Photos (Evidence)" name="photos">
+                            <field name="photo_ids">
+                                <kanban>
+                                    <field name="id"/>
+                                    <field name="image"/>
+                                    <field name="photo_type"/>
+                                    <field name="caption"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_global_click p-2 border rounded bg-white text-center">
+                                                <field name="image" widget="image" class="oe_avatar" options="{'size': [130, 130]}"/>
+                                                <div class="font-weight-bold small mt-1"><field name="photo_type"/></div>
+                                                <div class="text-muted small"><field name="caption"/></div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                                <form>
+                                    <group>
+                                        <field name="photo_type"/>
+                                        <field name="caption"/>
+                                        <field name="latitude"/>
+                                        <field name="longitude"/>
+                                        <field name="image" widget="image"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Customer Digital Signature" name="signature">
+                            <group>
+                                <field name="signature_id"/>
+                            </group>
+                        </page>
+                        <page string="Technician Commissioning Notes" name="notes">
+                            <field name="completion_notes" placeholder="Earthing test resistance values, inverter serial confirmation, net-metering status..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_sunpower_job" model="ir.actions.act_window">
+        <field name="name">Installation Jobs</field>
+        <field name="res_model">sunpower.job</field>
+        <field name="view_mode">tree,kanban,form,calendar</field>
+    </record>
+</odoo>

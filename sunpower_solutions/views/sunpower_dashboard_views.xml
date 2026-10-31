@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Executive Dashboard Client Action -->
+    <record id="action_sunpower_director_dashboard" model="ir.actions.client">
+        <field name="name">Director Executive Dashboard</field>
+        <field name="tag">sunpower_director_dashboard</field>
+        <field name="params" eval="{}"/>
+    </record>
+
+    <!-- Standard Form View for KPI Entity Fallback -->
+    <record id="view_sunpower_dashboard_kpi_form" model="ir.ui.view">
+        <field name="name">sunpower.dashboard.kpi.form</field>
+        <field name="model">sunpower.dashboard.kpi</field>
+        <field name="arch" type="xml">
+            <form string="Executive KPI Summary" create="false" edit="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                        <p class="text-muted">Calculated on: <field name="calculation_date"/></p>
+                    </div>
+                    <group>
+                        <group string="Financial Performance">
+                            <field name="total_revenue" widget="monetary"/>
+                            <field name="total_cost" widget="monetary"/>
+                            <field name="gross_profit" widget="monetary"/>
+                            <field name="average_margin_pct" widget="percentage"/>
+                        </group>
+                        <group string="Operations &amp; Field Execution">
+                            <field name="active_leads_count"/>
+                            <field name="lead_conversion_rate" widget="percentage"/>
+                            <field name="active_jobs_count"/>
+                            <field name="overdue_jobs_count"/>
+                        </group>
+                    </group>
+                    <group string="Customer Care &amp; Inventory">
+                        <group>
+                            <field name="open_tickets_count"/>
+                            <field name="warranties_expiring_soon"/>
+                        </group>
+                        <group>
+                            <field name="total_inventory_value" widget="monetary"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sunpower_dashboard_kpi_record" model="ir.actions.act_window">
+        <field name="name">Executive KPI Overview</field>
+        <field name="res_model">sunpower.dashboard.kpi</field>
+        <field name="view_mode">form</field>
+        <field name="res_id" ref="sunpower_solutions.default_dashboard_kpi"/>
+    </record>
+</odoo>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sunpower_solutions.SunPowerDirectorDashboard" owl="1">
+        <div class="o_sunpower_dashboard">
+            <div class="dashboard_header">
+                <div class="dashboard_title">
+                    <h1>SunPower Solutions &bull; Director Executive Cockpit</h1>
+                    <p>Native Odoo End-to-End Solar Business Intelligence &amp; Asset Integrity Metrics</p>
+                </div>
+                <button class="refresh_btn" t-on-click="loadKpis">
+                    <i class="fa fa-refresh me-1" t-att-class="{'fa-spin': state.loading}"/> Refresh Telemetry
+                </button>
+            </div>
+
+            <div class="kpi_grid">
+                <!-- Financials -->
+                <div class="kpi_card" role="button" t-on-click="openQuotes" style="cursor: pointer;">
+                    <div class="card_title">Total Revenue Confirmed</div>
+                    <div class="card_value text-primary"><t t-esc="formatCurrency(state.kpis.total_revenue)"/></div>
+                    <div class="card_subtext positive">Total Turnkey Commercial Order Volume</div>
+                </div>
+
+                <div class="kpi_card">
+                    <div class="card_title">Gross Profit &amp; Margin</div>
+                    <div class="card_value text-success"><t t-esc="formatCurrency(state.kpis.gross_profit)"/></div>
+                    <div class="card_subtext positive"><t t-esc="state.kpis.average_margin_pct"/>% Average Operating Margin</div>
+                </div>
+
+                <!-- Operations -->
+                <div class="kpi_card" role="button" t-on-click="openLeads" style="cursor: pointer;">
+                    <div class="card_title">Active Solar Leads</div>
+                    <div class="card_value text-warning"><t t-esc="state.kpis.active_leads_count"/></div>
+                    <div class="card_subtext"><t t-esc="state.kpis.lead_conversion_rate"/>% Pipeline Conversion Rate</div>
+                </div>
+
+                <div class="kpi_card" role="button" t-on-click="openJobs" style="cursor: pointer;">
+                    <div class="card_title">Field Installation Jobs</div>
+                    <div class="card_value text-info"><t t-esc="state.kpis.active_jobs_count"/></div>
+                    <div class="card_subtext text-danger" t-if="state.kpis.overdue_jobs_count > 0">
+                        ⚠️ <t t-esc="state.kpis.overdue_jobs_count"/> Overdue Target Milestone
+                    </div>
+                    <div class="card_subtext text-success" t-else="">
+                        ✓ All Crews on Schedule
+                    </div>
+                </div>
+
+                <!-- After Sales -->
+                <div class="kpi_card" role="button" t-on-click="openTickets" style="cursor: pointer;">
+                    <div class="card_title">Open Service &amp; RMA Tickets</div>
+                    <div class="card_value text-danger"><t t-esc="state.kpis.open_tickets_count"/></div>
+                    <div class="card_subtext">Active Customer Service Requests</div>
+                </div>
+
+                <div class="kpi_card" role="button" t-on-click="openWarranties" style="cursor: pointer;">
+                    <div class="card_title">Active 20-Year Warranties</div>
+                    <div class="card_value text-success">Verified</div>
+                    <div class="card_subtext">
+                        <t t-esc="state.kpis.warranties_expiring_soon"/> Expiring Soon (Next 90 Days)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategic Insights Grid -->
+            <div class="charts_grid">
+                <div class="chart_panel">
+                    <h3>Solar System Revenue Distribution (On-Grid vs Off-Grid)</h3>
+                    <div class="p-3 bg-light rounded">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span><strong>On-Grid Systems (DISCOM Synchronized)</strong></span>
+                            <span class="font-weight-bold text-primary"><t t-esc="formatCurrency(state.kpis.on_grid_revenue)"/></span>
+                        </div>
+                        <div class="progress mb-3" style="height: 10px;">
+                            <div class="progress-bar bg-primary"
+                                 t-attf-style="width: {{state.kpis.total_revenue ? (state.kpis.on_grid_revenue / state.kpis.total_revenue * 100) : 50}}%"/>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span><strong>Off-Grid / Hybrid Battery Storage</strong></span>
+                            <span class="font-weight-bold text-warning"><t t-esc="formatCurrency(state.kpis.off_grid_revenue)"/></span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-warning"
+                                 t-attf-style="width: {{state.kpis.total_revenue ? (state.kpis.off_grid_revenue / state.kpis.total_revenue * 100) : 50}}%"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart_panel">
+                    <h3>Warehouse Inventory &amp; Serial Asset Valuation</h3>
+                    <div class="p-3 bg-light rounded">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-muted">Total Real-Time Stock Value:</span>
+                            <span class="h4 mb-0 text-dark font-weight-bold"><t t-esc="formatCurrency(state.kpis.total_inventory_value)"/></span>
+                        </div>
+                        <div class="alert alert-info py-2 px-3 small mb-0">
+                            <strong>Serial Tracking Integrity:</strong> 100% of panels, inverters, and lithium battery banks are tagged with unique manufacturer serial numbers before dispatch.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

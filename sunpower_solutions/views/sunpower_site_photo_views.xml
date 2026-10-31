@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Photo Kanban View -->
+    <record id="view_sunpower_site_photo_kanban" model="ir.ui.view">
+        <field name="name">sunpower.site.photo.kanban</field>
+        <field name="model">sunpower.site.photo</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column" sample="1">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="image"/>
+                <field name="photo_type"/>
+                <field name="captured_at"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click p-3 border rounded shadow-sm bg-white text-center">
+                            <field name="image" widget="image" class="oe_avatar" options="{'size': [160, 160]}"/>
+                            <div class="font-weight-bold mt-2"><field name="name"/></div>
+                            <span class="badge text-bg-info"><field name="photo_type"/></span>
+                            <div class="text-muted small mt-1"><field name="captured_at"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_sunpower_site_photo_tree" model="ir.ui.view">
+        <field name="name">sunpower.site.photo.tree</field>
+        <field name="model">sunpower.site.photo</field>
+        <field name="arch" type="xml">
+            <tree string="Geotagged Site Photos">
+                <field name="name"/>
+                <field name="job_id"/>
+                <field name="survey_id"/>
+                <field name="photo_type"/>
+                <field name="captured_at"/>
+                <field name="latitude"/>
+                <field name="longitude"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sunpower_site_photo_form" model="ir.ui.view">
+        <field name="name">sunpower.site.photo.form</field>
+        <field name="model">sunpower.site.photo</field>
+        <field name="arch" type="xml">
+            <form string="Site Photo Record">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="job_id"/>
+                            <field name="survey_id"/>
+                            <field name="photo_type"/>
+                            <field name="caption"/>
+                        </group>
+                        <group>
+                            <field name="captured_at"/>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                        </group>
+                    </group>
+                    <group string="High-Resolution Photo Capture">
+                        <field name="image" widget="image" class="oe_avatar" options="{'size': [300, 300]}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_sunpower_site_photo" model="ir.actions.act_window">
+        <field name="name">Site Photo Gallery</field>
+        <field name="res_model">sunpower.site.photo</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sunpower_order_tree" model="ir.ui.view">
+        <field name="name">sunpower.order.tree</field>
+        <field name="model">sunpower.order</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Orders" sample="1">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="system_type"/>
+                <field name="capacity" string="Capacity (kW)"/>
+                <field name="total_amount" string="Total Value (₹)"/>
+                <field name="paid_amount" string="Paid (₹)"/>
+                <field name="balance_amount" string="Balance (₹)"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'confirmed'"
+                       decoration-warning="state in ('reserved', 'dispatched')"
+                       decoration-success="state in ('installed', 'completed')"
+                       decoration-danger="state == 'cancelled'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sunpower_order_form" model="ir.ui.view">
+        <field name="name">sunpower.order.form</field>
+        <field name="model">sunpower.order</field>
+        <field name="arch" type="xml">
+            <form string="Solar Sales Order">
+                <header>
+                    <button name="action_reserve_inventory" string="Reserve Warehouse Serials" type="object" class="btn-secondary"
+                            attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                    <button name="action_create_dispatch" string="Create Dispatch Manifest" type="object" class="btn-primary"
+                            attrs="{'invisible': [('state', 'not in', ('confirmed', 'reserved'))]}"/>
+                    <button name="action_create_job" string="Schedule Field Installation Job" type="object" class="btn-info"
+                            attrs="{'invisible': [('state', 'not in', ('dispatched', 'reserved', 'confirmed'))]}"/>
+                    <button name="action_create_invoice" string="Generate Tax Invoice" type="object" class="btn-success"
+                            attrs="{'invisible': [('state', '=', 'cancelled')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="confirmed,reserved,dispatched,installed,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_sunpower_dispatch)d" type="action" class="oe_stat_button" icon="fa-truck"
+                                context="{'search_default_order_id': active_id}">
+                            <field name="dispatch_count" widget="statinfo" string="Dispatches"/>
+                        </button>
+                        <button name="%(action_sunpower_job)d" type="action" class="oe_stat_button" icon="fa-wrench"
+                                context="{'search_default_order_id': active_id}">
+                            <field name="job_count" widget="statinfo" string="Install Jobs"/>
+                        </button>
+                        <button name="%(action_sunpower_invoice)d" type="action" class="oe_stat_button" icon="fa-pencil-square-o"
+                                context="{'search_default_order_id': active_id}">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                        <button name="%(action_sunpower_warranty)d" type="action" class="oe_stat_button" icon="fa-shield"
+                                context="{'search_default_order_id': active_id}">
+                            <field name="warranty_count" widget="statinfo" string="Warranties"/>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <label for="name" string="Order Reference"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+
+                    <group>
+                        <group string="Project Specifications">
+                            <field name="customer_id"/>
+                            <field name="quote_id"/>
+                            <field name="lead_id"/>
+                            <field name="system_type"/>
+                            <field name="capacity"/>
+                        </group>
+                        <group string="Financial Commercials">
+                            <field name="total_amount"/>
+                            <field name="advance_amount"/>
+                            <field name="paid_amount"/>
+                            <field name="balance_amount" class="text-danger font-weight-bold"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Reserved Hardware Serials" name="serials">
+                            <field name="reserved_serial_ids" readonly="1">
+                                <tree>
+                                    <field name="serial_number"/>
+                                    <field name="product_id"/>
+                                    <field name="category"/>
+                                    <field name="status" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Warehouse Dispatch Manifests" name="dispatches">
+                            <field name="dispatch_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="dispatch_date"/>
+                                    <field name="vehicle_number"/>
+                                    <field name="warehouse_user_id"/>
+                                    <field name="state" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Installation Field Work" name="jobs">
+                            <field name="job_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="scheduled_date"/>
+                                    <field name="lead_technician_id"/>
+                                    <field name="test_result"/>
+                                    <field name="state" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Digital Warranties" name="warranties">
+                            <field name="warranty_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="product_id"/>
+                                    <field name="serial_number_str"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="state" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Government Subsidy Scheme" name="subsidy">
+                            <field name="subsidy_ids">
+                                <tree editable="bottom">
+                                    <field name="scheme_name"/>
+                                    <field name="discom_name"/>
+                                    <field name="consumer_number"/>
+                                    <field name="subsidy_amount"/>
+                                    <field name="state" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_sunpower_order" model="ir.actions.act_window">
+        <field name="name">Sales Orders</field>
+        <field name="res_model">sunpower.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

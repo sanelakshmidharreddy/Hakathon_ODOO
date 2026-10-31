@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sunpower_product_tree" model="ir.ui.view">
+        <field name="name">sunpower.product.tree</field>
+        <field name="model">sunpower.product</field>
+        <field name="arch" type="xml">
+            <tree string="Solar Components &amp; Inventory" sample="1">
+                <field name="default_code"/>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="brand"/>
+                <field name="cost_price" widget="monetary"/>
+                <field name="sale_price" widget="monetary"/>
+                <field name="warranty_years" string="Warranty (Yrs)"/>
+                <field name="track_serial" widget="boolean_toggle"/>
+                <field name="stock_quantity" string="In Stock"/>
+                <field name="is_low_stock" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sunpower_product_form" model="ir.ui.view">
+        <field name="name">sunpower.product.form</field>
+        <field name="model">sunpower.product</field>
+        <field name="arch" type="xml">
+            <form string="Solar Hardware Component">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_serials" type="object" class="oe_stat_button" icon="fa-barcode"
+                                attrs="{'invisible': [('track_serial', '=', False)]}">
+                            <field name="serial_count" widget="statinfo" string="Serials"/>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <label for="name" string="Product / Component Name"/>
+                        <h1><field name="name" placeholder="e.g. SunMax 400W Monocrystalline Panel"/></h1>
+                        <label for="default_code" string="Part Number / SKU"/>
+                        <h3><field name="default_code" placeholder="e.g. SP-PAN-400"/></h3>
+                    </div>
+
+                    <group>
+                        <group string="Classification &amp; Warranty">
+                            <field name="category"/>
+                            <field name="brand"/>
+                            <field name="model_name"/>
+                            <field name="warranty_years"/>
+                            <field name="track_serial"/>
+                        </group>
+                        <group string="Commercial Pricing &amp; Stock Control">
+                            <field name="cost_price"/>
+                            <field name="sale_price"/>
+                            <field name="stock_quantity"/>
+                            <field name="min_stock_level"/>
+                            <field name="unit_of_measure"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Technical Specifications &amp; Datasheet" name="specs">
+                            <field name="description" placeholder="Electrical rating, efficiency %, Voc, Isc, dimensions, weight..."/>
+                        </page>
+                        <page string="Barcoded Serials in Warehouse" name="serials" attrs="{'invisible': [('track_serial', '=', False)]}">
+                            <field name="serial_ids" readonly="1">
+                                <tree>
+                                    <field name="serial_number"/>
+                                    <field name="status" widget="badge"/>
+                                    <field name="customer_id"/>
+                                    <field name="installed_at"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_sunpower_product" model="ir.actions.act_window">
+        <field name="name">Products &amp; Components</field>
+        <field name="res_model">sunpower.product</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

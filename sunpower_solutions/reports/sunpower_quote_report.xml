@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_sunpower_quote" model="ir.actions.report">
+        <field name="name">Customer Solar Quotation</field>
+        <field name="model">sunpower.quote</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sunpower_solutions.report_sunpower_quote_document</field>
+        <field name="report_file">sunpower_solutions.report_sunpower_quote_document</field>
+        <field name="print_report_name">'Quotation - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_sunpower_quote"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_sunpower_quote_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="sunpower_solutions.sunpower_external_layout">
+                    <div class="page">
+                        <table style="width: 100%; margin-bottom: 25px;">
+                            <tr>
+                                <td style="width: 50%; vertical-align: top;">
+                                    <h4 style="color: #005a9c; margin: 0 0 8px;">PREPARED FOR:</h4>
+                                    <div style="font-size: 14px; font-weight: bold;"><t t-esc="doc.customer_id.name"/></div>
+                                    <div><t t-esc="doc.customer_id.street or ''"/></div>
+                                    <div><t t-esc="doc.customer_id.city or ''"/>, <t t-esc="doc.customer_id.state or ''"/></div>
+                                    <div>Phone: <t t-esc="doc.customer_id.phone or ''"/></div>
+                                    <div>Email: <t t-esc="doc.customer_id.email or ''"/></div>
+                                </td>
+                                <td style="width: 50%; vertical-align: top; text-align: right;">
+                                    <h3 style="color: #111827; margin: 0;">SOLAR PROPOSAL</h3>
+                                    <div style="font-size: 13px; color: #4b5563; margin-top: 4px;">Quote #: <strong><t t-esc="doc.name"/></strong></div>
+                                    <div>Date: <t t-esc="doc.create_date.strftime('%d-%b-%Y') if doc.create_date else ''"/></div>
+                                    <div>Validity: <t t-esc="doc.validity_date or '30 Days'"/></div>
+                                    <div>System Architecture: <strong style="color: #005a9c; text-transform: uppercase;"><t t-esc="doc.system_type.replace('_', ' ')"/></strong></div>
+                                    <div>Installed Capacity: <strong style="color: #f59e0b;"><t t-esc="doc.capacity"/> kWp</strong></div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h4 style="background: #f3f4f6; padding: 6px 10px; border-left: 4px solid #005a9c; margin-bottom: 10px;">ENGINEERED BILL OF MATERIALS (BOM)</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                            <thead>
+                                <tr style="background: #005a9c; color: white; text-align: left; font-size: 11px;">
+                                    <th style="padding: 8px;">#</th>
+                                    <th style="padding: 8px;">Hardware / Engineering Component</th>
+                                    <th style="padding: 8px; text-align: center;">Category</th>
+                                    <th style="padding: 8px; text-align: right;">Qty</th>
+                                    <th style="padding: 8px; text-align: right;">Unit Rate (₹)</th>
+                                    <th style="padding: 8px; text-align: right;">Total Amount (₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="idx" t-value="1"/>
+                                <t t-foreach="doc.quote_line_ids" t-as="line">
+                                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                                        <td style="padding: 7px 8px;"><t t-esc="idx"/></td>
+                                        <td style="padding: 7px 8px;">
+                                            <strong><t t-esc="line.product_id.name"/></strong>
+                                            <div style="font-size: 10px; color: #6b7280;" t-if="line.product_id.warranty_years">
+                                                Manufacturer Warranty: <t t-esc="line.product_id.warranty_years"/> Years
+                                            </div>
+                                        </td>
+                                        <td style="padding: 7px 8px; text-align: center; text-transform: capitalize;">
+                                            <t t-esc="line.product_id.product_type.replace('_', ' ')"/>
+                                        </td>
+                                        <td style="padding: 7px 8px; text-align: right;"><t t-esc="int(line.quantity)"/></td>
+                                        <td style="padding: 7px 8px; text-align: right;"><t t-esc="'{:,.2f}'.format(line.unit_price)"/></td>
+                                        <td style="padding: 7px 8px; text-align: right; font-weight: bold;"><t t-esc="'{:,.2f}'.format(line.subtotal)"/></td>
+                                    </tr>
+                                    <t t-set="idx" t-value="idx + 1"/>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <!-- Totals Section -->
+                        <table style="width: 100%; margin-top: 10px;">
+                            <tr>
+                                <td style="width: 55%; vertical-align: top; font-size: 11px; color: #4b5563;">
+                                    <div style="border: 1px solid #e5e7eb; padding: 10px; border-radius: 4px; background: #fafafa;">
+                                        <strong>Scope of Delivery &amp; Standards:</strong>
+                                        <ul style="margin: 4px 0 0; padding-left: 18px;">
+                                            <li>Tier 1 Mono-PERC solar panels with 20-year output degradation warranty</li>
+                                            <li>Pure sine-wave grid-tied/hybrid inverter with IP65 ingress protection</li>
+                                            <li>Hot-dip galvanized rooftop mounting structure designed for 150 km/h wind load</li>
+                                            <li>Complete AC/DC distribution boxes, SPD Type II surge arrestors, copper earthing</li>
+                                            <li>Net-metering DISCOM documentation &amp; PM Surya Ghar subsidy coordination</li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td style="width: 45%; vertical-align: top;">
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tr>
+                                            <td style="padding: 4px 8px; text-align: right; color: #4b5563;">Untaxed Subtotal:</td>
+                                            <td style="padding: 4px 8px; text-align: right; font-weight: bold; width: 120px;">₹ <t t-esc="'{:,.2f}'.format(doc.amount_untaxed)"/></td>
+                                        </tr>
+                                        <tr t-if="doc.discount_amount">
+                                            <td style="padding: 4px 8px; text-align: right; color: #16a34a;">Commercial Discount:</td>
+                                            <td style="padding: 4px 8px; text-align: right; font-weight: bold; color: #16a34a;">- ₹ <t t-esc="'{:,.2f}'.format(doc.discount_amount)"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 4px 8px; text-align: right; color: #4b5563;">GST (13.8% Composite):</td>
+                                            <td style="padding: 4px 8px; text-align: right; font-weight: bold;">₹ <t t-esc="'{:,.2f}'.format(doc.tax_amount)"/></td>
+                                        </tr>
+                                        <tr style="border-top: 2px solid #005a9c; border-bottom: 2px solid #005a9c; background: #eff6ff;">
+                                            <td style="padding: 8px; text-align: right; font-weight: bold; font-size: 14px; color: #005a9c;">Total Turnkey Price:</td>
+                                            <td style="padding: 8px; text-align: right; font-weight: bold; font-size: 14px; color: #005a9c;">₹ <t t-esc="'{:,.2f}'.format(doc.total_amount)"/></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table style="width: 100%; margin-top: 40px;">
+                            <tr>
+                                <td style="width: 50%; text-align: center;">
+                                    <div style="border-top: 1px dashed #9ca3af; width: 200px; margin: 0 auto; padding-top: 5px;">
+                                        Customer Acceptance Signature
+                                    </div>
+                                </td>
+                                <td style="width: 50%; text-align: center;">
+                                    <div style="border-top: 1px dashed #9ca3af; width: 200px; margin: 0 auto; padding-top: 5px;">
+                                        Authorized Signatory, SunPower Solutions
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

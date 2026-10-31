@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sunpower_dispatch_wizard_form" model="ir.ui.view">
+        <field name="name">sunpower.dispatch.wizard.form</field>
+        <field name="model">sunpower.dispatch.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Barcode / QR Serial Scanner Verification">
+                <group>
+                    <field name="dispatch_id" readonly="1"/>
+                    <field name="scanned_barcode" placeholder="Scan or enter panel/inverter serial (e.g. PAN12345, INV54321)..."/>
+                    <field name="last_scan_message" readonly="1" widget="badge"/>
+                </group>
+                <footer>
+                    <button name="action_submit_scan" string="Verify &amp; Register Serial" type="object" class="btn-primary"/>
+                    <button string="Close Scanner" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sunpower_dispatch_wizard" model="ir.actions.act_window">
+        <field name="name">Serial Scanner Session</field>
+        <field name="res_model">sunpower.dispatch.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

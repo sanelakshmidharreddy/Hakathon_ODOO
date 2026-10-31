@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sunpower_solar_site_tree" model="ir.ui.view">
+        <field name="name">sunpower.solar.site.tree</field>
+        <field name="model">sunpower.solar.site</field>
+        <field name="arch" type="xml">
+            <tree string="Solar Sites &amp; Climatology Analytics">
+                <field name="customer_id"/>
+                <field name="latitude"/>
+                <field name="longitude"/>
+                <field name="ghi" string="GHI (kWh/m²/day)"/>
+                <field name="dni" string="DNI (kWh/m²/day)"/>
+                <field name="temperature" string="Avg Temp (°C)"/>
+                <field name="pvout" string="Specific Yield (kWh/kWp)"/>
+                <field name="solar_score" widget="progressbar"/>
+                <field name="last_sync_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sunpower_solar_site_form" model="ir.ui.view">
+        <field name="name">sunpower.solar.site.form</field>
+        <field name="model">sunpower.solar.site</field>
+        <field name="arch" type="xml">
+            <form string="Solar Site Irradiance &amp; Provenance">
+                <header>
+                    <button name="action_sync_nasa_data" string="Fetch NASA POWER Climatology" type="object" class="oe_highlight"/>
+                    <button name="action_calculate_solar_score" string="Compute Solar Potential Score" type="object" class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="customer_id" class="oe_edit_only"/>
+                        <h1><field name="customer_id" options="{'no_create': True}"/></h1>
+                        <h3>Lead: <field name="lead_id" readonly="1"/></h3>
+                    </div>
+                    <group>
+                        <group string="GPS Coordinates (WGS84)">
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                            <field name="last_sync_date" readonly="1"/>
+                        </group>
+                        <group string="Solar Assessment Metrics">
+                            <field name="solar_score" widget="progressbar"/>
+                            <field name="pvout" string="Specific Yield (kWh/kWp/yr)"/>
+                        </group>
+                    </group>
+                    <group string="NASA POWER Physical Radiation Parameters">
+                        <group>
+                            <field name="ghi" string="All-Sky Global Horizontal Irradiance (GHI, kWh/m²/day)"/>
+                            <field name="dni" string="Direct Normal Irradiance (DNI, kWh/m²/day)"/>
+                        </group>
+                        <group>
+                            <field name="temperature" string="Ambient Air Temperature @ 2m (°C)"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Monthly Generation Forecast" name="monthly_gen">
+                            <field name="expected_monthly_generation_ids">
+                                <tree string="Monthly Breakdown">
+                                    <field name="month_name"/>
+                                    <field name="ghi_daily" string="Daily GHI"/>
+                                    <field name="expected_kwh" string="Yield (kWh/kWp)" sum="Total Annual Yield"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Data Provenance &amp; Licensing" name="provenance">
+                            <div class="alert alert-info" role="alert">
+                                <strong>Public Data Transparency:</strong> All solar irradiance and meteorological data are retrieved from verified public scientific portals. No values are fabricated.
+                            </div>
+                            <field name="data_source_ids">
+                                <tree string="Verified Public Sources">
+                                    <field name="name"/>
+                                    <field name="portal_url" widget="url"/>
+                                    <field name="license"/>
+                                    <field name="coverage"/>
+                                    <field name="access_date"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sunpower_solar_site" model="ir.actions.act_window">
+        <field name="name">Solar Sites &amp; Climatology</field>
+        <field name="res_model">sunpower.solar.site</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Manage solar site physical irradiance assessments and NASA POWER integration.
+            </p>
+        </field>
+    </record>
+</odoo>

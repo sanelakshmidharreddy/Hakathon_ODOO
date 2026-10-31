@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sunpower_subsidy_tree" model="ir.ui.view">
+        <field name="name">sunpower.subsidy.tree</field>
+        <field name="model">sunpower.subsidy</field>
+        <field name="arch" type="xml">
+            <tree string="Government Solar Subsidies" decoration-info="state == 'applied'" decoration-success="state in ('approved', 'received')" decoration-danger="state == 'rejected'">
+                <field name="scheme_name"/>
+                <field name="customer_id"/>
+                <field name="order_id"/>
+                <field name="applied_date"/>
+                <field name="approval_date"/>
+                <field name="subsidy_amount" widget="monetary" sum="Total Subsidies"/>
+                <field name="state" widget="badge" decoration-info="state == 'applied'" decoration-success="state in ('approved', 'received')" decoration-danger="state == 'rejected'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sunpower_subsidy_form" model="ir.ui.view">
+        <field name="name">sunpower.subsidy.form</field>
+        <field name="model">sunpower.subsidy</field>
+        <field name="arch" type="xml">
+            <form string="Solar Subsidy Claim (PM Surya Ghar / MNRE)">
+                <header>
+                    <button name="action_apply" string="Mark as Applied" type="object" states="not_applied" class="oe_highlight"/>
+                    <button name="action_approve" string="Subsidy Approved" type="object" states="applied" class="btn-success"/>
+                    <button name="action_receive" string="Disbursement Received in Bank" type="object" states="approved" class="oe_highlight"/>
+                    <button name="action_reject" string="Reject" type="object" states="applied" class="btn-danger"/>
+                    <field name="state" widget="statusbar" statusbar_visible="not_applied,applied,approved,received"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="scheme_name" class="oe_edit_only"/>
+                        <h1><field name="scheme_name" placeholder="e.g. PM Surya Ghar Muft Bijli Yojana / MNRE Rooftop Phase II"/></h1>
+                    </div>
+                    <group>
+                        <group string="Beneficiary Information">
+                            <field name="customer_id" options="{'no_create': True}"/>
+                            <field name="order_id" domain="[('customer_id', '=', customer_id)]"/>
+                        </group>
+                        <group string="Subsidy Financials &amp; Timeline">
+                            <field name="subsidy_amount" widget="monetary"/>
+                            <field name="applied_date"/>
+                            <field name="approval_date" attrs="{'invisible': [('state', 'in', ('not_applied', 'applied'))]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="National Portal Verification" name="verification">
+                            <div class="alert alert-info">
+                                <strong>Disbursement Guideline:</strong> Subsidies under the PM Surya Ghar scheme are directly credited to the consumer's Aadhaar-linked bank account following DISCOM net meter commissioning and inspection certificate sign-off.
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_sunpower_subsidy_search" model="ir.ui.view">
+        <field name="name">sunpower.subsidy.search</field>
+        <field name="model">sunpower.subsidy</field>
+        <field name="arch" type="xml">
+            <search string="Search Subsidies">
+                <field name="scheme_name"/>
+                <field name="customer_id"/>
+                <field name="order_id"/>
+                <filter string="Pending Approval" name="applied" domain="[('state', '=', 'applied')]"/>
+                <filter string="Approved" name="approved" domain="[('state', '=', 'approved')]"/>
+                <filter string="Received" name="received" domain="[('state', '=', 'received')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Scheme" name="group_scheme" context="{'group_by': 'scheme_name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sunpower_subsidy" model="ir.actions.act_window">
+        <field name="name">Government Subsidies</field>
+        <field name="res_model">sunpower.subsidy</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_sunpower_subsidy_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Track central and state government rooftop solar subsidies.
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sunpower_solutions.PhotoGalleryWidget" owl="1">
+        <div class="sunpower_photo_gallery row g-3">
+            <t t-if="photos.length === 0">
+                <div class="col-12 text-center text-muted py-4 border rounded bg-light">
+                    <i class="fa fa-camera fa-2x mb-2 text-secondary"/>
+                    <p class="mb-0">No field installation photos captured yet.</p>
+                </div>
+            </t>
+            <t t-foreach="photos" t-as="photo" t-key="photo.id">
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm border overflow-hidden">
+                        <div class="position-relative" style="height: 140px; background: #e2e8f0;">
+                            <img t-if="photo.data.image"
+                                 t-attf-src="data:image/png;base64,{{photo.data.image}}"
+                                 class="card-img-top w-100 h-100"
+                                 style="object-fit: cover;"
+                                 alt="Site Installation Photo"/>
+                            <span class="position-absolute top-0 end-0 m-2 badge bg-primary text-uppercase" style="font-size: 0.65rem;">
+                                <t t-esc="photo.data.photo_type"/>
+                            </span>
+                        </div>
+                        <div class="card-body p-2">
+                            <div class="small font-weight-bold text-truncate"><t t-esc="photo.data.image_filename or 'Photo'"/></div>
+                            <div class="text-muted" style="font-size: 0.7rem;">
+                                <i class="fa fa-map-marker text-danger"/> <t t-esc="photo.data.latitude?.toFixed(4)"/>, <t t-esc="photo.data.longitude?.toFixed(4)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

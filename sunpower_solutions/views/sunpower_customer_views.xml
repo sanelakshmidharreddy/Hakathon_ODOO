@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Customer List View -->
+    <record id="view_sunpower_customer_tree" model="ir.ui.view">
+        <field name="name">sunpower.customer.tree</field>
+        <field name="model">sunpower.customer</field>
+        <field name="arch" type="xml">
+            <tree string="Solar Customers" sample="1">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="city"/>
+                <field name="state_name"/>
+                <field name="customer_type"/>
+                <field name="lead_count" string="Leads"/>
+                <field name="order_count" string="Orders"/>
+                <field name="job_count" string="Jobs"/>
+                <field name="warranty_count" string="Active Warranties"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Customer Form View -->
+    <record id="view_sunpower_customer_form" model="ir.ui.view">
+        <field name="name">sunpower.customer.form</field>
+        <field name="model">sunpower.customer</field>
+        <field name="arch" type="xml">
+            <form string="Solar Customer Record">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_leads" type="object" class="oe_stat_button" icon="fa-users">
+                            <field name="lead_count" widget="statinfo" string="Leads"/>
+                        </button>
+                        <button name="action_view_orders" type="object" class="oe_stat_button" icon="fa-shopping-cart">
+                            <field name="order_count" widget="statinfo" string="Orders"/>
+                        </button>
+                        <button name="action_view_jobs" type="object" class="oe_stat_button" icon="fa-wrench">
+                            <field name="job_count" widget="statinfo" string="Jobs"/>
+                        </button>
+                        <button name="action_view_warranties" type="object" class="oe_stat_button" icon="fa-shield">
+                            <field name="warranty_count" widget="statinfo" string="Warranties"/>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <label for="name" string="Customer / Enterprise Name"/>
+                        <h1><field name="name" placeholder="e.g. Alice Singh / Apex Foundry"/></h1>
+                    </div>
+
+                    <group>
+                        <group string="Contact Coordinates">
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="customer_type"/>
+                        </group>
+                        <group string="Site Location (OSM Geocoded)">
+                            <field name="street" placeholder="Building, Street, Landmark..."/>
+                            <field name="city"/>
+                            <field name="state_name"/>
+                            <field name="zip"/>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="CRM Enquiries" name="leads">
+                            <field name="lead_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="source"/>
+                                    <field name="system_type"/>
+                                    <field name="requested_capacity"/>
+                                    <field name="solar_score"/>
+                                    <field name="status" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Sales Orders" name="orders">
+                            <field name="order_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="system_type"/>
+                                    <field name="capacity"/>
+                                    <field name="total_amount"/>
+                                    <field name="paid_amount"/>
+                                    <field name="state" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Active Warranties" name="warranties">
+                            <field name="warranty_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="product_id"/>
+                                    <field name="serial_number_str"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="state" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Service Tickets" name="tickets">
+                            <field name="ticket_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="fault_code"/>
+                                    <field name="is_under_warranty"/>
+                                    <field name="total_charge"/>
+                                    <field name="state" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_sunpower_customer_search" model="ir.ui.view">
+        <field name="name">sunpower.customer.search</field>
+        <field name="model">sunpower.customer</field>
+        <field name="arch" type="xml">
+            <search string="Search Customers">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="city"/>
+                <filter name="residential" string="Residential" domain="[('customer_type', '=', 'home')]"/>
+                <filter name="factory" string="Factory / Commercial" domain="[('customer_type', '=', 'small_factory')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_city" string="City" context="{'group_by': 'city'}"/>
+                    <filter name="group_type" string="Customer Type" context="{'group_by': 'customer_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_sunpower_customer" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="res_model">sunpower.customer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_sunpower_customer_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Register your first solar customer!
+            </p>
+        </field>
+    </record>
+</odoo>

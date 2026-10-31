@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Quote Email Template -->
+    <record id="mail_template_sunpower_quote" model="mail.template">
+        <field name="name">SunPower: Solar Quotation</field>
+        <field name="model_id" ref="model_sunpower_quote"/>
+        <field name="subject">Your Rooftop Solar Quotation - {{ object.name }}</field>
+        <field name="email_from">{{ (object.customer_id.company_id.email or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.customer_id.id }}</field>
+        <field name="body_html" type="html">
+<div style="font-family: Arial, sans-serif; font-size: 13px; color: #333333;">
+    <p>Dear <strong t-out="object.customer_id.name">Customer</strong>,</p>
+    <p>Thank you for choosing <strong>SunPower Solutions</strong>. We are pleased to provide your customized rooftop solar quotation:</p>
+    <ul>
+        <li><strong>Quotation No:</strong> <span t-out="object.name"/></li>
+        <li><strong>System Type:</strong> <span t-out="object.system_type"/></li>
+        <li><strong>Proposed Capacity:</strong> <span t-out="object.capacity"/> kW</li>
+        <li><strong>Total Project Investment:</strong> ₹<span t-out="'{:,.2f}'.format(object.total_amount)"/></li>
+        <li><strong>Estimated 25-Yr Lifetime Generation:</strong> Approx <span t-out="'{:,.0f}'.format(object.capacity * 1428 * 25)"/> kWh</li>
+    </ul>
+    <p>This quotation is valid until <span t-out="object.validity_date"/>. Please review the attached PDF proposal and let us know if you have any questions.</p>
+    <p>Warm regards,<br/><strong>SunPower Solutions Engineering Team</strong></p>
+</div>
+        </field>
+    </record>
+
+    <!-- Warranty Certificate Email Template -->
+    <record id="mail_template_sunpower_warranty" model="mail.template">
+        <field name="name">SunPower: Digital Warranty Certificate</field>
+        <field name="model_id" ref="model_sunpower_warranty"/>
+        <field name="subject">Digital Warranty Issued for Serial {{ object.serial_number_str }}</field>
+        <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="body_html" type="html">
+<div style="font-family: Arial, sans-serif; font-size: 13px; color: #333333;">
+    <p>Dear <strong t-out="object.customer_id.name">Customer</strong>,</p>
+    <p>Congratulations on the commissioning of your rooftop solar plant. Your digital warranty ledger has been activated:</p>
+    <ul>
+        <li><strong>Certificate ID:</strong> <span t-out="object.name"/></li>
+        <li><strong>Product:</strong> <span t-out="object.product_id.name"/></li>
+        <li><strong>Hardware Barcode / Serial:</strong> <code><span t-out="object.serial_number_str"/></code></li>
+        <li><strong>Coverage Period:</strong> <span t-out="object.warranty_years"/> Years (<span t-out="object.start_date"/> to <span t-out="object.end_date"/>)</li>
+    </ul>
+    <p>Your equipment is covered under full manufacturer parts and on-site EPC replacement guarantees.</p>
+</div>
+        </field>
+    </record>
+</odoo>

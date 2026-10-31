@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sunpower_inventory_serial_tree" model="ir.ui.view">
+        <field name="name">sunpower.inventory.serial.tree</field>
+        <field name="model">sunpower.inventory.serial</field>
+        <field name="arch" type="xml">
+            <tree string="Serial Numbers &amp; QR Barcodes" sample="1">
+                <field name="serial_number"/>
+                <field name="product_id"/>
+                <field name="category"/>
+                <field name="status" widget="badge"
+                       decoration-success="status in ('in_stock', 'under_warranty')"
+                       decoration-warning="status in ('reserved', 'dispatched')"
+                       decoration-info="status == 'installed'"
+                       decoration-danger="status == 'replaced'"/>
+                <field name="customer_id"/>
+                <field name="reserved_order_id"/>
+                <field name="installed_at"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sunpower_inventory_serial_form" model="ir.ui.view">
+        <field name="name">sunpower.inventory.serial.form</field>
+        <field name="model">sunpower.inventory.serial</field>
+        <field name="arch" type="xml">
+            <form string="Hardware Serial Asset">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="serial_number" string="Serial Number / Barcode"/>
+                        <h1><field name="serial_number" placeholder="e.g. PAN12345, INV54321"/></h1>
+                    </div>
+
+                    <group>
+                        <group string="Equipment Classification">
+                            <field name="product_id"/>
+                            <field name="category"/>
+                            <field name="status"/>
+                            <field name="notes"/>
+                        </group>
+                        <group string="Lifecycle Deployment Links">
+                            <field name="customer_id"/>
+                            <field name="reserved_order_id"/>
+                            <field name="dispatch_id"/>
+                            <field name="current_job_id"/>
+                            <field name="warranty_id"/>
+                            <field name="installed_at"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_sunpower_inventory_serial_search" model="ir.ui.view">
+        <field name="name">sunpower.inventory.serial.search</field>
+        <field name="model">sunpower.inventory.serial</field>
+        <field name="arch" type="xml">
+            <search string="Search Serials">
+                <field name="serial_number"/>
+                <field name="product_id"/>
+                <field name="customer_id"/>
+                <filter name="in_stock" string="In Stock" domain="[('status', '=', 'in_stock')]"/>
+                <filter name="dispatched" string="Dispatched" domain="[('status', '=', 'dispatched')]"/>
+                <filter name="installed" string="Installed at Site" domain="[('status', '=', 'installed')]"/>
+                <filter name="panels" string="Solar Panels" domain="[('category', '=', 'panel')]"/>
+                <filter name="inverters" string="Inverters" domain="[('category', '=', 'inverter')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_product" string="Product Model" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                    <filter name="group_category" string="Category" context="{'group_by': 'category'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_sunpower_inventory_serial" model="ir.actions.act_window">
+        <field name="name">Inventory Serials &amp; Barcodes</field>
+        <field name="res_model">sunpower.inventory.serial</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_sunpower_inventory_serial_search"/>
+    </record>
+</odoo>

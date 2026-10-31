@@ -1,0 +1,66 @@
+/* SunPower Solutions Technician Mobile Field Experience */
+.o_sunpower_field_app {
+    padding: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+
+    .job_header_card {
+        background: #005a9c;
+        color: white;
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 12px rgba(0, 90, 156, 0.2);
+
+        h2 {
+            font-size: 1.25rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .customer_info {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+    }
+
+    .action_btn_large {
+        width: 100%;
+        padding: 0.875rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .camera_box {
+        border: 2px dashed #cbd5e1;
+        border-radius: 10px;
+        padding: 2rem 1rem;
+        text-align: center;
+        background: #f8fafc;
+        margin-bottom: 1.5rem;
+        cursor: pointer;
+        &:hover {
+            border-color: #005a9c;
+            background: #eff6ff;
+        }
+    }
+
+    .signature_canvas_wrapper {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        touch-action: none;
+        canvas {
+            width: 100%;
+            height: 180px;
+            display: block;
+        }
+    }
+}

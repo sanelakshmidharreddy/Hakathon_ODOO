@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sunpower_solutions.SolarScoreWidget" owl="1">
+        <div class="d-inline-flex align-items-center p-2 rounded bg-light border">
+            <div class="d-flex align-items-center justify-content-center rounded-circle text-white font-weight-bold me-2"
+                 t-attf-style="width: 44px; height: 44px; background: {{scoreColor}}; font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
+                <t t-esc="score"/>
+            </div>
+            <div>
+                <div class="font-weight-bold text-dark small"><t t-esc="tierLabel"/></div>
+                <div class="text-muted" style="font-size: 0.75rem;">NASA POWER Verified</div>
+            </div>
+        </div>
+    </t>
+</templates>

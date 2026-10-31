@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sunpower_solutions.WarrantyBadgeWidget" owl="1">
+        <span t-att-class="stateClass" style="font-size: 0.85rem; padding: 0.4em 0.8em; border-radius: 9999px;">
+            <t t-esc="label"/>
+        </span>
+    </t>
+</templates>

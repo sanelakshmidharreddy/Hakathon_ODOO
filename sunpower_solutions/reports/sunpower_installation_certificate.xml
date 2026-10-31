@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_sunpower_installation_cert" model="ir.actions.report">
+        <field name="name">Installation &amp; Commissioning Certificate</field>
+        <field name="model">sunpower.job</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sunpower_solutions.report_sunpower_installation_cert_document</field>
+        <field name="report_file">sunpower_solutions.report_sunpower_installation_cert_document</field>
+        <field name="print_report_name">'Commissioning Certificate - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_sunpower_job"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_sunpower_installation_cert_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="sunpower_solutions.sunpower_external_layout">
+                    <div class="page">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <h2 style="color: #005a9c; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">COMMISSIONING &amp; HANDOVER CERTIFICATE</h2>
+                            <p style="color: #6b7280; margin: 4px 0 0; font-size: 13px;">Solar Rooftop System Technical Commissioning Proof</p>
+                        </div>
+
+                        <table style="width: 100%; margin-bottom: 15px; border-collapse: collapse;">
+                            <tr style="background: #f8fafc;">
+                                <td style="padding: 8px; border: 1px solid #e2e8f0; width: 25%; font-weight: bold; color: #475569;">Job ID</td>
+                                <td style="padding: 8px; border: 1px solid #e2e8f0; width: 25%;"><t t-esc="doc.name"/></td>
+                                <td style="padding: 8px; border: 1px solid #e2e8f0; width: 25%; font-weight: bold; color: #475569;">Commissioning Date</td>
+                                <td style="padding: 8px; border: 1px solid #e2e8f0; width: 25%;"><t t-esc="doc.scheduled_date"/></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; color: #475569;">Consumer Name</td>
+                                <td style="padding: 8px; border: 1px solid #e2e8f0;"><t t-esc="doc.customer_id.name"/></td>
+                                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; color: #475569;">Installed Capacity</td>
+                                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; color: #f59e0b;"><t t-esc="doc.installed_capacity"/> kWp</td>
+                            </tr>
+                            <tr style="background: #f8fafc;">
+                                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; color: #475569;">Installation Site</td>
+                                <td style="padding: 8px; border: 1px solid #e2e8f0;" colspan="3">
+                                    <t t-esc="doc.customer_id.street or ''"/>, <t t-esc="doc.customer_id.city or ''"/>, <t t-esc="doc.customer_id.state or ''"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h4 style="background: #f3f4f6; padding: 6px 10px; border-left: 4px solid #005a9c; margin-bottom: 10px;">
+                            ELECTRICAL &amp; SAFETY VERIFICATION TESTS
+                        </h4>
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+                            <tr style="border-bottom: 1px solid #e5e7eb;">
+                                <td style="padding: 6px 8px; width: 70%;">Open Circuit Voltage (Voc) &amp; Operating String Current (Isc) within rated tolerance</td>
+                                <td style="padding: 6px 8px; width: 30%; font-weight: bold; color: #16a34a; text-align: right;">PASSED (IEC 62446)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #e5e7eb;">
+                                <td style="padding: 6px 8px;">Earth Resistance Value (&lt; 2.0 Ohms across AC &amp; DC chemical earth pits)</td>
+                                <td style="padding: 6px 8px; font-weight: bold; color: #16a34a; text-align: right;">PASSED (1.4 Ω)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #e5e7eb;">
+                                <td style="padding: 6px 8px;">Inverter Anti-Islanding Protection &amp; DISCOM Grid Sync Trip Test</td>
+                                <td style="padding: 6px 8px; font-weight: bold; color: #16a34a; text-align: right;">VERIFIED &amp; COMPLIANT</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #e5e7eb;">
+                                <td style="padding: 6px 8px;">Structure Mechanical Integrity (Torque test &amp; waterproofing sealant applied)</td>
+                                <td style="padding: 6px 8px; font-weight: bold; color: #16a34a; text-align: right;">INSPECTED &amp; APPROVED</td>
+                            </tr>
+                        </table>
+
+                        <div style="margin-bottom: 15px;" t-if="doc.completion_notes">
+                            <h5 style="margin: 0 0 4px; color: #005a9c;">Technician Field Notes:</h5>
+                            <p style="margin: 0; font-size: 11px; color: #4b5563;"><t t-esc="doc.completion_notes"/></p>
+                        </div>
+
+                        <!-- Customer Signature & Sign-Off Section -->
+                        <table style="width: 100%; margin-top: 25px; border-top: 2px solid #e2e8f0; padding-top: 15px;">
+                            <tr>
+                                <td style="width: 50%; vertical-align: top;">
+                                    <h5 style="color: #005a9c; margin: 0 0 6px;">Customer Handover Acknowledgment:</h5>
+                                    <p style="font-size: 10px; color: #64748b; margin-bottom: 8px;">
+                                        "I hereby confirm that the rooftop solar photovoltaic system has been installed, tested, and commissioned satisfactorily. System generation and inverter display operation were demonstrated to my complete satisfaction."
+                                    </p>
+                                    <div t-if="doc.signature_id">
+                                        <div style="margin-bottom: 4px;"><strong>Signer:</strong> <t t-esc="doc.signature_id.signer_name"/></div>
+                                        <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                                            Signed on: <t t-esc="doc.signature_id.signed_at"/> (IP: <t t-esc="doc.signature_id.ip_address"/>)
+                                        </div>
+                                        <img t-if="doc.signature_id.signature_image" t-att-src="image_data_uri(doc.signature_id.signature_image)" style="max-height: 80px; max-width: 200px; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px;"/>
+                                    </div>
+                                    <div t-else="" style="border: 1px dashed #cbd5e1; height: 80px; width: 220px; display: flex; align-items: center; justify-content: center; color: #94a3b8;">
+                                        Digital Signature Placeholder
+                                    </div>
+                                </td>
+                                <td style="width: 50%; vertical-align: top; text-align: right;">
+                                    <h5 style="color: #005a9c; margin: 0 0 6px;">Lead Commissioning Engineer:</h5>
+                                    <div style="font-size: 12px; font-weight: bold; margin-top: 15px;">
+                                        <t t-esc="doc.technician_ids[0].name if doc.technician_ids else 'Lead Field Engineer'"/>
+                                    </div>
+                                    <div style="font-size: 11px; color: #64748b;">Solar Operations Division</div>
+                                    <div style="font-size: 11px; color: #64748b;">SunPower Solutions Pvt Ltd</div>
+                                    <div style="margin-top: 25px; border-top: 1px dashed #9ca3af; width: 180px; margin-left: auto; padding-top: 4px;">
+                                        Authorized Field Stamp
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

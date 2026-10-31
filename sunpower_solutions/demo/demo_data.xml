@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- 1. Customers -->
+        <record id="demo_customer_alice" model="sunpower.customer">
+            <field name="name">Alice Singh</field>
+            <field name="phone">+91 98765 43210</field>
+            <field name="email">alice.singh@example.com</field>
+            <field name="street">142 Green Glen Layout, Bellandur</field>
+            <field name="city">Bengaluru</field>
+            <field name="state">Karnataka</field>
+            <field name="country">India</field>
+            <field name="latitude">12.9260</field>
+            <field name="longitude">77.6762</field>
+            <field name="customer_type">home</field>
+        </record>
+
+        <record id="demo_customer_ramesh" model="sunpower.customer">
+            <field name="name">Ramesh Patel</field>
+            <field name="phone">+91 98234 56789</field>
+            <field name="email">ramesh.patel@example.com</field>
+            <field name="street">88 Koramangala 4th Block</field>
+            <field name="city">Bengaluru</field>
+            <field name="state">Karnataka</field>
+            <field name="country">India</field>
+            <field name="latitude">12.9352</field>
+            <field name="longitude">77.6245</field>
+            <field name="customer_type">home</field>
+        </record>
+
+        <record id="demo_customer_sunita" model="sunpower.customer">
+            <field name="name">Sunita Desai</field>
+            <field name="phone">+91 97123 45678</field>
+            <field name="email">sunita.desai@example.com</field>
+            <field name="street">Plot 24, Baner Tech Park Road</field>
+            <field name="city">Pune</field>
+            <field name="state">Maharashtra</field>
+            <field name="country">India</field>
+            <field name="latitude">18.5590</field>
+            <field name="longitude">73.7868</field>
+            <field name="customer_type">small_factory</field>
+        </record>
+
+        <!-- 2. Leads -->
+        <record id="demo_lead_alice" model="sunpower.lead">
+            <field name="name">LEAD-2026-0001</field>
+            <field name="customer_id" ref="demo_customer_alice"/>
+            <field name="source">web_form</field>
+            <field name="system_type">off_grid</field>
+            <field name="requested_capacity">5.0</field>
+            <field name="monthly_bill">6500.0</field>
+            <field name="roof_area">600.0</field>
+            <field name="status">converted</field>
+            <field name="solar_score">88.5</field>
+            <field name="expected_annual_generation">7250.0</field>
+        </record>
+
+        <record id="demo_lead_ramesh" model="sunpower.lead">
+            <field name="name">LEAD-2026-0002</field>
+            <field name="customer_id" ref="demo_customer_ramesh"/>
+            <field name="source">referral</field>
+            <field name="system_type">on_grid</field>
+            <field name="requested_capacity">3.0</field>
+            <field name="monthly_bill">3800.0</field>
+            <field name="roof_area">350.0</field>
+            <field name="status">survey_completed</field>
+            <field name="solar_score">85.0</field>
+            <field name="expected_annual_generation">4350.0</field>
+        </record>
+
+        <record id="demo_lead_sunita" model="sunpower.lead">
+            <field name="name">LEAD-2026-0003</field>
+            <field name="customer_id" ref="demo_customer_sunita"/>
+            <field name="source">phone_call</field>
+            <field name="system_type">on_grid</field>
+            <field name="requested_capacity">10.0</field>
+            <field name="monthly_bill">14500.0</field>
+            <field name="roof_area">1200.0</field>
+            <field name="status">converted</field>
+            <field name="solar_score">91.0</field>
+            <field name="expected_annual_generation">14800.0</field>
+        </record>
+
+        <!-- 3. Solar Sites -->
+        <record id="demo_solar_site_alice" model="sunpower.solar.site">
+            <field name="customer_id" ref="demo_customer_alice"/>
+            <field name="lead_id" ref="demo_lead_alice"/>
+            <field name="latitude">12.9260</field>
+            <field name="longitude">77.6762</field>
+            <field name="ghi">5.24</field>
+            <field name="dni">4.85</field>
+            <field name="temperature">26.5</field>
+            <field name="pvout">1450.0</field>
+            <field name="solar_score">88.5</field>
+        </record>
+
+        <!-- 4. Site Surveys -->
+        <record id="demo_survey_alice" model="sunpower.survey">
+            <field name="name">SRV-2026-0001</field>
+            <field name="lead_id" ref="demo_lead_alice"/>
+            <field name="roof_direction">south</field>
+            <field name="roof_tilt">15.0</field>
+            <field name="shadow_free_area">550.0</field>
+            <field name="cable_distance">22.0</field>
+            <field name="roof_type">rcc_flat</field>
+            <field name="grid_connection">three_phase</field>
+            <field name="recommended_capacity">5.0</field>
+            <field name="latitude">12.9260</field>
+            <field name="longitude">77.6762</field>
+            <field name="state">approved</field>
+        </record>
+
+        <!-- 5. Quotations -->
+        <record id="demo_quote_alice" model="sunpower.quote">
+            <field name="name">QUO-2026-0001</field>
+            <field name="customer_id" ref="demo_customer_alice"/>
+            <field name="lead_id" ref="demo_lead_alice"/>
+            <field name="survey_id" ref="demo_survey_alice"/>
+            <field name="system_type">off_grid</field>
+            <field name="capacity">5.0</field>
+            <field name="amount_untaxed">275000.0</field>
+            <field name="tax_amount">37950.0</field>
+            <field name="discount_amount">5000.0</field>
+            <field name="total_amount">307950.0</field>
+            <field name="total_cost">215000.0</field>
+            <field name="margin_amount">60000.0</field>
+            <field name="margin_percentage">21.82</field>
+            <field name="state">accepted</field>
+            <field name="validity_date">2026-12-31</field>
+        </record>
+
+        <record id="demo_quote_line_alice_panel" model="sunpower.quote.line">
+            <field name="quote_id" ref="demo_quote_alice"/>
+            <field name="product_id" ref="product_panel_400w"/>
+            <field name="quantity">13</field>
+            <field name="unit_price">9500.0</field>
+            <field name="cost">7200.0</field>
+            <field name="subtotal">123500.0</field>
+            <field name="required_component" eval="True"/>
+        </record>
+
+        <record id="demo_quote_line_alice_inverter" model="sunpower.quote.line">
+            <field name="quote_id" ref="demo_quote_alice"/>
+            <field name="product_id" ref="product_inverter_5kw"/>
+            <field name="quantity">1</field>
+            <field name="unit_price">58000.0</field>
+            <field name="cost">46000.0</field>
+            <field name="subtotal">58000.0</field>
+            <field name="required_component" eval="True"/>
+        </record>
+
+        <record id="demo_quote_line_alice_battery" model="sunpower.quote.line">
+            <field name="quote_id" ref="demo_quote_alice"/>
+            <field name="product_id" ref="product_battery_lithium_200ah"/>
+            <field name="quantity">1</field>
+            <field name="unit_price">65000.0</field>
+            <field name="cost">52000.0</field>
+            <field name="subtotal">65000.0</field>
+            <field name="required_component" eval="True"/>
+        </record>
+
+        <!-- 6. Sales Order -->
+        <record id="demo_order_alice" model="sunpower.order">
+            <field name="name">SO-2026-0001</field>
+            <field name="quote_id" ref="demo_quote_alice"/>
+            <field name="customer_id" ref="demo_customer_alice"/>
+            <field name="state">installed</field>
+            <field name="advance_amount">100000.0</field>
+            <field name="paid_amount">307950.0</field>
+            <field name="balance_amount">0.0</field>
+        </record>
+
+        <!-- 7. Serials -->
+        <record id="demo_serial_pan_1" model="sunpower.inventory.serial">
+            <field name="product_id" ref="product_panel_400w"/>
+            <field name="serial_number">PAN12345</field>
+            <field name="status">under_warranty</field>
+        </record>
+
+        <record id="demo_serial_pan_2" model="sunpower.inventory.serial">
+            <field name="product_id" ref="product_panel_400w"/>
+            <field name="serial_number">PAN12346</field>
+            <field name="status">under_warranty</field>
+        </record>
+
+        <record id="demo_serial_pan_3" model="sunpower.inventory.serial">
+            <field name="product_id" ref="product_panel_400w"/>
+            <field name="serial_number">PAN12347</field>
+            <field name="status">under_warranty</field>
+        </record>
+
+        <record id="demo_serial_inv" model="sunpower.inventory.serial">
+            <field name="product_id" ref="product_inverter_5kw"/>
+            <field name="serial_number">INV54321</field>
+            <field name="status">under_warranty</field>
+        </record>
+
+        <record id="demo_serial_bat" model="sunpower.inventory.serial">
+            <field name="product_id" ref="product_battery_lithium_200ah"/>
+            <field name="serial_number">BAT98765</field>
+            <field name="status">under_warranty</field>
+        </record>
+
+        <!-- 8. Dispatch Manifest -->
+        <record id="demo_dispatch_alice" model="sunpower.dispatch">
+            <field name="name">DSP-2026-0001</field>
+            <field name="order_id" ref="demo_order_alice"/>
+            <field name="dispatch_date">2026-01-15</field>
+            <field name="vehicle_number">KA-01-AB-1234</field>
+            <field name="state">delivered</field>
+        </record>
+
+        <record id="demo_dispatch_line_1" model="sunpower.dispatch.line">
+            <field name="dispatch_id" ref="demo_dispatch_alice"/>
+            <field name="product_id" ref="product_panel_400w"/>
+            <field name="serial_id" ref="demo_serial_pan_1"/>
+        </record>
+
+        <record id="demo_dispatch_line_inv" model="sunpower.dispatch.line">
+            <field name="dispatch_id" ref="demo_dispatch_alice"/>
+            <field name="product_id" ref="product_inverter_5kw"/>
+            <field name="serial_id" ref="demo_serial_inv"/>
+        </record>
+
+        <record id="demo_dispatch_line_bat" model="sunpower.dispatch.line">
+            <field name="dispatch_id" ref="demo_dispatch_alice"/>
+            <field name="product_id" ref="product_battery_lithium_200ah"/>
+            <field name="serial_id" ref="demo_serial_bat"/>
+        </record>
+
+        <!-- 9. Automatic 20-Year Warranties (Auto-created on dispatch) -->
+        <record id="demo_warranty_pan_1" model="sunpower.warranty">
+            <field name="name">WAR-2026-0001</field>
+            <field name="serial_id" ref="demo_serial_pan_1"/>
+            <field name="product_id" ref="product_panel_400w"/>
+            <field name="customer_id" ref="demo_customer_alice"/>
+            <field name="start_date">2026-01-15</field>
+            <field name="end_date">2046-01-15</field>
+            <field name="warranty_years">20</field>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_warranty_inv" model="sunpower.warranty">
+            <field name="name">WAR-2026-0002</field>
+            <field name="serial_id" ref="demo_serial_inv"/>
+            <field name="product_id" ref="product_inverter_5kw"/>
+            <field name="customer_id" ref="demo_customer_alice"/>
+            <field name="start_date">2026-01-15</field>
+            <field name="end_date">2028-01-15</field>
+            <field name="warranty_years">2</field>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_warranty_bat" model="sunpower.warranty">
+            <field name="name">WAR-2026-0003</field>
+            <field name="serial_id" ref="demo_serial_bat"/>
+            <field name="product_id" ref="product_battery_lithium_200ah"/>
+            <field name="customer_id" ref="demo_customer_alice"/>
+            <field name="start_date">2026-01-15</field>
+            <field name="end_date">2028-01-15</field>
+            <field name="warranty_years">2</field>
+            <field name="state">active</field>
+        </record>
+
+        <!-- 10. Installation Job -->
+        <record id="demo_job_alice" model="sunpower.job">
+            <field name="name">JOB-2026-0001</field>
+            <field name="order_id" ref="demo_order_alice"/>
+            <field name="customer_id" ref="demo_customer_alice"/>
+            <field name="scheduled_date">2026-01-18</field>
+            <field name="installed_capacity">5.0</field>
+            <field name="state">verified</field>
+            <field name="test_result">Voc=480V, Isc=9.8A, Earth Pit=1.4 Ohm, Anti-Islanding Trip OK.</field>
+            <field name="completion_notes">All 13 Mono-PERC modules aligned to 15 deg true South. Inverter mounted on North-facing wall with weatherproof canopy.</field>
+        </record>
+
+        <!-- 11. Customer Signature -->
+        <record id="demo_signature_alice" model="sunpower.signature">
+            <field name="job_id" ref="demo_job_alice"/>
+            <field name="signer_name">Alice Singh</field>
+            <field name="signed_at">2026-01-18 16:45:00</field>
+            <field name="ip_address">192.168.1.104</field>
+            <field name="confirmation_text">I confirm that 5kW solar system is installed, tested, and fully functional.</field>
+        </record>
+
+        <!-- Link signature to job -->
+        <record id="demo_job_alice" model="sunpower.job">
+            <field name="signature_id" ref="demo_signature_alice"/>
+        </record>
+
+        <!-- 12. Service Ticket (Warranty Covered) -->
+        <record id="demo_ticket_alice" model="sunpower.service.ticket">
+            <field name="name">TCK-2026-0001</field>
+            <field name="customer_id" ref="demo_customer_alice"/>
+            <field name="job_id" ref="demo_job_alice"/>
+            <field name="serial_id" ref="demo_serial_inv"/>
+            <field name="warranty_id" ref="demo_warranty_inv"/>
+            <field name="issue_description">Inverter showing Fault Code F02 (Grid Undervoltage) during evening grid fluctuation.</field>
+            <field name="fault_code">inverter_tripping</field>
+            <field name="is_under_warranty" eval="True"/>
+            <field name="repair_cost">0.0</field>
+            <field name="labour_cost">0.0</field>
+            <field name="total_charge">0.0</field>
+            <field name="state">resolved</field>
+            <field name="resolution_notes">Updated inverter firmware to v2.14 with expanded DISCOM voltage ride-through parameters. System running normally.</field>
+        </record>
+
+        <!-- 13. Customer Invoice -->
+        <record id="demo_invoice_alice" model="sunpower.invoice">
+            <field name="name">INV-2026-0001</field>
+            <field name="order_id" ref="demo_order_alice"/>
+            <field name="customer_id" ref="demo_customer_alice"/>
+            <field name="invoice_date">2026-01-18</field>
+            <field name="due_date">2026-02-01</field>
+            <field name="amount_total">307950.0</field>
+            <field name="amount_paid">307950.0</field>
+            <field name="balance_amount">0.0</field>
+            <field name="state">paid</field>
+        </record>
+
+        <!-- 14. Government Subsidy -->
+        <record id="demo_subsidy_alice" model="sunpower.subsidy">
+            <field name="order_id" ref="demo_order_alice"/>
+            <field name="customer_id" ref="demo_customer_alice"/>
+            <field name="scheme_name">PM Surya Ghar: Muft Bijli Yojana (Central Subsidy)</field>
+            <field name="applied_date">2026-01-20</field>
+            <field name="approval_date">2026-02-05</field>
+            <field name="subsidy_amount">78000.0</field>
+            <field name="state">approved</field>
+        </record>
+    </data>
+</odoo>

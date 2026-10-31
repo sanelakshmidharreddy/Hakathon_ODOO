@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sunpower_quote_tree" model="ir.ui.view">
+        <field name="name">sunpower.quote.tree</field>
+        <field name="model">sunpower.quote</field>
+        <field name="arch" type="xml">
+            <tree string="Solar Quotations &amp; BOM" sample="1">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="system_type"/>
+                <field name="capacity" string="Capacity (kW)"/>
+                <field name="total_cost" string="BOM Cost (₹)" optional="show"/>
+                <field name="total_amount" string="Total Price (₹)"/>
+                <field name="margin_percentage" widget="badge" decoration-success="margin_percentage >= 25" decoration-warning="margin_percentage &lt; 25"/>
+                <field name="validity_date"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-primary="state == 'sent'"
+                       decoration-success="state in ('accepted', 'converted')"
+                       decoration-danger="state == 'rejected'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sunpower_quote_form" model="ir.ui.view">
+        <field name="name">sunpower.quote.form</field>
+        <field name="model">sunpower.quote</field>
+        <field name="arch" type="xml">
+            <form string="Solar Engineering Quotation">
+                <header>
+                    <button name="action_generate_bom" string="Re-Calculate Auto-BOM" type="object" class="btn-secondary"
+                            attrs="{'invisible': [('state', 'in', ('accepted', 'converted', 'rejected'))]}"/>
+                    <button name="action_send_quote" string="Send Proposal to Customer" type="object" class="btn-primary"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_accept_quote" string="Accept Quote &amp; Create Sales Order" type="object" class="btn-success"
+                            attrs="{'invisible': [('state', 'not in', ('draft', 'sent'))]}"/>
+                    <button name="action_reject_quote" string="Customer Rejected" type="object" class="btn-danger"
+                            attrs="{'invisible': [('state', 'not in', ('draft', 'sent'))]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,accepted,converted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Quote Number"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+
+                    <group>
+                        <group string="Customer &amp; Engineering Survey">
+                            <field name="customer_id"/>
+                            <field name="lead_id"/>
+                            <field name="survey_id"/>
+                            <field name="validity_date"/>
+                        </group>
+                        <group string="System Sizing &amp; Architecture">
+                            <field name="system_type"/>
+                            <field name="capacity"/>
+                            <field name="order_id" attrs="{'invisible': [('order_id', '=', False)]}"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Bill of Materials (BOM Lines)" name="bom">
+                            <field name="quote_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="category"/>
+                                    <field name="quantity"/>
+                                    <field name="cost_price" optional="show"/>
+                                    <field name="unit_price"/>
+                                    <field name="subtotal" sum="Total Untaxed"/>
+                                    <field name="required_component" invisible="1"/>
+                                </tree>
+                            </field>
+                            <group col="6" class="mt-2">
+                                <group colspan="4">
+                                    <field name="notes" placeholder="Payment terms: 30% advance on order, 50% on dispatch, 20% on commissioning..."/>
+                                </group>
+                                <group colspan="2" class="oe_subtotal_footer oe_right">
+                                    <field name="amount_untaxed"/>
+                                    <field name="discount_amount"/>
+                                    <field name="tax_rate" string="GST Rate (%)"/>
+                                    <field name="tax_amount"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="total_amount"/>
+                                    </div>
+                                    <field name="total_amount" nolabel="1" class="oe_subtotal_footer_separator"/>
+                                    <field name="total_cost" string="BOM Cost" class="text-muted"/>
+                                    <field name="margin_amount" string="Gross Margin (₹)" class="text-success font-weight-bold"/>
+                                    <field name="margin_percentage" string="Gross Margin (%)" widget="badge" decoration-success="margin_percentage >= 25"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_sunpower_quote" model="ir.actions.act_window">
+        <field name="name">Quotations &amp; BOM</field>
+        <field name="res_model">sunpower.quote</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

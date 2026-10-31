@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sunpower_warranty_tree" model="ir.ui.view">
+        <field name="name">sunpower.warranty.tree</field>
+        <field name="model">sunpower.warranty</field>
+        <field name="arch" type="xml">
+            <tree string="Digital Warranties Ledger" sample="1">
+                <field name="name"/>
+                <field name="serial_number_str" string="Serial / Barcode"/>
+                <field name="product_id"/>
+                <field name="customer_id"/>
+                <field name="warranty_years" string="Years"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="days_remaining" string="Days Left"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-warning="state == 'expiring_soon'"
+                       decoration-danger="state == 'expired'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Graph View -->
+    <record id="view_sunpower_warranty_graph" model="ir.ui.view">
+        <field name="name">sunpower.warranty.graph</field>
+        <field name="model">sunpower.warranty</field>
+        <field name="arch" type="xml">
+            <graph string="Active Warranties by Product" type="bar">
+                <field name="product_id"/>
+                <field name="state"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="view_sunpower_warranty_pivot" model="ir.ui.view">
+        <field name="name">sunpower.warranty.pivot</field>
+        <field name="model">sunpower.warranty</field>
+        <field name="arch" type="xml">
+            <pivot string="Warranty Ledger Analytics">
+                <field name="product_id" type="row"/>
+                <field name="state" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sunpower_warranty_form" model="ir.ui.view">
+        <field name="name">sunpower.warranty.form</field>
+        <field name="model">sunpower.warranty</field>
+        <field name="arch" type="xml">
+            <form string="Digital Warranty Certificate">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="active,expiring_soon,expired"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Warranty Certificate ID"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+
+                    <group>
+                        <group string="Equipment &amp; Barcode">
+                            <field name="serial_id"/>
+                            <field name="serial_number_str"/>
+                            <field name="product_id"/>
+                            <field name="customer_id"/>
+                        </group>
+                        <group string="Coverage Lifespan">
+                            <field name="warranty_years"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="days_remaining"/>
+                        </group>
+                    </group>
+
+                    <group string="Traceability References">
+                        <group>
+                            <field name="order_id"/>
+                            <field name="dispatch_id"/>
+                        </group>
+                        <group>
+                            <field name="job_id"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Service &amp; Maintenance Claims" name="claims">
+                            <field name="ticket_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="fault_code"/>
+                                    <field name="is_under_warranty"/>
+                                    <field name="total_charge"/>
+                                    <field name="state" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_sunpower_warranty_search" model="ir.ui.view">
+        <field name="name">sunpower.warranty.search</field>
+        <field name="model">sunpower.warranty</field>
+        <field name="arch" type="xml">
+            <search string="Search Warranties">
+                <field name="name"/>
+                <field name="serial_number_str"/>
+                <field name="customer_id"/>
+                <field name="product_id"/>
+                <filter name="active_cov" string="Active Warranties" domain="[('state', '=', 'active')]"/>
+                <filter name="expiring_soon" string="Expiring Soon (< 60 Days)" domain="[('state', '=', 'expiring_soon')]"/>
+                <filter name="expired" string="Expired" domain="[('state', '=', 'expired')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_product" string="Product" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_customer" string="Customer" context="{'group_by': 'customer_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_sunpower_warranty" model="ir.actions.act_window">
+        <field name="name">Warranties</field>
+        <field name="res_model">sunpower.warranty</field>
+        <field name="view_mode">tree,form,graph,pivot</field>
+        <field name="search_view_id" ref="view_sunpower_warranty_search"/>
+    </record>
+</odoo>
