@@ -14,225 +14,316 @@ import {
   Award,
   ChevronRight,
   Compass,
+  Check,
+  BarChart3,
+  Users,
+  QrCode,
+  ShieldCheck,
+  LifeBuoy,
+  Database,
+  Layers,
+  ArrowUpRight,
 } from 'lucide-react';
 import { SolarScoreRing } from '../components/ui/SolarScoreRing';
 
 export const LandingPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans selection:bg-amber-500 selection:text-slate-950">
-      {/* Top Announcement Bar */}
-      <div className="bg-gradient-to-r from-amber-600 via-orange-500 to-amber-600 py-1.5 px-4 text-center text-xs font-semibold text-slate-950 flex items-center justify-center gap-2">
-        <Sun className="w-3.5 h-3.5 fill-current" />
-        <span>Grounded in Real Public Data: Live NASA POWER & OpenStreetMap Integration</span>
-        <span className="hidden sm:inline-block">•</span>
-        <span className="hidden sm:inline-block font-normal">Empowering 40+ Rooftop Solar Projects Monthly Across India</span>
-      </div>
-
-      {/* Navigation Bar */}
-      <nav className="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-amber-500 selection:text-white">
+      {/* 1. Sticky White Navbar */}
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-400 flex items-center justify-center text-slate-950 shadow-lg shadow-amber-500/25">
-              <Sun className="w-6 h-6 fill-current text-slate-950" />
+            <div className="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center text-white shadow-xs">
+              <Sun className="w-5 h-5" />
             </div>
-            <div>
-              <span className="text-xl font-bold tracking-tight text-white block leading-none">
+            <div className="flex flex-col">
+              <span className="font-bold text-slate-900 text-base leading-tight tracking-tight">
                 SunPower Solutions
               </span>
-              <span className="text-[10px] uppercase font-bold text-amber-400 tracking-wider">
-                Enterprise Solar Operating System
+              <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">
+                Solar Business ERP
               </span>
             </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-8 text-sm text-slate-300 font-medium">
-            <a href="#workflow" className="hover:text-amber-400 transition-colors">
-              The Journey
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+            <a href="#modules" className="hover:text-amber-600 transition-colors">
+              Modules
             </a>
-            <a href="#features" className="hover:text-amber-400 transition-colors">
-              Core Modules
+            <a href="#workflow" className="hover:text-amber-600 transition-colors">
+              Workflow
             </a>
-            <a href="#solar-data" className="hover:text-amber-400 transition-colors">
-              NASA POWER Data
+            <a href="#real-data" className="hover:text-amber-600 transition-colors">
+              Solar Data
             </a>
-            <a href="#warranty" className="hover:text-amber-400 transition-colors">
-              20-Yr Warranty
+            <a href="#solutions" className="hover:text-amber-600 transition-colors">
+              Solutions
             </a>
-          </div>
+          </nav>
 
           <div className="flex items-center gap-3">
             <NavLink
-              to="/dashboard"
-              className="btn-accent px-5 py-2.5 rounded-xl font-semibold text-sm flex items-center gap-2 shadow-lg shadow-amber-500/25"
+              to="/login"
+              className="text-sm font-medium text-slate-700 hover:text-slate-900 px-3 py-2"
             >
-              <span>Launch Platform</span>
+              Sign In
+            </NavLink>
+            <NavLink
+              to="/dashboard"
+              className="btn-accent text-sm font-semibold px-4 py-2 rounded-md shadow-xs flex items-center gap-2"
+            >
+              <span>Open ERP</span>
               <ArrowRight className="w-4 h-4" />
             </NavLink>
           </div>
         </div>
-      </nav>
+      </header>
 
-      {/* Hero Section */}
-      <section className="relative pt-20 pb-28 overflow-hidden">
-        {/* Glow background effects */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-amber-500/20 to-orange-500/10 blur-[120px] rounded-full pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-amber-500/30 text-amber-300 text-xs font-semibold mb-8 animate-fade-in">
-            <Award className="w-4 h-4 text-amber-400" />
-            <span>Complete Rooftop Solar Lifecycle Management</span>
+      {/* 2. Hero Section */}
+      <section className="bg-slate-50 border-b border-slate-200 pt-16 pb-20 sm:pt-20 sm:pb-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-medium mb-6">
+            <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+            Enterprise Solar Installation Management
           </div>
 
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6 max-w-5xl mx-auto">
-            From First Enquiry to{' '}
-            <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200 bg-clip-text text-transparent">
-              20-Year Warranty
-            </span>
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight max-w-4xl mx-auto leading-tight">
+            Run your solar business from enquiry to warranty
           </h1>
 
-          <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-10 font-normal leading-relaxed">
-            Eliminate lost WhatsApp leads, manual quote errors, missing equipment serial numbers, and paper registers.
-            A modern Indian rooftop solar platform with NASA POWER irradiance modeling, automated BOM costing, QR serial dispatch, technician PWA, and instant warranty claim traceability.
+          <p className="mt-5 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Manage leads, automated bill of materials, serial equipment dispatch, technician field sign-offs, and 20-year warranties in one unified platform.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
             <NavLink
               to="/dashboard"
-              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-base transition-all transform hover:-translate-y-0.5 shadow-xl shadow-amber-500/25 flex items-center justify-center gap-2"
+              className="w-full sm:w-auto btn-accent px-6 py-3 rounded-md text-sm font-semibold shadow-xs flex items-center justify-center gap-2"
             >
-              <span>Explore Live Director Dashboard</span>
-              <ArrowRight className="w-5 h-5" />
+              <span>Explore Dashboard</span>
+              <ArrowRight className="w-4 h-4" />
             </NavLink>
             <NavLink
               to="/leads"
-              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-base border border-slate-700/80 transition-all flex items-center justify-center gap-2"
+              className="w-full sm:w-auto btn-secondary px-6 py-3 rounded-md text-sm font-semibold flex items-center justify-center gap-2"
             >
-              <span>View Lead CRM Pipeline</span>
+              <span>View CRM Pipeline</span>
             </NavLink>
           </div>
 
-          {/* Quick Metrics Bar */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto p-6 rounded-2xl bg-slate-900/60 border border-slate-800 backdrop-blur-xl">
-            <div className="text-center">
-              <div className="text-3xl font-extrabold text-amber-400 font-mono">40+</div>
-              <div className="text-xs text-slate-400 mt-1">Monthly Installations</div>
+          {/* Clean Enterprise UI Preview Card */}
+          <div className="mt-14 max-w-5xl mx-auto rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden text-left">
+            <div className="h-10 bg-slate-100 border-b border-slate-200 px-4 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-slate-300"></div>
+                <div className="w-3 h-3 rounded-full bg-slate-300"></div>
+                <div className="w-3 h-3 rounded-full bg-slate-300"></div>
+                <span className="text-xs text-slate-500 font-mono ml-2">sunpower-solutions.erp/dashboard</span>
+              </div>
+              <div className="text-xs text-slate-500 font-medium flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                Connected to Render Backend
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-extrabold text-white font-mono">100%</div>
-              <div className="text-xs text-slate-400 mt-1">Serial-Level Traceability</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-extrabold text-amber-400 font-mono">20 Yrs</div>
-              <div className="text-xs text-slate-400 mt-1">Panel Warranty Tracking</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-extrabold text-emerald-400 font-mono">27.8%</div>
-              <div className="text-xs text-slate-400 mt-1">Average Gross Margin</div>
+            <div className="p-6 bg-slate-50/50 grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="card p-4">
+                <div className="text-xs font-medium text-slate-500 uppercase">Monthly Installs</div>
+                <div className="text-2xl font-bold text-slate-900 mt-1">42 Sites</div>
+                <div className="text-xs text-emerald-600 mt-1 font-medium">↑ 12% vs last month</div>
+              </div>
+              <div className="card p-4">
+                <div className="text-xs font-medium text-slate-500 uppercase">Serial Tracking</div>
+                <div className="text-2xl font-bold text-slate-900 mt-1">100%</div>
+                <div className="text-xs text-slate-500 mt-1">QR scan enforced</div>
+              </div>
+              <div className="card p-4">
+                <div className="text-xs font-medium text-slate-500 uppercase">Average Gross Margin</div>
+                <div className="text-2xl font-bold text-slate-900 mt-1">27.8%</div>
+                <div className="text-xs text-emerald-600 mt-1 font-medium">Auto-BOM safeguard</div>
+              </div>
+              <div className="card p-4">
+                <div className="text-xs font-medium text-slate-500 uppercase">Active Warranties</div>
+                <div className="text-2xl font-bold text-slate-900 mt-1">480 Panels</div>
+                <div className="text-xs text-slate-500 mt-1">20-yr digital ledger</div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* The 8-Step Complete Customer Journey Section */}
-      <section id="workflow" className="py-24 bg-slate-900/40 border-t border-slate-800/80">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs uppercase font-bold text-amber-400 tracking-wider">
-              Zero-Friction Workflow
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold mt-2">
-              The Digital Solar Project Pipeline
+      {/* 3. Trust Section */}
+      <section className="py-10 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-xs font-semibold uppercase tracking-wider text-slate-400 mb-6">
+            Trusted by Indian solar EPCs & integrated with official scientific data providers
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 items-center justify-center text-center">
+            <div className="p-3 border border-slate-200 rounded-md bg-slate-50">
+              <div className="font-semibold text-slate-800 text-sm">NASA POWER</div>
+              <div className="text-[11px] text-slate-500">Solar Irradiance API</div>
+            </div>
+            <div className="p-3 border border-slate-200 rounded-md bg-slate-50">
+              <div className="font-semibold text-slate-800 text-sm">OpenStreetMap</div>
+              <div className="text-[11px] text-slate-500">Nominatim Geocoding</div>
+            </div>
+            <div className="p-3 border border-slate-200 rounded-md bg-slate-50">
+              <div className="font-semibold text-slate-800 text-sm">MNRE Guidelines</div>
+              <div className="text-[11px] text-slate-500">BOM Specifications</div>
+            </div>
+            <div className="p-3 border border-slate-200 rounded-md bg-slate-50">
+              <div className="font-semibold text-slate-800 text-sm">Global Solar Atlas</div>
+              <div className="text-[11px] text-slate-500">PV Yield Modeling</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Problem & Solution Section */}
+      <section id="solutions" className="py-16 sm:py-20 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Designed specifically for rooftop solar operations
             </h2>
-            <p className="text-slate-400 mt-3 text-sm sm:text-base">
-              Every stage seamlessly connected with data validation, role permissions, and immutable audit logs.
+            <p className="mt-3 text-sm sm:text-base text-slate-600">
+              Replace messy WhatsApp groups, spreadsheets, and lost paper registers with an enterprise operating system.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* The Challenge */}
+            <div className="card p-6 border-slate-200 bg-slate-50/60">
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">
+                Common Operational Pitfalls
+              </div>
+              <ul className="space-y-3.5 text-sm text-slate-700">
+                <li className="flex items-start gap-2.5">
+                  <span className="text-rose-500 font-bold mt-0.5">✕</span>
+                  <span><strong>Lost customer leads:</strong> Inquiries scattered across sales reps' personal messaging chats.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="text-rose-500 font-bold mt-0.5">✕</span>
+                  <span><strong>Inaccurate quotes:</strong> Hand-calculated BOMs leading to thin or negative gross project margins.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="text-rose-500 font-bold mt-0.5">✕</span>
+                  <span><strong>Serial number blindness:</strong> Inverters and panels installed without recorded barcodes.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="text-rose-500 font-bold mt-0.5">✕</span>
+                  <span><strong>Warranty dispute liabilities:</strong> Inability to prove installation dates or genuine equipment origins.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* The SunPower Solution */}
+            <div className="card p-6 border-slate-200 bg-white">
+              <div className="text-xs font-bold text-amber-700 uppercase tracking-wider mb-4">
+                The SunPower Platform Standard
+              </div>
+              <ul className="space-y-3.5 text-sm text-slate-700">
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <span><strong>Centralized CRM:</strong> Enriched with regional NASA irradiance scores and address geocoding.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <span><strong>Automated BOM:</strong> Standardized 1-5 kW templates with real-time margin calculations.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <span><strong>QR barcode dispatch:</strong> Compulsory equipment scanning before trucks leave warehouse.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <span><strong>Digital sign-offs:</strong> Geotagged technician photos, generation meter test, and digital customer signature.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Product Modules Section */}
+      <section id="modules" className="py-16 sm:py-20 bg-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Enterprise Modules Built for Every Team
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-slate-600">
+              Role-tailored tools for directors, sales executives, warehouse managers, and field technicians.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
-                step: '01',
-                title: 'Lead Capture & Solar Score',
-                desc: 'Web, WhatsApp, and call enquiries enriched instantly with NASA POWER irradiance and OSM geocoding.',
-                icon: Zap,
+                title: 'CRM & Pipeline',
+                desc: 'Track residential & commercial leads from initial inquiry to qualified survey stage.',
+                icon: Users,
                 link: '/leads',
               },
               {
-                step: '02',
-                title: 'Site Survey & Approval',
-                desc: 'Technician checks roof tilt, shadow area, cable distance, and grid parameters before quote sign-off.',
-                icon: Compass,
-                link: '/leads',
-              },
-              {
-                step: '03',
-                title: 'Quote & Auto-BOM',
-                desc: 'Template-driven bill of materials generation for 1-5 kW On-Grid/Off-Grid with instant margin safeguards.',
+                title: 'Quotations & BOM',
+                desc: 'Generate accurate system proposals with live BOM pricing and gross margin control.',
                 icon: FileText,
                 link: '/quotes',
               },
               {
-                step: '04',
-                title: 'Order & Serial Reserve',
-                desc: 'Accepted quote converts into sales order; high-value panels, inverters, and batteries reserved.',
-                icon: Package,
+                title: 'Inventory & Serials',
+                desc: 'Maintain panel and inverter inventory with strict barcode and serial number enforcement.',
+                icon: QrCode,
                 link: '/inventory',
               },
               {
-                step: '05',
-                title: 'QR Scan Dispatch',
-                desc: 'Warehouse scans equipment barcodes before truck rollout; automatically fires warranty start dates.',
-                icon: Shield,
+                title: 'Dispatch Manifest',
+                desc: 'Verify serial numbers against job manifests before staging equipment for delivery.',
+                icon: Package,
                 link: '/dispatch',
               },
               {
-                step: '06',
-                title: 'Technician Field PWA',
-                desc: 'Offline-ready checklist, generation meter testing, geotagged before/after photo evidence.',
+                title: 'Field App (PWA)',
+                desc: 'Mobile-ready checklist with geotagged photo capture, meter test, and signature.',
                 icon: Wrench,
                 link: '/jobs',
               },
               {
-                step: '07',
-                title: 'Customer Sign-off',
-                desc: 'Digital customer signature captured on glass; generates tamper-proof completion certificate.',
-                icon: CheckCircle,
-                link: '/jobs',
+                title: 'Warranty Ledger',
+                desc: 'Automated 20-year panel warranties linked directly to manufacturer serial records.',
+                icon: ShieldCheck,
+                link: '/warranties',
               },
               {
-                step: '08',
-                title: 'Traceable Warranty Service',
-                desc: 'Support agents trace fault claims directly to installed serial numbers for free or billable repair.',
-                icon: TrendingUp,
+                title: 'Service Tickets',
+                desc: 'Handle post-installation maintenance and warranty service claims with ease.',
+                icon: LifeBuoy,
                 link: '/tickets',
               },
-            ].map((card) => {
-              const Icon = card.icon;
+              {
+                title: 'Analytics & NASA Data',
+                desc: 'Real solar irradiance benchmarks from NASA POWER and Global Solar Atlas.',
+                icon: Globe2,
+                link: '/solar-insights',
+              },
+            ].map((module, i) => {
+              const Icon = module.icon;
               return (
                 <NavLink
-                  key={card.step}
-                  to={card.link}
-                  className="card p-6 bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition-all group flex flex-col justify-between"
+                  key={i}
+                  to={module.link}
+                  className="card p-5 bg-white hover:border-amber-400 transition-colors flex flex-col justify-between group"
                 >
                   <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-2xl font-black font-mono text-amber-500/60 group-hover:text-amber-400 transition-colors">
-                        {card.step}
-                      </span>
-                      <div className="p-2 rounded-xl bg-slate-800 text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
-                        <Icon className="w-5 h-5" />
-                      </div>
+                    <div className="w-8 h-8 rounded-md bg-slate-100 flex items-center justify-center text-slate-700 mb-3 group-hover:bg-amber-50 group-hover:text-amber-700 transition-colors">
+                      <Icon className="w-4 h-4" />
                     </div>
-                    <h3 className="text-base font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">
-                      {card.title}
-                    </h3>
-                    <p className="text-xs text-slate-400 leading-relaxed">
-                      {card.desc}
-                    </p>
+                    <h3 className="font-semibold text-slate-900 text-sm mb-1.5">{module.title}</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed">{module.desc}</p>
                   </div>
-                  <div className="mt-4 pt-4 border-t border-slate-800/80 flex items-center text-xs text-amber-400 font-semibold group-hover:translate-x-1 transition-transform">
-                    <span>Explore Stage</span>
-                    <ChevronRight className="w-3.5 h-3.5 ml-1" />
+                  <div className="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs font-medium text-amber-700">
+                    <span>Open Module</span>
+                    <ArrowRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover:translate-x-1" />
                   </div>
                 </NavLink>
               );
@@ -241,107 +332,162 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* NASA POWER & Real Data Showcase */}
-      <section id="solar-data" className="py-24 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold">
-                <Globe2 className="w-3.5 h-3.5" />
-                <span>Verified Scientific Solar Data</span>
+      {/* 6. Workflow Section */}
+      <section id="workflow" className="py-16 sm:py-20 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              End-to-End Installation Lifecycle
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-slate-600">
+              Clear sequential handover between departments ensures complete traceability.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
+            {[
+              { num: '01', title: 'Lead', desc: 'Enquiry captured & solar score calculated' },
+              { num: '02', title: 'Survey', desc: 'Roof tilt, shadow & cable distance measured' },
+              { num: '03', title: 'Quote', desc: 'Auto-BOM compiled & approved by customer' },
+              { num: '04', title: 'Dispatch', desc: 'Equipment scanned with QR barcodes' },
+              { num: '05', title: 'Install', desc: 'Technician finishes checklist & signs off' },
+              { num: '06', title: 'Warranty', desc: 'Active certificate issued for 20 years' },
+            ].map((step, idx) => (
+              <div key={idx} className="p-4 rounded-md border border-slate-200 bg-slate-50 flex flex-col justify-between">
+                <div>
+                  <div className="text-xs font-mono font-bold text-amber-600 mb-1">{step.num}</div>
+                  <div className="font-semibold text-slate-900 text-sm mb-1">{step.title}</div>
+                  <div className="text-xs text-slate-500 leading-relaxed">{step.desc}</div>
+                </div>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                Live Insights from NASA POWER & Global Solar Atlas
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Real Data Section */}
+      <section id="real-data" className="py-16 sm:py-20 bg-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-100 text-amber-800 text-xs font-medium mb-3">
+                <Globe2 className="w-3.5 h-3.5" />
+                NASA POWER & OSM Integration
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                Grounded in Real Public Solar Data
               </h2>
-              <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
-                Never guess generation estimates. SunPower Solutions queries NASA Langley Research Center's Satellite Solar Irradiance database (parameters: <code className="text-amber-300">ALLSKY_SFC_SW_DWN</code>, <code className="text-amber-300">T2M</code>) to calculate exact regional generation profiles, temperature derating, and tilt angles.
+              <p className="mt-3 text-sm text-slate-600 leading-relaxed">
+                Rather than using generic approximations, SunPower Solutions queries the NASA Langley Research Center Satellite database to compute exact regional irradiance and temperature coefficients.
               </p>
 
-              <div className="space-y-3 pt-2">
-                {[
-                  'Daily Global Horizontal Irradiance (GHI) and Direct Normal Irradiance (DNI)',
-                  'Regional temperature derate analysis (-0.38%/°C above 25°C cell temp)',
-                  'Address validation & reverse geocoding via OpenStreetMap Nominatim',
-                  '25-year cumulative kWh generation projection with 0.5%/yr degradation',
-                ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-xs sm:text-sm text-slate-300">{item}</span>
-                  </div>
-                ))}
+              <div className="mt-6 space-y-2.5 text-xs text-slate-700">
+                <div className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span>NASA POWER Climatology (ALLSKY_SFC_SW_DWN & T2M)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span>OpenStreetMap Nominatim Reverse Geocoding</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span>Global Solar Atlas Photovoltaic Yield Modeling</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span>NREL PVDAQ Standardized Performance Benchmarks</span>
+                </div>
               </div>
 
-              <div className="pt-4">
+              <div className="mt-8">
                 <NavLink
                   to="/solar-insights"
-                  className="btn-accent px-6 py-3 rounded-xl font-semibold text-sm inline-flex items-center gap-2"
+                  className="btn-accent px-5 py-2.5 rounded-md text-xs font-semibold inline-flex items-center gap-2 shadow-xs"
                 >
-                  <span>View Solar Data & Provenance Panel</span>
+                  <span>Explore Solar Data Insights</span>
                   <ArrowRight className="w-4 h-4" />
                 </NavLink>
               </div>
             </div>
 
-            {/* Interactive Data Preview Box */}
-            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl relative">
-              <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+            {/* Benchmark Preview Box */}
+            <div className="card p-6 bg-white border-slate-200 shadow-sm">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-100">
                 <div>
-                  <span className="text-xs font-semibold uppercase text-amber-400 tracking-wider">
-                    Demo Site 1: Urban Rooftop
-                  </span>
-                  <h4 className="text-lg font-bold text-white">Chennai, Tamil Nadu</h4>
-                  <p className="text-xs text-slate-400">13.0827° N, 80.2707° E • Elev 45m</p>
+                  <div className="text-xs font-semibold uppercase text-amber-700">Regional Benchmark Site</div>
+                  <div className="text-base font-bold text-slate-900 mt-0.5">Chennai, Tamil Nadu</div>
+                  <div className="text-xs text-slate-500">13.0827° N, 80.2707° E • Elev 45m</div>
                 </div>
                 <SolarScoreRing score={89} size="md" />
               </div>
 
-              <div className="grid grid-cols-2 gap-4 py-4 border-b border-slate-800 text-xs">
+              <div className="grid grid-cols-2 gap-4 py-4 border-b border-slate-100 text-xs">
                 <div>
                   <span className="text-slate-500 block">Annual GHI</span>
-                  <span className="text-base font-bold text-white font-mono">1,971 kWh/m²</span>
+                  <span className="text-sm font-bold text-slate-900 font-mono">1,971 kWh/m²</span>
                 </div>
                 <div>
                   <span className="text-slate-500 block">Daily Average GHI</span>
-                  <span className="text-base font-bold text-amber-400 font-mono">5.40 kWh/m²/day</span>
+                  <span className="text-sm font-bold text-amber-700 font-mono">5.40 kWh/m²/day</span>
                 </div>
                 <div>
                   <span className="text-slate-500 block">Optimal Tilt Angle</span>
-                  <span className="text-base font-bold text-white font-mono">13° South</span>
+                  <span className="text-sm font-bold text-slate-900 font-mono">13° South</span>
                 </div>
                 <div>
                   <span className="text-slate-500 block">Expected 5kW Output</span>
-                  <span className="text-base font-bold text-emerald-400 font-mono">7,144 kWh/year</span>
+                  <span className="text-sm font-bold text-emerald-600 font-mono">7,144 kWh/year</span>
                 </div>
               </div>
 
-              <div className="pt-4">
-                <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
-                  <span>Data Provenance Source:</span>
-                  <span className="text-amber-400 font-medium">NASA POWER (Public Domain)</span>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-[11px] text-slate-400 font-mono">
-                  Endpoint: https://power.larc.nasa.gov/api/temporal/climatology/point
-                </div>
+              <div className="pt-3 text-[11px] text-slate-500 font-mono">
+                Source: NASA POWER API (power.larc.nasa.gov) • Public Domain
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800/80 bg-slate-950 py-12 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-500">
-          <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-lg bg-amber-500 flex items-center justify-center text-slate-950 font-bold">
-              <Sun className="w-4 h-4" />
-            </div>
-            <span>© 2026 SunPower Solutions India. Built for rooftop solar excellence.</span>
+      {/* 8. Call to Action Section */}
+      <section className="py-16 bg-white border-b border-slate-200">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+            Ready to streamline your solar installation operations?
+          </h2>
+          <p className="mt-3 text-sm text-slate-600 max-w-xl mx-auto">
+            Log in to the dashboard to monitor installations, dispatch equipment, and manage customer service.
+          </p>
+          <div className="mt-6 flex justify-center">
+            <NavLink
+              to="/dashboard"
+              className="btn-accent px-6 py-3 rounded-md text-sm font-semibold shadow-xs inline-flex items-center gap-2"
+            >
+              <span>Launch Director Dashboard</span>
+              <ArrowRight className="w-4 h-4" />
+            </NavLink>
           </div>
-          <div className="flex flex-wrap gap-6">
-            <span>NASA POWER Project (LaRC)</span>
-            <span>OpenStreetMap / Nominatim</span>
-            <span>Global Solar Atlas (Solargis/World Bank)</span>
-            <span>MNRE India Standards</span>
+        </div>
+      </section>
+
+      {/* 9. Professional Enterprise Footer */}
+      <footer className="bg-slate-50 py-12 border-t border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-500">
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6 rounded bg-amber-500 flex items-center justify-center text-white font-bold">
+                <Sun className="w-3.5 h-3.5" />
+              </div>
+              <span>© 2026 SunPower Solutions ERP. Professional Solar Operations Platform.</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-5">
+              <NavLink to="/dashboard" className="hover:text-slate-800">Dashboard</NavLink>
+              <NavLink to="/leads" className="hover:text-slate-800">CRM</NavLink>
+              <NavLink to="/quotes" className="hover:text-slate-800">Quotations</NavLink>
+              <NavLink to="/inventory" className="hover:text-slate-800">Inventory</NavLink>
+              <NavLink to="/warranties" className="hover:text-slate-800">Warranties</NavLink>
+              <NavLink to="/solar-insights" className="hover:text-slate-800">NASA Data</NavLink>
+            </div>
           </div>
         </div>
       </footer>

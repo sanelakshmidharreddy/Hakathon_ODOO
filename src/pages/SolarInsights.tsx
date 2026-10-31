@@ -107,8 +107,8 @@ export const SolarInsights: React.FC = () => {
       </div>
 
       {/* Selected Site Overview Card */}
-      <div className="card p-6 border-amber-500/20 bg-gradient-to-r from-amber-50/20 via-white to-white dark:from-amber-950/20 dark:via-slate-900 dark:to-slate-900">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-slate-100 dark:border-slate-800">
+      <div className="card p-6 border-slate-200 bg-white">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-slate-100">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-0.5 rounded text-[11px] font-bold uppercase bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">

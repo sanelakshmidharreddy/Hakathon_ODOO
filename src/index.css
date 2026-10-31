@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,19 +6,21 @@
 
 @layer base {
   :root {
-    --color-primary: 26 35 126;
-    --color-accent: 255 193 7;
-    --color-success: 16 185 129;
-    --color-danger: 239 68 68;
-    --color-warning: 245 158 11;
+    --bg-main: #ffffff;
+    --bg-app: #f8fafc;
+    --border-default: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --color-accent: #d97706;
   }
 
   * {
-    @apply border-gray-200 dark:border-gray-700;
+    @apply border-slate-200;
   }
 
   body {
-    @apply bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans antialiased;
+    @apply bg-slate-50 text-slate-900 font-sans antialiased selection:bg-amber-100 selection:text-amber-900;
   }
 
   html {
@@ -27,88 +29,85 @@
 }
 
 @layer components {
-  .btn-primary {
-    @apply inline-flex items-center gap-2 px-4 py-2.5 bg-navy-600 hover:bg-navy-700 dark:bg-navy-500 dark:hover:bg-navy-600 text-white rounded-xl font-semibold text-sm transition-all duration-200 shadow-md hover:shadow-lg active:scale-95;
+  /* ====================================================================
+     Odoo-Style Enterprise Buttons
+     ==================================================================== */
+  .btn-primary,
+  .btn-accent {
+    @apply inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white rounded-md font-medium text-xs sm:text-sm transition-colors duration-150 shadow-xs disabled:opacity-50 disabled:pointer-events-none;
   }
 
-  .btn-accent {
-    @apply inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-amber text-navy-900 rounded-xl font-semibold text-sm transition-all duration-200 shadow-md hover:shadow-lg hover:opacity-90 active:scale-95;
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 active:bg-slate-100 text-slate-700 border border-slate-300 rounded-md font-medium text-xs sm:text-sm transition-colors duration-150 shadow-xs;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center gap-2 px-4 py-2.5 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-medium text-sm transition-all duration-200;
+    @apply inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-transparent hover:bg-slate-100 text-slate-600 hover:text-slate-900 rounded-md font-medium text-xs transition-colors duration-150;
   }
 
   .btn-danger {
-    @apply inline-flex items-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-semibold text-sm transition-all duration-200 shadow-md hover:shadow-lg active:scale-95;
+    @apply inline-flex items-center justify-center gap-1.5 px-3.5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md font-medium text-xs sm:text-sm transition-colors duration-150 shadow-xs;
   }
 
+  /* ====================================================================
+     Clean Enterprise Cards & Layout
+     ==================================================================== */
   .card {
-    @apply bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-6;
+    @apply bg-white rounded-lg border border-slate-200 shadow-xs p-5;
   }
 
   .card-hover {
-    @apply card hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer;
+    @apply card hover:border-slate-300 transition-colors duration-150;
   }
 
+  .kpi-card {
+    @apply bg-white rounded-lg border border-slate-200 shadow-xs p-4 sm:p-5;
+  }
+
+  /* ====================================================================
+     Enterprise Inputs & Form Controls
+     ==================================================================== */
   .input {
-    @apply w-full px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-transparent transition-all duration-200;
+    @apply w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500 transition-colors duration-150 shadow-xs;
   }
 
   .input-error {
-    @apply border-red-400 focus:ring-red-400;
+    @apply border-red-400 focus:ring-red-500 focus:border-red-500;
   }
 
   .label {
-    @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5;
+    @apply block text-xs font-semibold text-slate-700 mb-1;
   }
 
+  /* ====================================================================
+     Status Badges (Restrained Corporate Palette)
+     ==================================================================== */
   .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    @apply inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium border leading-tight;
   }
 
-  .badge-blue { @apply badge bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300; }
-  .badge-green { @apply badge bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300; }
-  .badge-amber { @apply badge bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300; }
-  .badge-red { @apply badge bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300; }
-  .badge-purple { @apply badge bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300; }
-  .badge-gray { @apply badge bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300; }
-
-  .kpi-card {
-    @apply card relative overflow-hidden;
+  .badge-blue {
+    @apply badge bg-blue-50 text-blue-700 border-blue-200;
   }
 
-  .kpi-card::before {
-    content: '';
-    @apply absolute top-0 right-0 w-24 h-24 opacity-10 rounded-full -translate-y-8 translate-x-8;
+  .badge-green {
+    @apply badge bg-emerald-50 text-emerald-700 border-emerald-200;
   }
 
-  .sidebar-link {
-    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer;
+  .badge-amber {
+    @apply badge bg-amber-50 text-amber-800 border-amber-200;
   }
 
-  .sidebar-link-active {
-    @apply sidebar-link bg-navy-600 dark:bg-navy-700 text-white shadow-md;
+  .badge-red {
+    @apply badge bg-red-50 text-red-700 border-red-200;
   }
 
-  .sidebar-link-inactive {
-    @apply sidebar-link text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100;
+  .badge-purple {
+    @apply badge bg-indigo-50 text-indigo-700 border-indigo-200;
   }
 
-  .table-row {
-    @apply border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-150;
-  }
-
-  .table-header {
-    @apply px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider;
-  }
-
-  .table-cell {
-    @apply px-4 py-3 text-sm text-gray-900 dark:text-gray-100;
-  }
-
-  .glassmorphism {
-    @apply bg-white/10 backdrop-blur-md border border-white/20 dark:bg-black/20 dark:border-white/10;
+  .badge-gray {
+    @apply badge bg-slate-100 text-slate-700 border-slate-200;
   }
 
   .status-new { @apply badge-blue; }
@@ -121,114 +120,79 @@
   .status-completed { @apply badge-green; }
   .status-overdue { @apply badge-red; }
 
-  .gradient-text {
-    @apply bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent;
+  /* ====================================================================
+     Enterprise Tables
+     ==================================================================== */
+  .table-row {
+    @apply border-b border-slate-100 hover:bg-slate-50/70 transition-colors duration-100;
   }
 
+  .table-header {
+    @apply px-4 py-2.5 text-left text-[11px] font-semibold text-slate-600 bg-slate-50 border-b border-slate-200 uppercase tracking-wider;
+  }
+
+  .table-cell {
+    @apply px-4 py-3 text-xs text-slate-800;
+  }
+
+  /* ====================================================================
+     Sidebar Navigation Tokens
+     ==================================================================== */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2 rounded-md text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors duration-150;
+  }
+
+  .sidebar-link-active {
+    @apply sidebar-link bg-amber-50 text-amber-900 font-semibold border-l-2 border-amber-600;
+  }
+
+  /* ====================================================================
+     Typography Helpers
+     ==================================================================== */
   .section-title {
-    @apply text-2xl font-bold text-gray-900 dark:text-gray-100;
+    @apply text-lg sm:text-xl font-bold text-slate-900 tracking-tight;
   }
 
   .page-header {
-    @apply flex items-center justify-between mb-6;
+    @apply flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 mb-6;
   }
 
   .skeleton {
-    @apply animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg;
+    @apply animate-pulse bg-slate-200 rounded;
   }
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { @apply bg-transparent; }
-::-webkit-scrollbar-thumb { @apply bg-gray-300 dark:bg-gray-600 rounded-full; }
-::-webkit-scrollbar-thumb:hover { @apply bg-gray-400 dark:bg-gray-500; }
-
-/* Custom animations */
-@keyframes countUp {
-  from { transform: translateY(10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+/* Slim professional scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-.shimmer {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-.dark .shimmer {
-  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
-}
-
-/* Leaflet map */
-.leaflet-container {
-  @apply rounded-xl;
-  font-family: 'Inter', sans-serif !important;
-}
-
-/* Chart tooltips */
+/* Clean chart tooltips */
 .recharts-tooltip-wrapper .recharts-default-tooltip {
-  @apply rounded-xl border-gray-200 dark:border-gray-700 shadow-xl !important;
+  border-radius: 6px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08) !important;
+  background-color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 12px !important;
 }
 
-/* PWA install prompt */
-.pwa-prompt {
-  @apply fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-80 card shadow-2xl z-50 animate-slide-up;
-}
-
-/* Kanban */
-.kanban-column {
-  @apply min-w-64 w-64 flex-shrink-0;
-}
-
-.kanban-card {
-  @apply card p-4 mb-3 cursor-grab active:cursor-grabbing hover:shadow-md transition-shadow;
-}
-
-/* Timeline */
-.timeline-dot {
-  @apply absolute left-0 w-3 h-3 rounded-full bg-navy-600 border-2 border-white dark:border-gray-900 -translate-x-1/2;
-}
-
-.timeline-line {
-  @apply absolute left-0 top-3 bottom-0 w-px bg-gray-200 dark:bg-gray-700;
-}
-
-/* Gradient hero */
-.hero-gradient {
-  background: linear-gradient(135deg, #060b24 0%, #0d1b4b 30%, #1a237e 60%, #0d47a1 100%);
-}
-
-/* Solar score ring */
+/* Solar score ring stroke transition */
 .score-ring {
   stroke-dasharray: 251.2;
   stroke-linecap: round;
-  transition: stroke-dashoffset 1.5s ease-out;
+  transition: stroke-dashoffset 1s ease-out;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
-}
-
-/* Toast notifications */
-.toast-enter {
-  transform: translateX(120%);
-  opacity: 0;
-}
-.toast-enter-active {
-  transform: translateX(0);
-  opacity: 1;
-  transition: all 0.3s ease-out;
-}
-.toast-exit {
-  transform: translateX(0);
-  opacity: 1;
-}
-.toast-exit-active {
-  transform: translateX(120%);
-  opacity: 0;
-  transition: all 0.3s ease-in;
 }

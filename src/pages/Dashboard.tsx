@@ -149,27 +149,27 @@ export const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-6">
       {/* Executive Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
               Director Executive Dashboard
             </h1>
             {backendStatus?.connected ? (
-              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5" title="Connected to Render Backend">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1.5" title="Connected to Render Backend">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                 Render Backend Connected
               </span>
             ) : (
-              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center gap-1.5">
+              <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                 Live Operations
               </span>
             )}
           </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Real-time project financials, inventory dispatch status, technician field telemetry, and NASA POWER irradiance insights.
           </p>
         </div>
@@ -177,7 +177,7 @@ export const Dashboard: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={handleExportCSV}
-            className="btn-ghost px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2"
+            className="btn-secondary px-3.5 py-1.5 rounded text-xs font-semibold flex items-center gap-2"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
@@ -193,8 +193,8 @@ export const Dashboard: React.FC = () => {
           subtitle="From confirmed & installed orders"
           change={{ value: '18.4%', isPositive: true }}
           icon={DollarSign}
-          iconBgColor="bg-emerald-50 dark:bg-emerald-950/40"
-          iconColor="text-emerald-500"
+          iconBgColor="bg-emerald-50"
+          iconColor="text-emerald-600"
         />
         <KPICard
           title="Gross Margin"
@@ -202,8 +202,8 @@ export const Dashboard: React.FC = () => {
           subtitle={`₹${(grossProfit / 100000).toFixed(2)}L gross profit`}
           change={{ value: '1.2%', isPositive: true }}
           icon={TrendingUp}
-          iconBgColor="bg-amber-50 dark:bg-amber-950/40"
-          iconColor="text-amber-500"
+          iconBgColor="bg-amber-50"
+          iconColor="text-amber-700"
         />
         <KPICard
           title="Lead Pipeline"
@@ -211,16 +211,16 @@ export const Dashboard: React.FC = () => {
           subtitle={`${conversionRate}% overall conversion rate`}
           change={{ value: '6 new this week', isPositive: true }}
           icon={Users}
-          iconBgColor="bg-sky-50 dark:bg-sky-950/40"
-          iconColor="text-sky-500"
+          iconBgColor="bg-blue-50"
+          iconColor="text-blue-600"
         />
         <KPICard
           title="Active Field Work"
           value={`${activeJobs} Jobs`}
           subtitle={`${completedJobs} jobs commissioned`}
           icon={Wrench}
-          iconBgColor="bg-indigo-50 dark:bg-indigo-950/40"
-          iconColor="text-indigo-500"
+          iconBgColor="bg-slate-100"
+          iconColor="text-slate-700"
         />
       </div>
 
@@ -229,14 +229,14 @@ export const Dashboard: React.FC = () => {
         <div className="card p-4 flex items-center justify-between">
           <div className="space-y-0.5">
             <span className="text-[11px] font-semibold text-slate-500 uppercase">Warehouse Valuation</span>
-            <div className="text-lg font-bold text-slate-900 dark:text-white font-mono">
+            <div className="text-lg font-bold text-slate-900 font-mono">
               ₹{(totalInventoryValue / 100000).toFixed(2)} Lakhs
             </div>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-slate-500">
               {serialNumbers.filter((s) => s.status === 'in_stock').length} barcoded serials in stock
             </span>
           </div>
-          <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+          <div className="p-2.5 rounded bg-slate-100 text-slate-700">
             <Package className="w-5 h-5" />
           </div>
         </div>
@@ -244,14 +244,14 @@ export const Dashboard: React.FC = () => {
         <div className="card p-4 flex items-center justify-between">
           <div className="space-y-0.5">
             <span className="text-[11px] font-semibold text-slate-500 uppercase">Warranty Coverage</span>
-            <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400 font-mono">
+            <div className="text-lg font-bold text-emerald-600 font-mono">
               {warranties.filter((w) => w.status === 'active').length} Active Units
             </div>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-slate-500">
               20-yr panels & 2-5 yr inverters/batteries
             </span>
           </div>
-          <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-500">
+          <div className="p-2.5 rounded bg-emerald-50 text-emerald-600">
             <ShieldCheck className="w-5 h-5" />
           </div>
         </div>
@@ -259,14 +259,14 @@ export const Dashboard: React.FC = () => {
         <div className="card p-4 flex items-center justify-between">
           <div className="space-y-0.5">
             <span className="text-[11px] font-semibold text-slate-500 uppercase">Support Tickets</span>
-            <div className="text-lg font-bold text-amber-600 dark:text-amber-400 font-mono">
+            <div className="text-lg font-bold text-amber-700 font-mono">
               {openTickets} Open ({underWarrantyTickets} under warranty)
             </div>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-slate-500">
               Avg resolution time: 2.4 days
             </span>
           </div>
-          <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-500">
+          <div className="p-2.5 rounded bg-amber-50 text-amber-700">
             <LifeBuoy className="w-5 h-5" />
           </div>
         </div>
@@ -278,40 +278,42 @@ export const Dashboard: React.FC = () => {
         <div className="card p-6 lg:col-span-2">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-base font-bold text-slate-900 dark:text-white">
+              <h3 className="text-base font-bold text-slate-900">
                 Revenue vs Cost Trend (₹)
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                Tracking monthly turnover against component BOM and installation costs
+              <p className="text-xs text-slate-500">
+                Monthly turnover compared with equipment BOM and installation expenses
               </p>
             </div>
-            <span className="text-xs font-semibold px-2.5 py-1 bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 rounded-lg">
+            <span className="text-xs font-semibold px-2.5 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded">
               Avg Margin: 28.1%
             </span>
           </div>
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={financialData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.2} />
-                <XAxis dataKey="month" tick={{ fontSize: 12 }} stroke="#64748b" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#64748b' }} axisLine={{ stroke: '#e2e8f0' }} tickLine={false} />
                 <YAxis
                   tickFormatter={(val) => `₹${(val / 100000).toFixed(0)}L`}
-                  tick={{ fontSize: 11 }}
-                  stroke="#64748b"
+                  tick={{ fontSize: 11, fill: '#64748b' }}
+                  axisLine={{ stroke: '#e2e8f0' }}
+                  tickLine={false}
                 />
                 <Tooltip
                   formatter={(value: any) => [`₹${Number(value).toLocaleString('en-IN')}`, '']}
                   contentStyle={{
-                    backgroundColor: '#0f172a',
-                    borderColor: '#334155',
-                    borderRadius: '0.75rem',
+                    backgroundColor: '#ffffff',
+                    borderColor: '#e2e8f0',
+                    borderRadius: '6px',
                     fontSize: '12px',
-                    color: '#fff',
+                    color: '#0f172a',
+                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
                   }}
                 />
                 <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
-                <Bar dataKey="revenue" name="Total Revenue" fill="#f59e0b" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="cost" name="Total Cost" fill="#64748b" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="revenue" name="Total Revenue" fill="#d97706" radius={[2, 2, 0, 0]} />
+                <Bar dataKey="cost" name="Total Cost" fill="#94a3b8" radius={[2, 2, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -320,10 +322,10 @@ export const Dashboard: React.FC = () => {
         {/* System Type Revenue Split */}
         <div className="card p-6 flex flex-col justify-between">
           <div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">
+            <h3 className="text-base font-bold text-slate-900 mb-1">
               Revenue by System Type
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
+            <p className="text-xs text-slate-500 mb-4">
               5 kW Off-Grid systems deliver the highest gross margin contribution
             </p>
             <div className="h-56">
@@ -335,7 +337,7 @@ export const Dashboard: React.FC = () => {
                     cy="50%"
                     innerRadius={55}
                     outerRadius={80}
-                    paddingAngle={4}
+                    paddingAngle={3}
                     dataKey="value"
                   >
                     {systemTypeData.map((entry, index) => (
@@ -345,22 +347,23 @@ export const Dashboard: React.FC = () => {
                   <Tooltip
                     formatter={(value: any) => [`${value}% Share`, 'Revenue']}
                     contentStyle={{
-                      backgroundColor: '#0f172a',
-                      borderColor: '#334155',
-                      borderRadius: '0.75rem',
+                      backgroundColor: '#ffffff',
+                      borderColor: '#e2e8f0',
+                      borderRadius: '6px',
                       fontSize: '12px',
-                      color: '#fff',
+                      color: '#0f172a',
+                      boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
                     }}
                   />
                 </PieChart>
               </ResponsiveContainer>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
+          <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100 text-xs">
             {systemTypeData.map((item) => (
               <div key={item.name} className="flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
-                <span className="text-slate-600 dark:text-slate-300 truncate">{item.name}</span>
+                <span className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: item.color }} />
+                <span className="text-slate-600 truncate">{item.name}</span>
               </div>
             ))}
           </div>
@@ -368,23 +371,23 @@ export const Dashboard: React.FC = () => {
       </div>
 
       {/* Real Data Section: NASA POWER Irradiance Comparison */}
-      <div className="card p-6 border-amber-500/20 bg-gradient-to-b from-white via-white to-amber-50/10 dark:from-slate-900 dark:via-slate-900 dark:to-amber-950/10">
+      <div className="card p-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-2">
-              <Sun className="w-5 h-5 text-amber-500" />
-              <h3 className="text-base font-bold text-slate-900 dark:text-white">
+              <Sun className="w-5 h-5 text-amber-600" />
+              <h3 className="text-base font-bold text-slate-900">
                 Live NASA POWER Solar Irradiance Benchmark
               </h3>
             </div>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              Real scientific daily GHI (kWh/m²/day) comparing Urban Site (Chennai, TN) vs Semi-Urban High-Yield Site (Jodhpur, RJ).
+            <p className="text-xs text-slate-500 mt-1">
+              Scientific daily GHI (kWh/m²/day) comparing Urban Site (Chennai, TN) vs High-Yield Site (Jodhpur, RJ).
             </p>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-500 dark:text-slate-400">Endpoint:</span>
-            <code className="text-[11px] px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-amber-600 dark:text-amber-400">
+            <span className="text-xs text-slate-500">Endpoint:</span>
+            <code className="text-[11px] px-2 py-1 bg-slate-100 border border-slate-200 rounded font-mono text-slate-700">
               NASA POWER LaRC Climatology
             </code>
           </div>
@@ -395,38 +398,40 @@ export const Dashboard: React.FC = () => {
             <AreaChart data={solarChartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorChennai" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0} />
+                  <stop offset="5%" stopColor="#2563eb" stopOpacity={0.2} />
+                  <stop offset="95%" stopColor="#2563eb" stopOpacity={0} />
                 </linearGradient>
                 <linearGradient id="colorJodhpur" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.4} />
-                  <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
+                  <stop offset="5%" stopColor="#d97706" stopOpacity={0.25} />
+                  <stop offset="95%" stopColor="#d97706" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.2} />
-              <XAxis dataKey="month" tick={{ fontSize: 12 }} stroke="#64748b" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+              <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#64748b' }} axisLine={{ stroke: '#e2e8f0' }} tickLine={false} />
               <YAxis
                 unit=" kWh"
                 domain={[3.5, 7.5]}
-                tick={{ fontSize: 11 }}
-                stroke="#64748b"
+                tick={{ fontSize: 11, fill: '#64748b' }}
+                axisLine={{ stroke: '#e2e8f0' }}
+                tickLine={false}
               />
               <Tooltip
                 formatter={(val: any) => [`${val} kWh/m²/day`, 'Daily GHI']}
                 contentStyle={{
-                  backgroundColor: '#0f172a',
-                  borderColor: '#334155',
-                  borderRadius: '0.75rem',
+                  backgroundColor: '#ffffff',
+                  borderColor: '#e2e8f0',
+                  borderRadius: '6px',
                   fontSize: '12px',
-                  color: '#fff',
+                  color: '#0f172a',
+                  boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
                 }}
               />
               <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
               <Area
                 type="monotone"
                 dataKey="jodhpurGhi"
-                name="Jodhpur, RJ (Rural/Semi-Urban) - Avg 5.75"
-                stroke="#f59e0b"
+                name="Jodhpur, RJ (Semi-Urban) - Avg 5.75"
+                stroke="#d97706"
                 strokeWidth={2}
                 fillOpacity={1}
                 fill="url(#colorJodhpur)"
@@ -435,7 +440,7 @@ export const Dashboard: React.FC = () => {
                 type="monotone"
                 dataKey="chennaiGhi"
                 name="Chennai, TN (Urban) - Avg 5.40"
-                stroke="#0ea5e9"
+                stroke="#2563eb"
                 strokeWidth={2}
                 fillOpacity={1}
                 fill="url(#colorChennai)"
@@ -444,24 +449,24 @@ export const Dashboard: React.FC = () => {
           </ResponsiveContainer>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 text-xs">
-          <div className="p-3 rounded-xl bg-sky-50/50 dark:bg-sky-950/20 border border-sky-200/50 dark:border-sky-900/40">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 pt-4 border-t border-slate-100 text-xs">
+          <div className="p-3 rounded-md bg-slate-50 border border-slate-200">
             <div className="flex items-center justify-between mb-1">
-              <span className="font-semibold text-sky-900 dark:text-sky-300">Chennai Demo Rooftop (Alice Singh)</span>
+              <span className="font-semibold text-slate-800">Chennai Demo Rooftop (Alice Singh)</span>
               <SolarScoreRing score={89} size="sm" showLabel={false} />
             </div>
-            <p className="text-slate-600 dark:text-slate-400">
-              5 kW system produces approx. <strong>7,144 kWh/year</strong>. Higher summer ambient temperatures (33°C+) cause 3.2% thermal derating.
+            <p className="text-slate-600">
+              5 kW system produces approx. <strong>7,144 kWh/year</strong>. Summer ambient temperatures (33°C+) introduce 3.2% thermal derating.
             </p>
           </div>
 
-          <div className="p-3 rounded-xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-900/40">
+          <div className="p-3 rounded-md bg-amber-50/50 border border-amber-200">
             <div className="flex items-center justify-between mb-1">
-              <span className="font-semibold text-amber-900 dark:text-amber-300">Jodhpur Demo Site (High DNI)</span>
+              <span className="font-semibold text-amber-900">Jodhpur Demo Site (High DNI)</span>
               <SolarScoreRing score={96} size="sm" showLabel={false} />
             </div>
-            <p className="text-slate-600 dark:text-slate-400">
-              5 kW system produces approx. <strong>7,820 kWh/year</strong>. Prime solar belt with over 320 sunny days annually.
+            <p className="text-slate-600">
+              5 kW system produces approx. <strong>7,820 kWh/year</strong>. High-yield solar belt with over 320 clear days annually.
             </p>
           </div>
         </div>
@@ -471,35 +476,35 @@ export const Dashboard: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Field Crew Productivity */}
         <div className="card p-6">
-          <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">
+          <h3 className="text-base font-bold text-slate-900 mb-1">
             Installation Crew Productivity
           </h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
+          <p className="text-xs text-slate-500 mb-4">
             Monitoring active jobs, completion speed, and digital sign-off compliance
           </p>
 
-          <div className="divide-y divide-slate-100 dark:divide-slate-800">
+          <div className="divide-y divide-slate-100">
             {technicianWorkload.map((tech) => (
-              <div key={tech.name} className="py-3.5 flex items-center justify-between">
+              <div key={tech.name} className="py-3 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-xs text-slate-700 dark:text-slate-300">
+                  <div className="w-8 h-8 rounded bg-slate-100 flex items-center justify-center font-bold text-xs text-slate-700">
                     {tech.name.charAt(0)}
                   </div>
                   <div>
-                    <span className="font-semibold text-xs text-slate-900 dark:text-white block">
+                    <span className="font-semibold text-xs text-slate-900 block">
                       {tech.name}
                     </span>
-                    <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                    <span className="text-[11px] text-slate-500">
                       {tech.completed} jobs commissioned this month
                     </span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4 text-xs font-mono">
-                  <span className="px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 font-semibold">
+                  <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-semibold border border-blue-200">
                     {tech.active} Active
                   </span>
-                  <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+                  <span className="text-emerald-700 font-semibold">
                     {tech.efficiency} On-time
                   </span>
                 </div>
@@ -513,20 +518,20 @@ export const Dashboard: React.FC = () => {
           <div>
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                <h3 className="text-base font-bold text-slate-900">
                   Installation Geospatial Distribution
                 </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+                <p className="text-xs text-slate-500">
                   OpenStreetMap validated customer coordinates across Tamil Nadu & Rajasthan
                 </p>
               </div>
-              <MapPin className="w-5 h-5 text-amber-500" />
+              <MapPin className="w-5 h-5 text-amber-600" />
             </div>
 
-            <div className="space-y-3">
-              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
+            <div className="space-y-2.5">
+              <div className="p-3 rounded border border-slate-200 bg-slate-50/50 flex items-center justify-between text-xs">
                 <div>
-                  <span className="font-bold text-slate-900 dark:text-white block">
+                  <span className="font-bold text-slate-900 block">
                     Alice Singh (5 kW Off-Grid)
                   </span>
                   <span className="text-slate-500">Anna Nagar, Chennai • 13.0827°N, 80.2707°E</span>
@@ -534,9 +539,9 @@ export const Dashboard: React.FC = () => {
                 <StatusBadge status="completed" />
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
+              <div className="p-3 rounded border border-slate-200 bg-slate-50/50 flex items-center justify-between text-xs">
                 <div>
-                  <span className="font-bold text-slate-900 dark:text-white block">
+                  <span className="font-bold text-slate-900 block">
                     Ramesh Patel (3 kW On-Grid)
                   </span>
                   <span className="text-slate-500">Shastri Nagar, Jodhpur • 26.2918°N, 73.0169°E</span>
@@ -544,9 +549,9 @@ export const Dashboard: React.FC = () => {
                 <StatusBadge status="survey_scheduled" />
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
+              <div className="p-3 rounded border border-slate-200 bg-slate-50/50 flex items-center justify-between text-xs">
                 <div>
-                  <span className="font-bold text-slate-900 dark:text-white block">
+                  <span className="font-bold text-slate-900 block">
                     Sunita Desai (5 kW On-Grid)
                   </span>
                   <span className="text-slate-500">Kothrud, Pune • 18.5074°N, 73.8077°E</span>
@@ -556,9 +561,9 @@ export const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
+          <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500 flex items-center justify-between">
             <span>Powered by OpenStreetMap & Nominatim</span>
-            <span className="text-amber-500 font-medium">100% Geotagged Proof</span>
+            <span className="text-amber-700 font-medium">100% Geotagged Proof</span>
           </div>
         </div>
       </div>
