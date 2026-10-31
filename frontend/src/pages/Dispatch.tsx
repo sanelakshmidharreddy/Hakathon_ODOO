@@ -103,7 +103,7 @@ export const Dispatch: React.FC = () => {
           >
             {orders.map((o) => (
               <option key={o.id} value={o.id}>
-                {o.orderNumber} - {o.customerName} ({o.capacityKw}kW {o.systemType.replace('_', ' ')})
+                {o.orderNumber} - {o.customerName} ({o.capacityKw}kW {(o.systemType || '').replace('_', ' ')})
               </option>
             ))}
           </select>
@@ -240,7 +240,7 @@ export const Dispatch: React.FC = () => {
                         <td className="p-3 text-slate-700 dark:text-slate-300 font-medium">
                           {ser?.productName}
                         </td>
-                        <td className="p-3 capitalize text-slate-500">{ser?.category.replace('_', ' ')}</td>
+                        <td className="p-3 capitalize text-slate-500">{(ser?.category || '').replace('_', ' ')}</td>
                         <td className="p-3 text-emerald-600 dark:text-emerald-400 font-semibold">
                           {ser?.category === 'panel' ? '20 Years' : ser?.category === 'battery' ? '5 Years' : '2 Years'}
                         </td>

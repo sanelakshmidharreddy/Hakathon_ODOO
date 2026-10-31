@@ -124,9 +124,9 @@ export const Leads: React.FC = () => {
 
   const filteredLeads = leads.filter((l) => {
     const matchesSearch =
-      l.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      l.phone.includes(searchTerm) ||
-      l.address.toLowerCase().includes(searchTerm.toLowerCase());
+      (l.customerName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (l.phone || '').includes(searchTerm) ||
+      (l.address || '').toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'all' || l.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -297,13 +297,13 @@ export const Leads: React.FC = () => {
                           <div className="flex items-center gap-1.5">
                             <Zap className="w-3.5 h-3.5 text-amber-500" />
                             <span className="font-medium text-slate-700 dark:text-slate-300">
-                              {lead.preferredCapacityKw} kW • {lead.preferredSystemType.replace('_', ' ')}
+                              {lead.preferredCapacityKw} kW • {(lead.preferredSystemType || '').replace('_', ' ')}
                             </span>
                           </div>
                         </div>
 
                         <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px]">
-                          <span className="text-slate-400 capitalize">Src: {lead.source.replace('_', ' ')}</span>
+                          <span className="text-slate-400 capitalize">Src: {(lead.source || '').replace('_', ' ')}</span>
                           <span className="text-amber-600 dark:text-amber-400 font-semibold group-hover:underline flex items-center gap-1">
                             Action
                             <ArrowRight className="w-3 h-3" />
@@ -351,7 +351,7 @@ export const Leads: React.FC = () => {
                     </td>
                     <td className="p-4">
                       <span className="font-semibold text-slate-800 dark:text-slate-200">
-                        {lead.preferredCapacityKw} kW {lead.preferredSystemType.replace('_', ' ')}
+                        {lead.preferredCapacityKw} kW {(lead.preferredSystemType || '').replace('_', ' ')}
                       </span>
                       <div className="text-[11px] text-slate-400">Bill: ₹{lead.monthlyElectricityBill}/mo</div>
                     </td>
@@ -359,7 +359,7 @@ export const Leads: React.FC = () => {
                       <SolarScoreRing score={lead.solarScore || 85} size="sm" />
                     </td>
                     <td className="p-4 capitalize text-slate-600 dark:text-slate-400">
-                      {lead.source.replace('_', ' ')}
+                      {(lead.source || '').replace('_', ' ')}
                     </td>
                     <td className="p-4">
                       <StatusBadge status={lead.status} />
@@ -559,7 +559,7 @@ export const Leads: React.FC = () => {
               <div>
                 <span className="text-slate-400 text-[10px] block">Capacity</span>
                 <span className="font-bold text-slate-800 dark:text-slate-200">
-                  {selectedLead.preferredCapacityKw} kW {selectedLead.preferredSystemType.replace('_', ' ')}
+                  {selectedLead.preferredCapacityKw} kW {(selectedLead.preferredSystemType || '').replace('_', ' ')}
                 </span>
               </div>
               <div>

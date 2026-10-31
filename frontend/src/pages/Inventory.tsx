@@ -25,8 +25,8 @@ export const Inventory: React.FC = () => {
 
   const filteredSerials = serialNumbers.filter((s) => {
     const matchesSearch =
-      s.serialNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      s.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (s.serialNumber || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (s.productName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
       (s.reservedForOrderId && s.reservedForOrderId.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesCat = categoryFilter === 'all' || s.category === categoryFilter;
     return matchesSearch && matchesCat;
@@ -35,7 +35,7 @@ export const Inventory: React.FC = () => {
   const handleSimulateScan = (e: React.FormEvent) => {
     e.preventDefault();
     const match = serialNumbers.find(
-      (s) => s.serialNumber.toLowerCase() === scannedSerialInput.trim().toLowerCase()
+      (s) => (s.serialNumber || '').toLowerCase() === scannedSerialInput.trim().toLowerCase()
     );
     if (match) {
       setScannedResult({
@@ -164,7 +164,7 @@ export const Inventory: React.FC = () => {
                     <td className="p-4 font-semibold text-slate-800 dark:text-slate-200">
                       {s.productName}
                     </td>
-                    <td className="p-4 capitalize text-slate-500">{s.category.replace('_', ' ')}</td>
+                    <td className="p-4 capitalize text-slate-500">{(s.category || '').replace('_', ' ')}</td>
                     <td className="p-4">
                       <StatusBadge status={s.status} />
                     </td>

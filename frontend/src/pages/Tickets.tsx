@@ -41,7 +41,7 @@ export const Tickets: React.FC = () => {
   const handleSerialCheck = (serial: string) => {
     setTicketForm({ ...ticketForm, serialNumber: serial });
     const matchedWarranty = warranties.find(
-      (w) => w.serialNumber.toLowerCase() === serial.trim().toLowerCase()
+      (w) => (w.serialNumber || '').toLowerCase() === serial.trim().toLowerCase()
     );
     if (matchedWarranty) {
       const isExpired = new Date(matchedWarranty.endDate) < new Date();
@@ -86,10 +86,10 @@ export const Tickets: React.FC = () => {
 
   const filteredTickets = tickets.filter((t) => {
     const matchesSearch =
-      t.ticketNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      t.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      t.serialNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      t.issueType.toLowerCase().includes(searchTerm.toLowerCase());
+      (t.ticketNumber || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (t.customerName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (t.serialNumber || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (t.issueType || '').toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'all' || t.status === statusFilter;
     return matchesSearch && matchesStatus;
   });

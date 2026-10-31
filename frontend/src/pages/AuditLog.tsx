@@ -9,10 +9,10 @@ export const AuditLogPage: React.FC = () => {
   const filteredLogs = auditLogs.filter((log) => {
     const eType = log.entityType || log.entity || '';
     return (
-      log.action.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      log.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (log.action || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (log.userName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
       eType.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      log.entityId.toLowerCase().includes(searchTerm.toLowerCase())
+      (log.entityId || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
 

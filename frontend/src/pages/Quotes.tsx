@@ -115,7 +115,7 @@ export const Quotes: React.FC = () => {
 
                 <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
                   <span className="font-bold text-slate-900 dark:text-white font-mono">
-                    ₹{q.totalAmount.toLocaleString('en-IN')}
+                    ₹{(q.totalAmount || 0).toLocaleString('en-IN')}
                   </span>
                   <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                     {q.marginPercentage}% Margin
@@ -139,7 +139,7 @@ export const Quotes: React.FC = () => {
                   <StatusBadge status={selectedQuote.status} />
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                  System: {selectedQuote.capacityKw} kW {selectedQuote.systemType.replace('_', ' ')} • Package: {selectedQuote.packageType}
+                  System: {selectedQuote.capacityKw} kW {(selectedQuote.systemType || '').replace('_', ' ')} • Package: {selectedQuote.packageType}
                 </p>
               </div>
 
@@ -181,10 +181,10 @@ export const Quotes: React.FC = () => {
                 </div>
                 <div>
                   <span className="font-bold text-slate-900 dark:text-white block">
-                    Gross Margin: {selectedQuote.marginPercentage}% (₹{selectedQuote.grossMargin.toLocaleString('en-IN')})
+                    Gross Margin: {selectedQuote.marginPercentage}% (₹{(selectedQuote.grossMargin || 0).toLocaleString('en-IN')})
                   </span>
                   <span className="text-slate-500 dark:text-slate-400 text-[11px]">
-                    Total Equipment & Labor Cost: ₹{selectedQuote.totalCost.toLocaleString('en-IN')}
+                    Total Equipment & Labor Cost: ₹{(selectedQuote.totalCost || 0).toLocaleString('en-IN')}
                   </span>
                 </div>
               </div>
@@ -221,18 +221,18 @@ export const Quotes: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                    {selectedQuote.items.map((item) => (
+                    {(selectedQuote.items || []).map((item) => (
                       <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30">
                         <td className="p-3 font-semibold text-slate-800 dark:text-slate-200">
                           {item.productName}
                         </td>
-                        <td className="p-3 capitalize text-slate-500">{item.category.replace('_', ' ')}</td>
+                        <td className="p-3 capitalize text-slate-500">{(item.category || '').replace('_', ' ')}</td>
                         <td className="p-3 text-center font-mono font-bold">{item.quantity}</td>
                         <td className="p-3 text-right font-mono text-slate-500">
-                          ₹{item.unitPrice.toLocaleString('en-IN')}
+                          ₹{(item.unitPrice || 0).toLocaleString('en-IN')}
                         </td>
                         <td className="p-3 text-right font-mono font-bold text-slate-900 dark:text-white">
-                          ₹{item.totalPrice.toLocaleString('en-IN')}
+                          ₹{(item.totalPrice || 0).toLocaleString('en-IN')}
                         </td>
                       </tr>
                     ))}
@@ -245,27 +245,27 @@ export const Quotes: React.FC = () => {
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 space-y-2 text-xs">
               <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>Subtotal (Equipment + Turnkey Installation):</span>
-                <span className="font-mono">₹{selectedQuote.subtotal.toLocaleString('en-IN')}</span>
+                <span className="font-mono">₹{(selectedQuote.subtotal || 0).toLocaleString('en-IN')}</span>
               </div>
               <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>Special Promotional Discount:</span>
                 <span className="font-mono text-emerald-600 dark:text-emerald-400">
-                  - ₹{selectedQuote.discountAmount.toLocaleString('en-IN')}
+                  - ₹{(selectedQuote.discountAmount || 0).toLocaleString('en-IN')}
                 </span>
               </div>
               <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>GST (12% MNRE Standard for Rooftop Solar):</span>
-                <span className="font-mono">₹{selectedQuote.taxAmount.toLocaleString('en-IN')}</span>
+                <span className="font-mono">₹{(selectedQuote.taxAmount || 0).toLocaleString('en-IN')}</span>
               </div>
               <div className="pt-2 border-t border-slate-200 dark:border-slate-700 flex justify-between text-sm font-bold text-slate-900 dark:text-white">
                 <span>Total Quotation Payable:</span>
                 <span className="font-mono text-amber-600 dark:text-amber-400">
-                  ₹{selectedQuote.totalAmount.toLocaleString('en-IN')}
+                  ₹{(selectedQuote.totalAmount || 0).toLocaleString('en-IN')}
                 </span>
               </div>
               <div className="flex justify-between text-[11px] text-slate-400 pt-1">
                 <span>Advance Payment Required (20% to Reserve Inventory):</span>
-                <span className="font-mono font-bold">₹{selectedQuote.advanceAmount.toLocaleString('en-IN')}</span>
+                <span className="font-mono font-bold">₹{(selectedQuote.advanceAmount || 0).toLocaleString('en-IN')}</span>
               </div>
             </div>
           </div>

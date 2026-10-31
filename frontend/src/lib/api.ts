@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';
 // Central API Base URL definition following the specified pattern
 export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') ||
-  'http://localhost:5000';
+  (import.meta.env.PROD ? 'https://hakathon-odoo.onrender.com' : 'http://localhost:5000');
 
 export const apiUrl = (path: string): string => {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;

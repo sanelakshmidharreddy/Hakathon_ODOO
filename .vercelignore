@@ -1,0 +1,9 @@
+# Prevent Vercel from detecting Python Serverless runtime
+main.py
+requirements.txt
+runtime.txt
+backend/
+sunpower_solutions/
+odoo_module/
+Procfile
+render.yaml

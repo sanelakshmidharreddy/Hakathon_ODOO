@@ -161,10 +161,10 @@ export const Warranties: React.FC = () => {
                     {w.warrantyPeriodYears} Years
                   </td>
                   <td className="p-4 font-mono text-slate-500">
-                    {new Date(w.startDate).toLocaleDateString()}
+                    {w.startDate ? new Date(w.startDate).toLocaleDateString() : '—'}
                   </td>
                   <td className="p-4 font-mono font-semibold text-slate-800 dark:text-slate-200">
-                    {new Date(w.endDate).toLocaleDateString()}
+                    {w.endDate ? new Date(w.endDate).toLocaleDateString() : '—'}
                   </td>
                   <td className="p-4">
                     <StatusBadge status={w.status} />

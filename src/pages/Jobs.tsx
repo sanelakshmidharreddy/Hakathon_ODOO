@@ -206,7 +206,7 @@ export const Jobs: React.FC = () => {
                   </div>
                   <div className="flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300">
                     <Zap className="w-3.5 h-3.5 text-amber-500" />
-                    <span>{job.capacityKw} kW {job.systemType.replace('_', ' ')}</span>
+                    <span>{job.capacityKw} kW {(job.systemType || '').replace('_', ' ')}</span>
                   </div>
                 </div>
               </div>
@@ -249,12 +249,12 @@ export const Jobs: React.FC = () => {
                   Installation Safety & Commissioning Checklist
                 </h3>
                 <span className="text-[11px] text-slate-500 font-mono">
-                  {selectedJob.checklist.filter((c) => c.completed).length} / {selectedJob.checklist.length} Completed
+                  {(selectedJob.checklist || []).filter((c) => c.completed).length} / {(selectedJob.checklist || []).length} Completed
                 </span>
               </div>
 
               <div className="space-y-2">
-                {selectedJob.checklist.map((item) => (
+                {(selectedJob.checklist || []).map((item) => (
                   <label
                     key={item.id}
                     className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 cursor-pointer hover:bg-slate-100/60 dark:hover:bg-slate-800/80 transition-colors text-xs"
@@ -301,7 +301,7 @@ export const Jobs: React.FC = () => {
             <div>
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                  Geotagged Installation Photos ({selectedJob.photos.length})
+                  Geotagged Installation Photos ({(selectedJob.photos || []).length})
                 </h3>
                 <button
                   onClick={() => setIsPhotoModalOpen(true)}
@@ -312,13 +312,13 @@ export const Jobs: React.FC = () => {
                 </button>
               </div>
 
-              {selectedJob.photos.length === 0 ? (
+              {(selectedJob.photos || []).length === 0 ? (
                 <div className="p-8 text-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl text-xs text-slate-400">
                   No site photos uploaded yet. Capture before, during, and after photos with GPS tags.
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {selectedJob.photos.map((photo) => (
+                  {(selectedJob.photos || []).map((photo) => (
                     <div
                       key={photo.id}
                       className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-900 text-white group"
