@@ -11,6 +11,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="manifest" href="/manifest.json" />
+    <script>
+      // Restore path if redirected by static 404.html fallback
+      (function() {
+        var params = new URLSearchParams(window.location.search);
+        var redirectPath = params.get('p');
+        if (redirectPath) {
+          var query = params.get('q');
+          var newUrl = (redirectPath.startsWith('/') ? redirectPath : '/' + redirectPath) +
+            (query ? '?' + query : '') + window.location.hash;
+          window.history.replaceState(null, null, newUrl);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

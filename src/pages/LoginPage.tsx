@@ -14,13 +14,13 @@ export const LoginPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     login(email);
-    navigate('/app/dashboard');
+    navigate('/dashboard');
   };
 
   const handleSelectRole = (user: typeof demoUsers[0]) => {
     setEmail(user.email);
     login(user.email, user.role as UserRole);
-    navigate('/app/dashboard');
+    navigate('/dashboard');
   };
 
   return (

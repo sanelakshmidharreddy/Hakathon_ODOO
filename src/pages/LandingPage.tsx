@@ -62,7 +62,7 @@ export const LandingPage: React.FC = () => {
 
           <div className="flex items-center gap-3">
             <NavLink
-              to="/app/dashboard"
+              to="/dashboard"
               className="btn-accent px-5 py-2.5 rounded-xl font-semibold text-sm flex items-center gap-2 shadow-lg shadow-amber-500/25"
             >
               <span>Launch Platform</span>
@@ -97,14 +97,14 @@ export const LandingPage: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
             <NavLink
-              to="/app/dashboard"
+              to="/dashboard"
               className="w-full sm:w-auto px-8 py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-base transition-all transform hover:-translate-y-0.5 shadow-xl shadow-amber-500/25 flex items-center justify-center gap-2"
             >
               <span>Explore Live Director Dashboard</span>
               <ArrowRight className="w-5 h-5" />
             </NavLink>
             <NavLink
-              to="/app/leads"
+              to="/leads"
               className="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-base border border-slate-700/80 transition-all flex items-center justify-center gap-2"
             >
               <span>View Lead CRM Pipeline</span>
@@ -155,56 +155,56 @@ export const LandingPage: React.FC = () => {
                 title: 'Lead Capture & Solar Score',
                 desc: 'Web, WhatsApp, and call enquiries enriched instantly with NASA POWER irradiance and OSM geocoding.',
                 icon: Zap,
-                link: '/app/leads',
+                link: '/leads',
               },
               {
                 step: '02',
                 title: 'Site Survey & Approval',
                 desc: 'Technician checks roof tilt, shadow area, cable distance, and grid parameters before quote sign-off.',
                 icon: Compass,
-                link: '/app/leads',
+                link: '/leads',
               },
               {
                 step: '03',
                 title: 'Quote & Auto-BOM',
                 desc: 'Template-driven bill of materials generation for 1-5 kW On-Grid/Off-Grid with instant margin safeguards.',
                 icon: FileText,
-                link: '/app/quotes',
+                link: '/quotes',
               },
               {
                 step: '04',
                 title: 'Order & Serial Reserve',
                 desc: 'Accepted quote converts into sales order; high-value panels, inverters, and batteries reserved.',
                 icon: Package,
-                link: '/app/inventory',
+                link: '/inventory',
               },
               {
                 step: '05',
                 title: 'QR Scan Dispatch',
                 desc: 'Warehouse scans equipment barcodes before truck rollout; automatically fires warranty start dates.',
                 icon: Shield,
-                link: '/app/dispatch',
+                link: '/dispatch',
               },
               {
                 step: '06',
                 title: 'Technician Field PWA',
                 desc: 'Offline-ready checklist, generation meter testing, geotagged before/after photo evidence.',
                 icon: Wrench,
-                link: '/app/jobs',
+                link: '/jobs',
               },
               {
                 step: '07',
                 title: 'Customer Sign-off',
                 desc: 'Digital customer signature captured on glass; generates tamper-proof completion certificate.',
                 icon: CheckCircle,
-                link: '/app/jobs',
+                link: '/jobs',
               },
               {
                 step: '08',
                 title: 'Traceable Warranty Service',
                 desc: 'Support agents trace fault claims directly to installed serial numbers for free or billable repair.',
                 icon: TrendingUp,
-                link: '/app/tickets',
+                link: '/tickets',
               },
             ].map((card) => {
               const Icon = card.icon;
@@ -273,7 +273,7 @@ export const LandingPage: React.FC = () => {
 
               <div className="pt-4">
                 <NavLink
-                  to="/app/solar-insights"
+                  to="/solar-insights"
                   className="btn-accent px-6 py-3 rounded-xl font-semibold text-sm inline-flex items-center gap-2"
                 >
                   <span>View Solar Data & Provenance Panel</span>

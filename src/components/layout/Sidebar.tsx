@@ -29,13 +29,13 @@ export const Sidebar: React.FC = () => {
 
   const navItems = [
     {
-      to: '/app/dashboard',
+      to: '/dashboard',
       label: 'Director Dashboard',
       icon: LayoutDashboard,
       roles: ['director', 'sales_manager'],
     },
     {
-      to: '/app/leads',
+      to: '/leads',
       label: 'Leads & CRM',
       icon: Users,
       badge: newLeadsCount > 0 ? newLeadsCount : undefined,
@@ -43,25 +43,25 @@ export const Sidebar: React.FC = () => {
       roles: ['director', 'sales_manager', 'sales_rep'],
     },
     {
-      to: '/app/quotes',
+      to: '/quotes',
       label: 'Quotes & BOM',
       icon: FileText,
       roles: ['director', 'sales_manager', 'sales_rep'],
     },
     {
-      to: '/app/inventory',
+      to: '/inventory',
       label: 'Inventory & Serials',
       icon: QrCode,
       roles: ['director', 'warehouse', 'sales_manager'],
     },
     {
-      to: '/app/dispatch',
+      to: '/dispatch',
       label: 'Dispatch Manifest',
       icon: Package,
       roles: ['director', 'warehouse'],
     },
     {
-      to: '/app/jobs',
+      to: '/jobs',
       label: 'Field App (Technician)',
       icon: Wrench,
       badge: activeJobsCount > 0 ? activeJobsCount : undefined,
@@ -69,13 +69,13 @@ export const Sidebar: React.FC = () => {
       roles: ['director', 'technician', 'sales_manager'],
     },
     {
-      to: '/app/warranties',
+      to: '/warranties',
       label: 'Warranty Engine',
       icon: ShieldCheck,
       roles: ['director', 'service_agent', 'sales_manager', 'customer'],
     },
     {
-      to: '/app/tickets',
+      to: '/tickets',
       label: 'Service Tickets',
       icon: LifeBuoy,
       badge: openTicketsCount > 0 ? openTicketsCount : undefined,
@@ -83,13 +83,13 @@ export const Sidebar: React.FC = () => {
       roles: ['director', 'service_agent', 'technician'],
     },
     {
-      to: '/app/solar-insights',
+      to: '/solar-insights',
       label: 'NASA Solar Data',
       icon: Globe2,
       roles: ['director', 'sales_manager', 'sales_rep', 'technician', 'service_agent', 'warehouse', 'customer'],
     },
     {
-      to: '/app/audit-log',
+      to: '/audit-log',
       label: 'Audit Trail',
       icon: History,
       roles: ['director'],
