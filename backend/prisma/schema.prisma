@@ -1,0 +1,114 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  role      String   @default("sales_rep") // director, sales_rep, surveyor, warehouse_manager, technician, accountant, service_coordinator
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  leads     Lead[]
+}
+
+model Lead {
+  id               String   @id @default(uuid())
+  customerName     String
+  phone            String
+  city             String
+  state            String
+  status           String   @default("new")
+  systemCapacityKw Float
+  solarScore       Int      @default(85)
+  monthlyBill      Float    @default(3000)
+  assignedToId     String?
+  assignedTo       User?    @relation(fields: [assignedToId], references: [id])
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  quotes           Quote[]
+}
+
+model Quote {
+  id               String   @id @default(uuid())
+  leadId           String
+  lead             Lead     @relation(fields: [leadId], references: [id])
+  customerName     String
+  capacityKw       Float
+  totalAmount      Float
+  equipmentCost    Float
+  installationCost Float
+  labourCost       Float
+  marginPercent    Float
+  status           String   @default("draft")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  orders           Order[]
+}
+
+model Order {
+  id          String     @id @default(uuid())
+  quoteId     String
+  quote       Quote      @relation(fields: [quoteId], references: [id])
+  totalAmount Float
+  status      String     @default("confirmed")
+  createdAt   DateTime   @default(now())
+  dispatches  Dispatch[]
+  jobs        Job[]
+  warranties  Warranty[]
+}
+
+model Dispatch {
+  id           String   @id @default(uuid())
+  orderId      String
+  order        Order    @relation(fields: [orderId], references: [id])
+  destination  String
+  truckNumber  String
+  serialCount  Int
+  status       String   @default("dispatched")
+  dispatchedAt DateTime @default(now())
+}
+
+model Job {
+  id                   String   @id @default(uuid())
+  orderId              String
+  order                Order    @relation(fields: [orderId], references: [id])
+  customerName         String
+  city                 String
+  systemType           String
+  technician           String
+  status               String   @default("scheduled")
+  completionPercentage Int      @default(0)
+  scheduledDate        DateTime?
+  completedAt          DateTime?
+}
+
+model Warranty {
+  id             String   @id @default(uuid())
+  orderId        String
+  order          Order    @relation(fields: [orderId], references: [id])
+  customerName   String
+  capacityKw     Float
+  policyNumber   String   @unique
+  activationDate DateTime @default(now())
+  expiryDate     DateTime
+  status         String   @default("active")
+}
+
+model ServiceTicket {
+  id           String   @id @default(uuid())
+  ticketNumber String   @unique
+  customerName String
+  city         String
+  issueType    String
+  priority     String   @default("medium")
+  status       String   @default("open")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
