@@ -1,0 +1,62 @@
+{
+  "provenance": {
+    "source": "NASA POWER & Global Solar Atlas",
+    "curationDate": "2024-10-31",
+    "model": "Photovoltaic Performance Ratio (PR 78%) + Cell Temp Derate (-0.38%/°C)",
+    "license": "CC BY 4.0 / NASA Open Data"
+  },
+  "sites": [
+    {
+      "siteId": "chennai_urban",
+      "name": "Chennai (Urban Coastal)",
+      "state": "Tamil Nadu",
+      "lat": 13.0827,
+      "lng": 80.2707,
+      "annualGhiKwhM2": 1971,
+      "avgDailyGhiKwhM2Day": 5.4,
+      "solarScore": 89,
+      "optimalTilt": 13,
+      "expectedAnnualOutput5kWp": 7144,
+      "monthly": [
+        { "month": "Jan", "ghi": 4.75, "temp": 25.2, "output5kW": 555 },
+        { "month": "Feb", "ghi": 5.68, "temp": 26.4, "output5kW": 609 },
+        { "month": "Mar", "ghi": 6.42, "temp": 28.9, "output5kW": 751 },
+        { "month": "Apr", "ghi": 7.11, "temp": 31.2, "output5kW": 806 },
+        { "month": "May", "ghi": 7.35, "temp": 34.1, "output5kW": 833 },
+        { "month": "Jun", "ghi": 5.92, "temp": 33.2, "output5kW": 671 },
+        { "month": "Jul", "ghi": 5.21, "temp": 31.8, "output5kW": 609 },
+        { "month": "Aug", "ghi": 5.44, "temp": 31.5, "output5kW": 636 },
+        { "month": "Sep", "ghi": 5.18, "temp": 30.9, "output5kW": 587 },
+        { "month": "Oct", "ghi": 4.61, "temp": 29.1, "output5kW": 539 },
+        { "month": "Nov", "ghi": 4.82, "temp": 28.4, "output5kW": 546 },
+        { "month": "Dec", "ghi": 4.31, "temp": 26.1, "output5kW": 504 }
+      ]
+    },
+    {
+      "siteId": "jodhpur_high_potential",
+      "name": "Jodhpur (Thar Desert Semi-Urban)",
+      "state": "Rajasthan",
+      "lat": 26.2918,
+      "lng": 73.0169,
+      "annualGhiKwhM2": 2182,
+      "avgDailyGhiKwhM2Day": 5.75,
+      "solarScore": 96,
+      "optimalTilt": 24,
+      "expectedAnnualOutput5kWp": 7820,
+      "monthly": [
+        { "month": "Jan", "ghi": 4.82, "temp": 16.2, "output5kW": 564 },
+        { "month": "Feb", "ghi": 5.91, "temp": 19.4, "output5kW": 634 },
+        { "month": "Mar", "ghi": 7.22, "temp": 25.8, "output5kW": 844 },
+        { "month": "Apr", "ghi": 8.41, "temp": 32.1, "output5kW": 953 },
+        { "month": "May", "ghi": 8.82, "temp": 37.4, "output5kW": 968 },
+        { "month": "Jun", "ghi": 7.21, "temp": 38.2, "output5kW": 792 },
+        { "month": "Jul", "ghi": 5.92, "temp": 34.9, "output5kW": 692 },
+        { "month": "Aug", "ghi": 5.81, "temp": 33.2, "output5kW": 679 },
+        { "month": "Sep", "ghi": 6.42, "temp": 31.4, "output5kW": 728 },
+        { "month": "Oct", "ghi": 5.89, "temp": 28.1, "output5kW": 689 },
+        { "month": "Nov", "ghi": 5.12, "temp": 24.1, "output5kW": 580 },
+        { "month": "Dec", "ghi": 4.68, "temp": 18.8, "output5kW": 547 }
+      ]
+    }
+  ]
+}

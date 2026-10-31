@@ -1,0 +1,65 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [73.0169, 26.2918, 231.0]
+  },
+  "properties": {
+    "parameter": {
+      "ALLSKY_SFC_SW_DWN": {
+        "JAN": 4.82,
+        "FEB": 5.91,
+        "MAR": 7.22,
+        "APR": 8.41,
+        "MAY": 8.82,
+        "JUN": 7.21,
+        "JUL": 5.92,
+        "AUG": 5.81,
+        "SEP": 6.42,
+        "OCT": 5.89,
+        "NOV": 5.12,
+        "DEC": 4.68,
+        "ANN": 6.35
+      },
+      "T2M": {
+        "JAN": 16.2,
+        "FEB": 19.4,
+        "MAR": 25.8,
+        "APR": 32.1,
+        "MAY": 37.4,
+        "JUN": 38.2,
+        "JUL": 34.9,
+        "AUG": 33.2,
+        "SEP": 31.4,
+        "OCT": 28.1,
+        "NOV": 24.1,
+        "DEC": 18.8,
+        "ANN": 27.5
+      },
+      "WS2M": {
+        "JAN": 2.1,
+        "FEB": 2.4,
+        "MAR": 2.8,
+        "APR": 3.4,
+        "MAY": 4.8,
+        "JUN": 5.2,
+        "JUL": 4.6,
+        "AUG": 4.1,
+        "SEP": 3.2,
+        "OCT": 2.2,
+        "NOV": 1.9,
+        "DEC": 2.0,
+        "ANN": 3.2
+      }
+    }
+  },
+  "header": {
+    "title": "NASA POWER Climatology Monthly Averages (CERES / MERRA-2)",
+    "api_version": "v2.0",
+    "sources": ["CERES", "MERRA-2"],
+    "retrieval_timestamp": "2024-10-31T06:00:00Z",
+    "community": "RE",
+    "site": "Jodhpur, Rajasthan, India",
+    "license": "NASA Open Data Policy (Public Domain)"
+  }
+}

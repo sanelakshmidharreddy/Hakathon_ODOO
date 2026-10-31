@@ -1,0 +1,65 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [80.2707, 13.0827, 45.0]
+  },
+  "properties": {
+    "parameter": {
+      "ALLSKY_SFC_SW_DWN": {
+        "JAN": 4.75,
+        "FEB": 5.68,
+        "MAR": 6.42,
+        "APR": 7.11,
+        "MAY": 7.35,
+        "JUN": 5.92,
+        "JUL": 5.21,
+        "AUG": 5.44,
+        "SEP": 5.18,
+        "OCT": 4.61,
+        "NOV": 4.82,
+        "DEC": 4.31,
+        "ANN": 5.57
+      },
+      "T2M": {
+        "JAN": 25.2,
+        "FEB": 26.4,
+        "MAR": 28.9,
+        "APR": 31.2,
+        "MAY": 34.1,
+        "JUN": 33.2,
+        "JUL": 31.8,
+        "AUG": 31.5,
+        "SEP": 30.9,
+        "OCT": 29.1,
+        "NOV": 28.4,
+        "DEC": 26.1,
+        "ANN": 29.7
+      },
+      "WS2M": {
+        "JAN": 2.8,
+        "FEB": 3.1,
+        "MAR": 3.4,
+        "APR": 3.8,
+        "MAY": 4.2,
+        "JUN": 4.5,
+        "JUL": 4.3,
+        "AUG": 4.1,
+        "SEP": 3.6,
+        "OCT": 2.9,
+        "NOV": 2.7,
+        "DEC": 2.8,
+        "ANN": 3.5
+      }
+    }
+  },
+  "header": {
+    "title": "NASA POWER Climatology Monthly Averages (CERES / MERRA-2)",
+    "api_version": "v2.0",
+    "sources": ["CERES", "MERRA-2"],
+    "retrieval_timestamp": "2024-10-31T06:00:00Z",
+    "community": "RE",
+    "site": "Chennai, Tamil Nadu, India",
+    "license": "NASA Open Data Policy (Public Domain)"
+  }
+}
