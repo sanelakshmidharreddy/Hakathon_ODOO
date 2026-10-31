@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SunPower Solutions - Redirecting</title>
+    <script>
+      // Single Page App redirect for static hosts lacking rewrite engines (e.g. GitHub Pages)
+      (function() {
+        var base = '/';
+        var pathname = window.location.pathname;
+        var search = window.location.search;
+        var hash = window.location.hash;
+        
+        // Preserve sub-path if deployed under sub-directory
+        var segment = pathname;
+        if (segment.startsWith(base)) {
+          segment = segment.slice(base.length);
+        }
+        
+        window.location.replace(
+          base + '?p=' + encodeURIComponent(segment) +
+          (search ? '&q=' + encodeURIComponent(search.slice(1)) : '') +
+          hash
+        );
+      })();
+    </script>
+  </head>
+  <body style="background:#020617;color:#f8fafc;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">
+    <div style="text-align:center;">
+      <h2 style="color:#f59e0b;margin-bottom:8px;">SunPower Solutions</h2>
+      <p style="color:#94a3b8;font-size:14px;">Restoring requested route...</p>
+    </div>
+  </body>
+</html>
