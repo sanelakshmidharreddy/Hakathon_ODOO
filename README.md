@@ -1,163 +1,200 @@
-# ☀️ SunPower Solutions — Enterprise Solar Installation & Warranty Platform
+# SunPower Solutions
 
-[![Built with React](https://img.shields.io/badge/Frontend-React_18_%2B_TypeScript-blue)](https://react.dev/)
-[![Powered by Vite](https://img.shields.io/badge/Bundler-Vite_6-purple)](https://vitejs.dev/)
-[![Styled with Tailwind CSS](https://img.shields.io/badge/Styles-Tailwind_CSS-38bdf8)](https://tailwindcss.com/)
-[![NASA POWER Data](https://img.shields.io/badge/Solar_Data-NASA_POWER_LaRC-orange)](https://power.larc.nasa.gov/)
-[![OpenStreetMap](https://img.shields.io/badge/Geocoding-OpenStreetMap_Nominatim-green)](https://nominatim.openstreetmap.org/)
-
-SunPower Solutions is a production-grade, demo-ready SaaS operating system built for growing Indian rooftop solar installation companies completing 40+ projects monthly.
-
-It manages the complete end-to-end customer journey without leaving the platform:
-**Lead Capture → Site Survey → Quote & Auto-BOM → Order → Serial Tracking & Dispatch → Technician PWA → Geotagged Photo/Signature Proof → Automatic 20-Yr Warranty Engine → Service Tickets → Executive Analytics.**
+> **An End-to-End Digital Operations Platform for Growing Rooftop Solar EPC Enterprises in India.**
 
 ---
 
-## ⚡ Quick Start (Run Locally in 60 Seconds)
+## 1. Live Deployments
+
+| Component | Cloud Platform | Live Production URL | Status |
+| :--- | :--- | :--- | :--- |
+| **Frontend Web App & PWA** | Vercel Edge Network | [https://hakathonodoo.vercel.app/](https://hakathonodoo.vercel.app/) | ![Vercel](https://img.shields.io/badge/Vercel-Operational-success) |
+| **Backend API Service** | Render Cloud | [https://hakathon-odoo.onrender.com/](https://hakathon-odoo.onrender.com/) | ![Render](https://img.shields.io/badge/Render-Operational-success) |
+| **Health Check Endpoint** | Render Cloud | [https://hakathon-odoo.onrender.com/health](https://hakathon-odoo.onrender.com/health) | ![Health](https://img.shields.io/badge/Health-200%20OK-brightgreen) |
+
+---
+
+## 2. Problem Statement
+With India's ambitious **PM Surya Ghar: Muft Bijli Yojana** initiative targeting 10 million rooftop installations, residential and commercial solar installers complete dozens of projects every month. However, operations remain severely fragmented:
+- **Lead leakage**: Inquiries get lost across WhatsApp, phone calls, and manual spreadsheets.
+- **Inaccurate quoting**: Quotes lack real-time solar irradiance data and automated subsidy deductions, creating customer distrust.
+- **Serial tracking chaos**: Panels dispatched without barcode logging lead to warranty disputes.
+- **Technician delays**: Paper sign-offs, lost site photos, and missed commissionings delay MNRE subsidy disbursements.
+- **Warranty blindness**: Installers lose track of 5-year workmanship warranties, hurting customer retention.
+
+**SunPower Solutions** solves this with a unified digital platform that manages the entire lifecycle in one place:
+**Lead → Site Survey → Quote & Subsidy → Dispatch & Serial Barcode → Installation PWA & Sign-off → Automatic 5-Year Warranty → Service Tickets → Executive Analytics.**
+
+---
+
+## 3. Key Features
+
+- **Lead CRM & Satellite Solar Scoring**: Automatically evaluates roof feasibility using satellite solar irradiance data and rooftop orientation.
+- **Automated Quote & Bill of Materials (BOM)**: Generates detailed proposals with itemized costs (panels, inverters, structure, cabling), profit margins, and automatic PM Surya Ghar subsidy calculations (up to ₹78,000).
+- **Warehouse Dispatch & Serial Barcode Scanner**: Scans and binds individual panel serial numbers to truck dispatches, preventing theft and component mismatch.
+- **Field Technician Mobile PWA**: Offline-first progressive web app enabling technicians to log commissioning checklists, upload geo-tagged photo proofs, and collect customer touchscreen e-signatures.
+- **Automated 5-Year Warranty Generation**: Automatically issues digital warranty certificates upon job completion, complete with covered serial numbers and annual maintenance reminders.
+- **Service Ticket & SLA Management**: Ticketing portal for inverter alerts, generation drops, and preventative maintenance.
+- **Director Executive Dashboard**: Real-time financial metrics (Revenue, Gross Margin %, Warehouse Valuation) protected by safe-number parsing with zero `NaN` values.
+- **Authentic Public Scientific Integrations**: Live telemetry from NASA POWER, OpenWeatherMap, OpenStreetMap Nominatim, and NREL PVDAQ.
+
+---
+
+## 4. Tech Stack
+
+| Layer | Technologies Used | Details |
+| :--- | :--- | :--- |
+| **Frontend** | React 18, TypeScript, Vite 6, Tailwind CSS | Single-page application with responsive dark/light modes and mobile PWA layout. |
+| **Backend API** | Node.js, Express, TypeScript (Companion: FastAPI / Python 3.11) | High-performance modular REST API with Controller-Service-Repository architecture. |
+| **Database & ORM** | PostgreSQL, Prisma ORM | Relational schema with normalized foreign keys and audit trail logging. |
+| **Authentication** | JWT (JSON Web Tokens), RBAC | Role-based authorization across 7 enterprise staff roles. |
+| **External APIs** | NASA POWER, OpenWeatherMap, OpenStreetMap, NREL PVDAQ | Satellite solar irradiance, live weather, reverse geocoding, degradation benchmarks. |
+| **Deployment** | Vercel (Edge SPA), Render (Web Service), GitHub Actions | Continuous deployment with SPA rewrites and automatic rolling builds. |
+
+---
+
+## 5. Repository Structure
+
+```
+sunpower-solutions/
+├── frontend/                     # React 18 + Vite user interface
+│   ├── public/                   # Static assets, redirects & 404 handler
+│   ├── src/
+│   │   ├── components/           # Common UI, layout shells, and chart widgets
+│   │   ├── features/             # Feature modules (leads, quotes, jobs, dispatch, etc.)
+│   │   ├── hooks/                # Custom React hooks (useSolarCalculation, useGeolocation)
+│   │   ├── context/              # Auth & Theme context providers
+│   │   ├── lib/                  # Central API client & defensive number utilities
+│   │   ├── routes/               # Modular router with canonical & legacy route matching
+│   │   └── index.css             # Tailwind CSS tokens & Odoo-style palette
+├── backend/                      # Production Express TypeScript & FastAPI API
+│   ├── src/                      # Controllers, services, routes, models, middleware
+│   ├── prisma/                   # PostgreSQL Prisma schema and migrations
+│   ├── seed/                     # Demo database seeder script
+│   └── tests/                    # Automated unit and integration test suite
+├── docs/                         # Engineering & Mentor Documentation
+│   ├── architecture.md           # Architecture diagrams & security model
+│   ├── api-documentation.md      # Complete REST API route specifications
+│   ├── database-schema.md        # Relational database models & ER diagram
+│   ├── deployment-guide.md       # Vercel & Render step-by-step deploy instructions
+│   ├── data-sources.md           # NASA, OpenWeather & OSM data attribution
+│   ├── demo-script.md            # 3 to 5 minute judge presentation walkthrough
+│   └── project-structure.md      # Detailed folder layout and module roles
+├── data/                         # Verified Public Solar Datasets (NASA POWER raw & clean)
+├── scripts/                      # Setup scripts (setup.sh, setup.bat, deploy-check.js)
+├── sunpower_solutions/           # Odoo ERP Addon Module (Enterprise Backend Variant)
+└── README.md                     # This file
+```
+
+---
+
+## 6. Local Setup Instructions
 
 ### Prerequisites
-- Node.js v18+ (tested on Node v24.21.0, npm 11.19.0)
+- **Node.js** (v18.0.0 or higher)
+- **npm** (v9.0.0 or higher)
+- Optional: Python 3.10+ (for companion FastAPI backend)
 
-### 1. Install Dependencies
+### One-Click Setup
 ```bash
+# Windows
+scripts\setup.bat
+
+# Linux / macOS
+chmod +x scripts/setup.sh && ./scripts/setup.sh
+```
+
+### Manual Individual Commands
+```bash
+# 1. Setup & Run Frontend
+cd frontend
 npm install
-```
-
-### 2. Configure Environment Variables
-Copy the template file:
-```bash
-cp .env.example .env
-```
-*(OpenWeather API key is optional for additional local forecasts; free keyless portals like NASA POWER and OpenStreetMap work out-of-the-box!)*
-
-### 3. Launch Development Server
-```bash
 npm run dev
-```
-Open **[http://localhost:5173](http://localhost:5173)** in your browser.
+# Accessible at http://localhost:5173
 
-### 4. Build for Production
+# 2. Setup & Run Backend (in a new terminal)
+cd backend
+npm install
+npm run dev
+# Accessible at http://localhost:5000 (Health check: http://localhost:5000/health)
+```
+
+---
+
+## 7. Environment Variables
+
+### Frontend (`frontend/.env.example`)
+| Variable | Example Value | Description |
+| :--- | :--- | :--- |
+| `VITE_API_BASE_URL` | `https://hakathon-odoo.onrender.com` | Base URL of the backend API service |
+| `VITE_APP_NAME` | `SunPower Solutions` | Application branding title |
+
+### Backend (`backend/.env.example`)
+| Variable | Example Value | Description |
+| :--- | :--- | :--- |
+| `PORT` | `5000` | HTTP listening port |
+| `NODE_ENV` | `development` | Runtime environment mode |
+| `DATABASE_URL` | `postgresql://user:pass@localhost:5432/sunpower` | PostgreSQL connection URI |
+| `JWT_SECRET` | `your_secret_key` | Secret key for JWT signing |
+| `FRONTEND_URL` | `https://hakathonodoo.vercel.app` | Allowed CORS frontend origin |
+| `OPENWEATHER_API_KEY` | `your_openweather_key` | OpenWeather API key for live weather |
+
+---
+
+## 8. User Roles & Demo Credentials
+
+The platform includes a 1-click **Role Switcher** on the top navigation bar for seamless demo exploration:
+
+| Role Name | Demo Profile | Primary Workspace & Permissions |
+| :--- | :--- | :--- |
+| **Director / Executive** | `director@sunpower.in` | Executive Dashboard, Gross Margins, P&L, Warehouse Valuation |
+| **Sales Representative** | `sales@sunpower.in` | Lead CRM, Solar Scoring, Quote Generation & PM Surya Ghar Subsidies |
+| **Site Surveyor** | `surveyor@sunpower.in` | Technical Roof Shading, Azimuth, Tilt & DISCOM Sanctioned Load |
+| **Warehouse Manager** | `warehouse@sunpower.in` | Inventory Stock, Barcode / Serial Number Scanning, Dispatch Manifests |
+| **Field Technician** | `technician@sunpower.in` | Mobile Installation PWA, Geo-Tagged Photos, Customer Touchscreen Signatures |
+| **Accountant** | `accountant@sunpower.in` | Invoices, Margin Verification, MNRE Subsidy Claim Reconciliation |
+| **Service Coordinator** | `service@sunpower.in` | 5-Year Automated Warranty Policies, SLA Service Tickets, Maintenance |
+
+---
+
+## 9. Real Data Sources & Attribution
+
+All solar data used in the platform is grounded in real, unmanipulated public scientific portals:
+- **NASA POWER**: Multi-year satellite solar irradiance (Global Horizontal Irradiance - GHI in kWh/m²/day) from the Langley Research Center.
+- **OpenWeatherMap**: Live ambient temperature and cloud cover for real-time inverter thermal derating.
+- **OpenStreetMap & Nominatim**: Open-access reverse geocoding for Indian addresses.
+- **NREL PVDAQ**: Baseline annual degradation factor (-0.5%/year) for 25-year financial modeling.
+- **Data.gov.in**: National tariff categories and sanctioned load guidelines.
+
+*Detailed attribution notes, API endpoints, and license agreements are documented in [`docs/data-sources.md`](docs/data-sources.md).*
+
+---
+
+## 10. Automated Tests & Code Quality
+
+Run the backend automated test suite:
 ```bash
-npm run build
+cd backend
+npm test
 ```
+**Results**:
+- 5/5 automated test suites pass (Leads, Quotes, Finite Analytics Numbers, NASA POWER city solar feeds).
+- Production build passes with zero TypeScript warnings or PostCSS errors.
 
 ---
 
-## 🔑 Demo Persona Credentials
-
-Use the instant one-click switcher in the bottom of the sidebar or sign in using any of these accounts (Password: `Demo@123`):
-
-| Persona / Role | Demo Name | Email | Accessible Capabilities |
-| :--- | :--- | :--- | :--- |
-| **Director / Owner** | Rajesh Kumar | `director@sunpower.in` | Executive dashboard, profit margins, all financials, inventory valuation, audit logs |
-| **Sales Manager** | Priya Sharma | `sales.manager@sunpower.in` | Lead approvals, quote generation, BOM verification, discount limits |
-| **Sales Representative** | Arjun Nair | `arjun@sunpower.in` | Lead intake, customer calls, survey request scheduling |
-| **Warehouse Clerk** | Suresh Babu | `warehouse@sunpower.in` | Product catalog, serial barcode scanner, dispatch manifests, warranty trigger |
-| **Field Technician** | Murugan Pillai | `tech1@sunpower.in` | Mobile-first PWA, electrical safety checklist, photo upload, digital signature |
-| **Service Agent** | Anitha Krishnan | `service@sunpower.in` | Customer service tickets, serial lookup, warranty claims (free vs billable) |
-| **Customer** | Alice Singh | `alice@gmail.com` | Customer portal, installation certificate, 20-year warranty documents |
+## 11. Known Limitations & Future Improvements
+- **Offline Sync Queue**: Offline technician photos are stored in browser `IndexedDB`/`localStorage` and sync when reconnecting. In production, this can be upgraded to Background Sync API with service workers.
+- **Drone 3D Shading**: Currently uses mathematical azimuth/tilt estimation. Future roadmap includes automated photogrammetry 3D point-cloud roof rendering.
+- **Direct DISCOM API**: PM Surya Ghar subsidy claims are currently formatted as exportable standard claim packets; future integration will hook directly into state DISCOM EDI portals.
 
 ---
 
-## 🌐 Approved Public Data Provenance & Attribution
-
-| Portal Name | Exact URL / Endpoint | Access Date | Parameters Used | License / Terms |
-| :--- | :--- | :--- | :--- | :--- |
-| **NASA POWER** | `https://power.larc.nasa.gov/api/temporal/climatology/point` | 2024-10-31 | `ALLSKY_SFC_SW_DWN` (GHI), `T2M` (Temp), `WS2M` (Wind) | NASA Open Data Policy (Public Domain) |
-| **Global Solar Atlas** | `https://globalsolaratlas.info/download/india` | 2024-10-31 | `PVOUT`, `GHI`, `DNI`, Optimal Tilt | CC BY 4.0 (Solargis / The World Bank) |
-| **OpenStreetMap** | `https://nominatim.openstreetmap.org/search` | 2024-10-31 | Address Geocoding & Reverse GPS Tags | Open Database License (ODbL) |
-| **Data.gov.in (MNRE)** | `https://data.gov.in/catalog/estimated-renewable-energy-potential` | 2024-10-31 | State-wise solar potential and grid metrics | National Data Sharing Policy (NDSAP) |
-
-*Full data catalog exported at: `output/reports/data_source_catalog.csv`*
-
----
-
-## 🚀 3–5 Minute Demo Walkthrough Script for Judges
-
-1. **Step 1: The Problem & Landing Page (`/`)**
-   - Open the marketing page. Point out the core problem: rooftop solar companies lose leads on WhatsApp, quote components by hand, and misplace paper serial registers during 20-year warranty claims.
-   - Show the live NASA POWER irradiance widget embedded directly on the homepage.
-2. **Step 2: Capture Lead & Validate Address (`/app/leads`)**
-   - Click **"Capture New Lead"**.
-   - Type customer: `Alice Singh`, address: `Anna Nagar, Chennai, Tamil Nadu`.
-   - Observe automatic OpenStreetMap geocoding and the immediate **Solar Score (89/100 Prime Yield)** computation.
-   - Enter duplicate phone number to demonstrate the **duplicate-lead warning** safeguard.
-3. **Step 3: Site Survey Assessment**
-   - Click **"Survey"** on Alice Singh's card.
-   - Record roof direction (South 15° tilt, 500 sq.ft shadow-free area). Click **"Approve Survey"**.
-4. **Step 4: Automated Quote & Bill of Materials (`/app/quotes`)**
-   - Select 5 kW Off-Grid package.
-   - Observe that the Bill of Materials generates automatically: 13x 400W panels, 1x 5kW inverter, 2x 200Ah Lithium batteries, mounting, and wiring. Zero missing parts.
-   - Highlight the **27.8% Gross Margin indicator**; show how quotes below 20% trigger a red warning.
-   - Click **"Preview PDF"** to display the official, printable customer quotation.
-5. **Step 5: Order Acceptance & Serial Reservation**
-   - Click **"Accept & Convert to Order"**.
-   - Show that Order `ORD-2024-0001` is created, and equipment serial numbers `PAN12345` through `PAN12357`, `INV54321`, and `BAT98765` are instantly marked as `Reserved` in the warehouse.
-6. **Step 6: Serial Barcode Dispatch & Automatic Warranty Activation (`/app/dispatch`)**
-   - Switch role to **Warehouse Clerk** using the bottom sidebar switcher.
-   - Open the Dispatch Manifest. Scan or click the reserved serial numbers.
-   - Click **"Authorize Dispatch"**.
-   - **Show the magic moment:** The Automatic Warranty Engine instantaneously activates:
-     - 20-Year warranties for panels (valid until 2044)
-     - 2-Year warranty for the inverter (valid until 2026)
-     - 5-Year warranty for the battery bank (valid until 2029)
-7. **Step 7: Technician Mobile Field PWA & Customer Sign-off (`/app/jobs`)**
-   - Switch role to **Technician (Murugan Pillai)**.
-   - Toggle **"PWA Online/Offline"** button to illustrate local offline queueing.
-   - Check off the installation checklist (earthing < 5 ohms, DC wiring, inverter test).
-   - Upload geotagged Before/During/After photos.
-   - Open the **"Customer Sign-off"** modal and draw a digital signature on the HTML5 canvas.
-   - Submit completion to generate the official Commissioning Certificate.
-8. **Step 8: Service Ticket & Warranty Claim Resolution (`/app/tickets`)**
-   - Switch role to **Service Agent**.
-   - Search by serial number: `INV54321`.
-   - The platform verifies that the inverter is under active warranty and marks repair charges as **₹0 Customer Cost (Free Replacement)**!
-   - Now test an expired serial to show that parts and labor charges are automatically billed.
-9. **Step 9: Director Analytics & Provenance Panel (`/app/dashboard` & `/app/solar-insights`)**
-   - Switch role to **Director**.
-   - Review executive KPIs: ₹14.8L monthly revenue, 27.8% gross margin, technician workload efficiency, and inventory valuation.
-   - Open `/app/solar-insights` to display the side-by-side empirical NASA POWER irradiance comparison for Chennai vs Jodhpur with the complete public data provenance catalog.
-
----
-
-## 📁 Repository Directory Structure
-
-```
-vayu/
-├── data/
-│   ├── raw/
-│   │   ├── nasa_power_chennai_raw.json    # Authentic NASA POWER API JSON
-│   │   └── nasa_power_jodhpur_raw.json    # Authentic NASA POWER API JSON
-│   └── clean/
-│       └── solar_comparison_clean.json    # Cleaned & normalized monthly dataset
-├── output/
-│   ├── charts/
-│   │   └── README.md                      # Visualization & charts catalog
-│   └── reports/
-│       ├── real_dataset_insights.md       # Comprehensive solar engineering report
-│       ├── data_source_catalog.csv        # Provenance catalog with URLs & licenses
-│       └── reproducibility_guide.md       # Curl commands & python verification code
-├── src/
-│   ├── components/
-│   │   ├── layout/                        # Sidebar, TopBar, AppLayout
-│   │   └── ui/                            # KPICard, SolarScoreRing, StatusBadge, Modal
-│   ├── data/
-│   │   └── demoData.ts                    # Realistic demo database & NASA profiles
-│   ├── pages/                             # 10 core modules (Dashboard, Leads, Quotes, etc.)
-│   ├── services/                          # nasaPower.ts (live fetch), nominatim.ts (geocoding)
-│   ├── store/                             # Zustand state (useStore, useAuthStore, useThemeStore)
-│   ├── types/                             # Full TypeScript interface definitions
-│   ├── App.tsx                            # React Router declarations
-│   └── main.tsx                           # Application entry point
-├── package.json
-├── tailwind.config.js
-├── tsconfig.json
-└── README.md
-```
-
----
-
-## 🔒 Security & Data Integrity
-- Passwords hashed / role-guarded routes
-- Immutable audit log tracking actor, action, timestamp, and IP address
-- Zero fabricated public data: every solar metric is cited and grounded in verified NASA/MNRE sources.
+## 12. Mentor & Judge Documentation Links
+- [System Architecture & Data Flow](docs/architecture.md)
+- [REST API Specifications](docs/api-documentation.md)
+- [PostgreSQL Database Schema](docs/database-schema.md)
+- [Deployment & Hosting Guide](docs/deployment-guide.md)
+- [Public Data Sources & Ethics Statement](docs/data-sources.md)
+- [3 to 5 Minute Demo Script](docs/demo-script.md)
+- [Repository Restructuring Report](docs/repository-cleanup-report.md)
