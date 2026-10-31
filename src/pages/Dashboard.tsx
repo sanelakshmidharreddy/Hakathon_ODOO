@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Users,
   CheckCircle2,
@@ -38,10 +38,23 @@ import { SolarScoreRing } from '../components/ui/SolarScoreRing';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { useStore } from '../store/useStore';
 import { demoNasaPowerChennai, demoNasaPowerJodhpur } from '../data/demoData';
+import { api } from '../lib/api';
 
 export const Dashboard: React.FC = () => {
   const { leads, orders, jobs, warranties, tickets, products, serialNumbers } = useStore();
   const [siteFilter, setSiteFilter] = useState<'all' | 'chennai' | 'jodhpur'>('all');
+  const [backendStatus, setBackendStatus] = useState<{ connected: boolean; service?: string } | null>(null);
+
+  useEffect(() => {
+    api
+      .get('/api/health')
+      .then((res) => {
+        setBackendStatus({ connected: true, service: res.data?.service || 'SunPower API' });
+      })
+      .catch(() => {
+        setBackendStatus({ connected: false });
+      });
+  }, []);
 
   // KPI Calculations
   const totalLeads = leads.length;
@@ -144,9 +157,17 @@ export const Dashboard: React.FC = () => {
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               Director Executive Dashboard
             </h1>
-            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-              Live Operations
-            </span>
+            {backendStatus?.connected ? (
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5" title="Connected to Render Backend">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Render Backend Connected
+              </span>
+            ) : (
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                Live Operations
+              </span>
+            )}
           </div>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Real-time project financials, inventory dispatch status, technician field telemetry, and NASA POWER irradiance insights.

@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { User, UserRole } from '../types';
 import { demoUsers } from '../data/demoData';
+import { api } from '../lib/api';
 
 interface AuthState {
   currentUser: User | null;
@@ -14,7 +15,7 @@ interface AuthState {
 export const useAuthStore = create<AuthState>((set) => ({
   // Default to Director for seamless demo exploration
   currentUser: demoUsers[0],
-  token: 'demo-jwt-token-active-session',
+  token: localStorage.getItem('auth_token') || 'demo-jwt-token-active-session',
   isAuthenticated: true,
 
   login: (email: string, role?: UserRole) => {
@@ -22,18 +23,48 @@ export const useAuthStore = create<AuthState>((set) => ({
     if (!matched && role) {
       matched = demoUsers.find((u) => u.role === role);
     }
+    const token = `jwt-token-${matched?.id || 'demo'}-${Date.now()}`;
+    localStorage.setItem('auth_token', token);
+
+    // Call Render backend auth login endpoint
+    api
+      .post('/api/auth/login', { email, role: role || matched?.role || 'director' })
+      .then((res) => {
+        if (res.data?.token) {
+          localStorage.setItem('auth_token', res.data.token);
+        }
+      })
+      .catch((err) => {
+        console.log('Backend auth offline/fallback active:', err.message);
+      });
+
     if (matched) {
       set({
         currentUser: matched,
-        token: `jwt-token-${matched.id}-${Date.now()}`,
+        token,
         isAuthenticated: true,
       });
       return true;
     }
-    return false;
+
+    const customUser: User = {
+      id: `usr-${Date.now()}`,
+      name: email.split('@')[0],
+      email,
+      role: role || 'sales_rep',
+      isActive: true,
+    };
+
+    set({
+      currentUser: customUser,
+      token,
+      isAuthenticated: true,
+    });
+    return true;
   },
 
   logout: () => {
+    localStorage.removeItem('auth_token');
     set({
       currentUser: null,
       token: null,
@@ -43,9 +74,11 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   switchRole: (role: UserRole) => {
     const userForRole = demoUsers.find((u) => u.role === role) || demoUsers[0];
+    const token = `jwt-token-${userForRole.id}-${Date.now()}`;
+    localStorage.setItem('auth_token', token);
     set({
       currentUser: userForRole,
-      token: `jwt-token-${userForRole.id}-${Date.now()}`,
+      token,
       isAuthenticated: true,
     });
   },

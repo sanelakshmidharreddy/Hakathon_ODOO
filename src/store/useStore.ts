@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { api } from '../lib/api';
 import {
   Lead,
   Survey,
@@ -146,6 +147,12 @@ export const useStore = create<AppState>((set, get) => ({
     }));
 
     get().addAuditLog('LEAD_CREATE', 'lead', id, { name: newLead.customerName, source: newLead.source });
+
+    // Sync with Render backend
+    api.post('/api/leads', newLead).catch((err) => {
+      console.log('Backend sync offline/fallback active:', err.message);
+    });
+
     return newLead;
   },
 
@@ -372,6 +379,11 @@ export const useStore = create<AppState>((set, get) => ({
       totalAmount,
       grossMargin,
       marginPercentage,
+    });
+
+    // Sync with Render backend
+    api.post('/api/quotes', newQuote).catch((err) => {
+      console.log('Backend sync offline/fallback active:', err.message);
     });
 
     return newQuote;
@@ -659,6 +671,12 @@ export const useStore = create<AppState>((set, get) => ({
     }));
 
     get().addAuditLog('TICKET_CREATE', 'ticket', newTicket.id, { ticketNumber, issue: ticketData.issueType });
+
+    // Sync with Render backend
+    api.post('/api/tickets', newTicket).catch((err) => {
+      console.log('Backend sync offline/fallback active:', err.message);
+    });
+
     return newTicket;
   },
 

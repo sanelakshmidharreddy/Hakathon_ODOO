@@ -18,6 +18,7 @@ import { useStore } from '../store/useStore';
 import { Job } from '../types';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { Modal } from '../components/ui/Modal';
+import { api } from '../lib/api';
 
 export const Jobs: React.FC = () => {
   const { jobs, updateJobChecklist, addJobPhoto, completeJob } = useStore();
@@ -80,9 +81,20 @@ export const Jobs: React.FC = () => {
     const canvas = canvasRef.current;
     const dataUrl = canvas ? canvas.toDataURL() : 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==';
 
+    // Transmit customer signature to Render backend
+    api.post('/api/upload', {
+      fileData: dataUrl,
+      fileName: `signature_${selectedJob.jobNumber}.png`,
+      fileType: 'image/png',
+      jobId: selectedJob.id,
+      tag: 'customer_signature',
+    }).catch((err) => {
+      console.log('Backend sync offline/fallback active:', err.message);
+    });
+
     completeJob(selectedJob.id, dataUrl, signerName);
     setIsSignModalOpen(false);
-    alert(`Job ${selectedJob.jobNumber} marked Commissioned & Completed! Customer signature and test certificates stored.`);
+    alert(`Job ${selectedJob.jobNumber} marked Commissioned & Completed! Customer signature stored.`);
   };
 
   const handleSimulatePhotoUpload = () => {
@@ -94,9 +106,22 @@ export const Jobs: React.FC = () => {
       after: 'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=600&q=80',
     };
 
+    const photoUrl = demoPhotos[activePhotoStage];
+
+    // Transmit photo upload to Render backend
+    api.post('/api/upload', {
+      fileData: photoUrl,
+      fileName: `evidence_${activePhotoStage}_${selectedJob.jobNumber}.jpg`,
+      fileType: 'image/jpeg',
+      jobId: selectedJob.id,
+      tag: activePhotoStage,
+    }).catch((err) => {
+      console.log('Backend sync offline/fallback active:', err.message);
+    });
+
     addJobPhoto(
       selectedJob.id,
-      demoPhotos[activePhotoStage],
+      photoUrl,
       photoCaption || `Installed 540W Tier-1 Panels on south tilt (${activePhotoStage})`,
       activePhotoStage,
       selectedJob.customerCoordinates || { lat: 13.0827, lng: 80.2707 }
